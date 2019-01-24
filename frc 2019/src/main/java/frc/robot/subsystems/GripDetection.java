@@ -58,7 +58,7 @@ public class GripDetection extends Subsystem {
   public void startGrip(){
     camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-    
+    //dont know why this is deprecated. help? it works, but i really hate the green lines.
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
         if (!pipeline.filterContoursOutput().isEmpty()) {
             Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
@@ -111,9 +111,12 @@ public class GripDetection extends Subsystem {
     coords2[1]=centerY2;
     return(coords2);
   }
-  public double[] straightenOut(){
+  public double[] motorPowerReturn(){
     motorPower[0]=0;
     motorPower[1]=0;
+    /*
+
+    */
     return(motorPower);
 
   }
