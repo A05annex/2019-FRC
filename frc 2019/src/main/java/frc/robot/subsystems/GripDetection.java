@@ -115,7 +115,7 @@ public class GripDetection extends Subsystem {
     motorPower[0]=0;
     motorPower[1]=0;
     /*
-
+    i hate java python is better in most ways besides that it lags
     */
     return(motorPower);
 
