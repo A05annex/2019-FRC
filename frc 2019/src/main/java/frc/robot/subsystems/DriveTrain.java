@@ -44,8 +44,8 @@ public class DriveTrain extends Subsystem{
 
     public void arcadeDrive(Joystick stick){
         //this is called from commands to drive the robot
-        rightMotor.set(stick.getRawAxis(0) + (stick.getRawAxis(1)/2));
-        leftMotor.set(stick.getRawAxis(0) - (stick.getRawAxis(1)/2));
+        rightMotor.set(stick.getRawAxis(1) + (stick.getRawAxis(2)/2));
+        leftMotor.set(stick.getRawAxis(1) - (stick.getRawAxis(2)/2));
     }
 
     public void setNeutralMode(NeutralMode mode){
