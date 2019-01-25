@@ -121,7 +121,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    oi.button.whenPressed(new Shift());
     Scheduler.getInstance().run();
   }
 
