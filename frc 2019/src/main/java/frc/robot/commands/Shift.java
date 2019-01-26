@@ -30,7 +30,7 @@ public class Shift extends Command {
     
     @Override
     protected void execute() {
-        //runs the arcadeDrive function from the drive train
+        //shifts the motors based on the value of boolean "up"
         Robot.driveTrain.stop();
         if(up){
             Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kForward);
@@ -41,7 +41,7 @@ public class Shift extends Command {
     
     @Override
     protected boolean isFinished() {
-        //only returns false because the command cannot end without being interrupted
+        //returns true after .3 seconds
         if (time.get() > .3){
             return true;
         }else{
@@ -51,7 +51,7 @@ public class Shift extends Command {
     
     @Override
     protected void end() {
-        //calls function to stop the motors
+        //calls function to stop the shifter when finished
         Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kOff);
         time.stop();
         time.reset();
