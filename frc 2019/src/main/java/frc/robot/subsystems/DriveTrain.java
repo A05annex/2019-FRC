@@ -3,12 +3,15 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.Teleop;
 
 public class DriveTrain extends Subsystem{
 
+    public DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
     public WPI_TalonSRX
         rightMotor = new WPI_TalonSRX(RobotMap.rm1),
         rm2 = new WPI_TalonSRX(RobotMap.rm2),
@@ -36,13 +39,13 @@ public class DriveTrain extends Subsystem{
     }
 
     public void initDefaultCommand(){
-        
+        setDefaultCommand(new Teleop());
     }
 
     public void arcadeDrive(Joystick stick){
         //this is called from commands to drive the robot
-        rightMotor.set(stick.getY());
-        leftMotor.set(stick.getY());
+        rightMotor.set(stick.getRawAxis(1) + (stick.getRawAxis(2)/2));
+        leftMotor.set(stick.getRawAxis(1) - (stick.getRawAxis(2)/2));
     }
 
     public void setNeutralMode(NeutralMode mode){
