@@ -9,12 +9,13 @@ import frc.robot.Robot;
 
 public class Shift extends Command {
 
-
+    boolean up;
     Timer time = new Timer();
-    public Shift() {
+    public Shift(boolean up) {
+        this.up = up;
 
         //only functions if the drive train is not in use by another command
-        //requires(Robot.driveTrain);
+        requires(Robot.driveTrain);
     }
     
     @Override
@@ -23,15 +24,19 @@ public class Shift extends Command {
         time.start();
 
         //sets the wheels to brake when assigned a motor power of 0
-        //Robot.driveTrain.setNeutralMode(NeutralMode.Coast);
+        Robot.driveTrain.setNeutralMode(NeutralMode.Coast);
 
     }
     
     @Override
     protected void execute() {
         //runs the arcadeDrive function from the drive train
-        //Robot.driveTrain.stop();
-        //Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kForward);
+        Robot.driveTrain.stop();
+        if(up){
+            Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kForward);
+        }else{
+            Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kReverse);
+        }
     }
     
     @Override
@@ -47,7 +52,7 @@ public class Shift extends Command {
     @Override
     protected void end() {
         //calls function to stop the motors
-        //Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kOff);
+        Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kOff);
         time.stop();
         time.reset();
     }
