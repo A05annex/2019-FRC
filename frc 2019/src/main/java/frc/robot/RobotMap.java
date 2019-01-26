@@ -24,7 +24,7 @@ public class RobotMap {
     rm1 = 1,
     rm2 = 2,
     rm3 = 3,
-    lm1 = 8,
+    lm1 = 6,
     lm2 = 7,
     lm3 = 8,
     shifter1 = 0,
