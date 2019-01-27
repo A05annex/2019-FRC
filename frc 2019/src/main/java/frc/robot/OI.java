@@ -22,6 +22,7 @@ public class OI {
 
   JoystickButton trigger = new JoystickButton(this.stick, 1);
   JoystickButton thumb = new JoystickButton(this.stick, 2);
+  JoystickButton top = new JoystickButton(this.stick, 3);
 
   public Joystick getStick(){
   //method to be called by other commands or subsystems to use the joystick

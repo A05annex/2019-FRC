@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
@@ -35,7 +36,8 @@ public class DriveTrain extends Subsystem{
         leftMotor.setInverted(true);
         lm2.setInverted(true);
         lm3.setInverted(true);
-
+        rightMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        leftMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     }
 
     public void initDefaultCommand(){
