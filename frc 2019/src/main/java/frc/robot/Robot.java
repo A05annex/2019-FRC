@@ -17,6 +17,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.GripDetection;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI oi;
   public static Bucket bucket = new Bucket();
+  public static GripDetection grip = new GripDetection();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -39,7 +41,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    CameraServer.getInstance().startAutomaticCapture();
+    grip.startGrip();
     oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -129,6 +131,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("DB/String 2", Integer.toString(driveTrain.rightMotor.getSelectedSensorPosition()));
     //SmartDashboard.putString("DB/String 3", "functional");
     SmartDashboard.putString("DB/String 4", Double.toString(driveTrain.ahrs.getAngle()));
+    SmartDashboard.putString("DB/String 5", Double.toString(grip.sendXY1()[0]));
+    SmartDashboard.putString("DB/String 6", Double.toString(grip.sendXY1()[1]));
   }
 
   /**

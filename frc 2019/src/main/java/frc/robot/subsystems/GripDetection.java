@@ -93,7 +93,7 @@ public class GripDetection extends Subsystem {
     double[] WidthHeight1 = new double[]{Width2,Height2};
     return WidthHeight1;
   }
-  private double[] sendXY1(){
+  public double[] sendXY1(){
     double centerX1;
     double centerY1;
     synchronized (imgLockCX1){centerX1=this.centerX1;}
@@ -102,7 +102,7 @@ public class GripDetection extends Subsystem {
     coords1[1]=centerY1;
     return(coords1);
   }
-  private double[] sendXY2(){
+  public double[] sendXY2(){
     double centerX2;
     double centerY2;
     synchronized (imgLockCX2){centerX2=this.centerX2;}
