@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.MoveServo;
 import frc.robot.commands.Shift;
 
 /**
@@ -22,6 +24,8 @@ public class OI {
 
   JoystickButton trigger = new JoystickButton(this.stick, 1);
   JoystickButton thumb = new JoystickButton(this.stick, 2);
+  JoystickButton top = new JoystickButton(this.stick, 3);
+  JoystickButton top2 = new JoystickButton(this.stick, 4);
 
   public Joystick getStick(){
   //method to be called by other commands or subsystems to use the joystick
@@ -31,5 +35,7 @@ public class OI {
   public OI(){
     trigger.whenPressed(new Shift(true));
     thumb.whenPressed(new Shift(false));
+    top.whenPressed(new MoveServo(0));
+    top2.whenPressed(new MoveServo(1));
   }
 }

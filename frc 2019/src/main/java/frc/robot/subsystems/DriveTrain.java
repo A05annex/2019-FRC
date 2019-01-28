@@ -2,15 +2,19 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.Teleop;
 
 public class DriveTrain extends Subsystem{
 
+    public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
     public DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
     public WPI_TalonSRX
         rightMotor = new WPI_TalonSRX(RobotMap.rm1),
@@ -35,7 +39,9 @@ public class DriveTrain extends Subsystem{
         leftMotor.setInverted(true);
         lm2.setInverted(true);
         lm3.setInverted(true);
-
+        rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        ahrs.reset();
     }
 
     public void initDefaultCommand(){
@@ -44,8 +50,8 @@ public class DriveTrain extends Subsystem{
 
     public void arcadeDrive(Joystick stick){
         //this is called from commands to drive the robot
-        rightMotor.set(stick.getRawAxis(1) + (stick.getRawAxis(2)/2));
-        leftMotor.set(stick.getRawAxis(1) - (stick.getRawAxis(2)/2));
+        rightMotor.set((stick.getRawAxis(1) + (stick.getRawAxis(2)/2))/3);
+        leftMotor.set((stick.getRawAxis(1) - (stick.getRawAxis(2)/2))/3);
     }
 
     public void setNeutralMode(NeutralMode mode){
