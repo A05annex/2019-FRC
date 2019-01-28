@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  * Add your docs here.
  */
 public class GripDetection extends Subsystem {
-	
+  
 	public static final int IMG_WIDTH = 320;
 	public static final int IMG_HEIGHT = 240;
 	
@@ -114,9 +114,6 @@ public class GripDetection extends Subsystem {
   public double[] motorPowerReturn(){
     motorPower[0]=0;
     motorPower[1]=0;
-    /*
-    i hate java python is better in most ways besides that it lags
-    */
     return(motorPower);
 
   }

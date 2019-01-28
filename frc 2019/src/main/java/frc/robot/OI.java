@@ -9,7 +9,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.MoveServo;
 import frc.robot.commands.Shift;
 
