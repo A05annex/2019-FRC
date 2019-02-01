@@ -23,8 +23,8 @@ public class ArmDriveTrain extends Subsystem{
         setDefaultCommand(new ArmTeleop());
     }
     public void stickDrive(Joystick stick){
-        armMotorLower.set(-(stick.getRawAxis(1)/10));
-        armMotorUpper.set(stick.getRawAxis(0)/10);
+        armMotorLower.set(-(stick.getRawAxis(1)));
+        armMotorUpper.set(stick.getRawAxis(0));
     }
 
     public void inputDrive(double[] motorInput){
