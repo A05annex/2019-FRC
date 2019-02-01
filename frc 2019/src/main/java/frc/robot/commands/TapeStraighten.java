@@ -1,28 +1,28 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Teleop extends Command{
+public class TapeStraighten extends Command{
+    
+    char direction;
 
-    public Teleop() {
+    public TapeStraighten(char direction) {
 
         //only functions if the drive train is not in use by another command
         requires(Robot.driveTrain);
+        this.direction=direction;
       }
-    
       @Override
       protected void initialize() {
-          //sets the wheels to brake when assigned a motor power of 0
-          Robot.driveTrain.setNeutralMode(NeutralMode.Brake);
+          if(direction=='L'){
+              
+          }
       }
     
       @Override
       protected void execute() {
-          //runs the arcadeDrive function from the drive train
-          Robot.driveTrain.arcadeDrive(Robot.oi.getStick());
       }
     
       @Override
