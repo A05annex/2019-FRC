@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.ArmDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -27,6 +28,7 @@ import frc.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
+  public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI oi;
   public static Bucket bucket = new Bucket();

@@ -53,6 +53,9 @@ public class DriveTrain extends Subsystem{
         rightMotor.set((stick.getRawAxis(1) + (stick.getRawAxis(2)/2))/3);
         leftMotor.set((stick.getRawAxis(1) - (stick.getRawAxis(2)/2))/3);
     }
+    public void inputDrive(double[] motorInput){
+
+    }
 
     public void setNeutralMode(NeutralMode mode){
         //method to easily set the neutral mode of all of the driveTrain motors

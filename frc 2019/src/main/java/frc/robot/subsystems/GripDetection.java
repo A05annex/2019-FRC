@@ -55,12 +55,13 @@ public class GripDetection extends Subsystem {
 	private final Object imgLockCH2 = new Object();
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public void startGrip(){
+  public GripDetection(){
     camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     //dont know why this is deprecated. help? it works, but i really hate the green lines.
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
         if (!pipeline.filterContoursOutput().isEmpty()) {
+          if(pipeline.filterContoursOutput().size()>=2){
             Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
             Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
             synchronized (imgLockCX1) {centerX1 = r1.x + (r1.width / 2);}
@@ -72,9 +73,29 @@ public class GripDetection extends Subsystem {
             synchronized (imgLockCW2) {Width2 = r2.width;}
             synchronized (imgLockCH1) {Height1 = r1.height;}
             synchronized (imgLockCH2) {Height2 = r2.height;}
+            if(pipeline.filterContoursOutput().size()>2){
+              System.out.println("More than two oh god something is bad please jesus help me");
+            }
+          }
         }
       });
+
+    }
+  public void startVision(){
     visionThread.start();
+  }
+  public double[] findTape(char direction){
+    double mlPower=0;
+    double mrPower=0;
+    if(direction=='L'){
+      mlPower=-.2;
+      mrPower= .2;
+    }
+    if(direction=='R'){
+      mlPower= .2;
+      mrPower=-.2;
+    }
+    return(motorPower);
 
   }
   private double[] sendWidthHeight1(){
@@ -110,15 +131,6 @@ public class GripDetection extends Subsystem {
     coords2[0]=centerX2;
     coords2[1]=centerY2;
     return(coords2);
-  }
-  public double[] motorPowerReturn(){
-    motorPower[0]=0;
-    motorPower[1]=0;
-    /*
-    i hate java python is better in most ways besides that it lags
-    */
-    return(motorPower);
-
   }
   @Override
   public void initDefaultCommand() {
