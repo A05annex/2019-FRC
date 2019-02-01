@@ -1,5 +1,3 @@
-package frc.robot;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -42,9 +40,9 @@ public class GripPipeline implements VisionPipeline {
 	@Override	public void process(Mat source0) {
 		// Step HSL_Threshold0:
 		Mat hslThresholdInput = source0;
-		double[] hslThresholdHue = {61.510791366906474, 124.70989761092152};
-		double[] hslThresholdSaturation = {154.10071942446044, 255.0};
-		double[] hslThresholdLuminance = {0.0, 255.0};
+		double[] hslThresholdHue = {38.84892086330935, 95.52901023890787};
+		double[] hslThresholdSaturation = {43.57014388489208, 65.70819112627989};
+		double[] hslThresholdLuminance = {240.7823741007194, 255.0};
 		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
 
 		// Step Find_Contours0:
@@ -54,17 +52,17 @@ public class GripPipeline implements VisionPipeline {
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 0.0;
-		double filterContoursMinPerimeter = 0.0;
-		double filterContoursMinWidth = 0.0;
-		double filterContoursMaxWidth = 600.0;
-		double filterContoursMinHeight = 0.0;
-		double filterContoursMaxHeight = 600.0;
-		double[] filterContoursSolidity = {58.45323741007196, 100};
-		double filterContoursMaxVertices = 60.0;
-		double filterContoursMinVertices = 10.0;
-		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 1000.0;
+		double filterContoursMinArea = 0;
+		double filterContoursMinPerimeter = 0;
+		double filterContoursMinWidth = 60.0;
+		double filterContoursMaxWidth = 1000;
+		double filterContoursMinHeight = 60.0;
+		double filterContoursMaxHeight = 1000;
+		double[] filterContoursSolidity = {0, 100};
+		double filterContoursMaxVertices = 1000000;
+		double filterContoursMinVertices = 0;
+		double filterContoursMinRatio = 0;
+		double filterContoursMaxRatio = 1000;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
