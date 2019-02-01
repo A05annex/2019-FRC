@@ -45,7 +45,6 @@ public class DriveTrain extends Subsystem{
     }
 
     public void initDefaultCommand(){
-        setDefaultCommand(new Teleop());
     }
 
     public void arcadeDrive(Joystick stick){

@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.Teleop;
+import frc.robot.commands.ArmTeleop;
 
 public class ArmDriveTrain extends Subsystem{
     public WPI_TalonSRX
@@ -20,7 +20,7 @@ public class ArmDriveTrain extends Subsystem{
     }
 
     public void initDefaultCommand(){
-        setDefaultCommand(new Teleop());
+        setDefaultCommand(new ArmTeleop());
     }
     public void stickDrive(Joystick stick){
         armMotorLower.set(-(stick.getRawAxis(1)/10));
