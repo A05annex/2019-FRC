@@ -27,6 +27,8 @@ public class RobotMap {
     lm1 = 8,
     lm2 = 7,
     lm3 = 6,
+    arm1 = 9,
+    arm2 = 10,
     shifter1 = 0,
     shifter2 = 1,
     servo = 0;

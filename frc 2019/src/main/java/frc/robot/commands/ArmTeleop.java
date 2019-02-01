@@ -10,7 +10,7 @@ public class ArmTeleop extends Command{
     public ArmTeleop() {
 
         //only functions if the drive train is not in use by another command
-        requires(Robot.driveTrain);
+        requires(Robot.armDriveTrain);
       }
     
       @Override
