@@ -16,7 +16,7 @@ public class Teleop extends Command{
       @Override
       protected void initialize() {
           //sets the wheels to brake when assigned a motor power of 0
-          Robot.driveTrain.setNeutralMode(NeutralMode.Brake);
+        Robot.driveTrain.setNeutralMode(NeutralMode.Brake);
       }
     
       @Override
