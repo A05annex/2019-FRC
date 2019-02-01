@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
@@ -23,8 +24,16 @@ public class ArmDriveTrain extends Subsystem{
         setDefaultCommand(new ArmTeleop());
     }
     public void stickDrive(Joystick stick){
-        armMotorLower.set(-(stick.getRawAxis(1)));
-        armMotorUpper.set(stick.getRawAxis(0));
+        if(stick.getRawButton(5)){
+            armMotorLower.set(.3);
+
+        }
+        else if(stick.getRawButton(6)){
+            armMotorLower.set(-.3);
+        }
+        else{
+            armMotorLower.set(0);
+        }
     }
 
     public void inputDrive(double[] motorInput){
