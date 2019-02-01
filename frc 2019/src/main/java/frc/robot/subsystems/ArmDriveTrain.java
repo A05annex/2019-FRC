@@ -10,19 +10,21 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
 
 public class ArmDriveTrain extends Subsystem{
+    //construction of arm motors
     public WPI_TalonSRX
         armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
     
     public ArmDriveTrain(){
-        //constructs and configures all six drive motors
+        //configures both drive motors for the motors
         armMotorLower.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setNeutralMode(NeutralMode.Brake);
     }
-
+    //default command for the subsystem, this one being teleoperation for the arm
     public void initDefaultCommand(){
         setDefaultCommand(new ArmTeleop());
     }
+    //method for driving arms with stick input
     public void stickDrive(Joystick stick){
         if(stick.getRawButton(5)){
             armMotorLower.set(.3);
@@ -35,6 +37,7 @@ public class ArmDriveTrain extends Subsystem{
             armMotorLower.set(0);
         }
     }
+    //methods to drive the arms independently, if necessary
     public void inputDriveLowArm(double motorInput){
         armMotorLower.set(motorInput);
     }
