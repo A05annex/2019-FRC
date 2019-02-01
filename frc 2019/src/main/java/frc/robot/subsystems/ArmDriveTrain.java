@@ -35,10 +35,12 @@ public class ArmDriveTrain extends Subsystem{
             armMotorLower.set(0);
         }
     }
-
-    public void inputDrive(double[] motorInput){
+    public void inputDriveLowArm(double motorInput){
+        armMotorLower.set(motorInput);
     }
-
+    public void inputDriveUppArm(double motorInput){
+        armMotorUpper.set(motorInput);
+    }
     public void setNeutralMode(NeutralMode mode){
         //method to easily set the neutral mode of all of the driveTrain motors
         armMotorLower.setNeutralMode(mode);
