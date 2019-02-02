@@ -27,11 +27,11 @@ public class ArmDriveTrain extends Subsystem{
     //method for driving arms with stick input
     public void stickDrive(Joystick stick){
         if(stick.getRawButton(5)){
-            armMotorLower.set(.3);
+            armMotorLower.set(.5);
 
         }
         else if(stick.getRawButton(6)){
-            armMotorLower.set(-.3);
+            armMotorLower.set(-.5);
         }
         else{
             armMotorLower.set(0);
