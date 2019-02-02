@@ -14,6 +14,10 @@ public class ArmDriveTrain extends Subsystem{
     public WPI_TalonSRX
         armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
+    static double
+        armLengthUpper=6.0,
+        armLengthLower=8.0;
+
     
     public ArmDriveTrain(){
         //configures both drive motors for the motors
