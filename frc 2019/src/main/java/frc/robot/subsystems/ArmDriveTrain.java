@@ -108,12 +108,14 @@ public class ArmDriveTrain extends Subsystem{
     }
 
     public void setNeutralMode(NeutralMode mode){
-        //method to easily set the neutral mode of all of the driveTrain motors
+        // probably don't want this - don't think we ever want tne arms to float
         armMotorLower.setNeutralMode(mode);
         armMotorUpper.setNeutralMode(mode);
     }
 
     public void stop(){
         //method to easily stop the motors
+        armMotorLower.set(0.0);
+        armMotorUpper.set(0.0);
     }
 }
