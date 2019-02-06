@@ -32,7 +32,9 @@ These are the details:
       control.
   * [Prepare Robot Controller](https://phoenix-documentation.readthedocs.io/en/latest/ch06_PrepRobot.html)
     - describes installing and usning software that lets you 
-  * [Bring Up: Talon SRX Sensors](https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html) - describes the
+  * [Bring Up: Talon SRX Sensors](https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html) -
+    describes how to setup/configure the TALON SRX motor controller with different sensors (like potentiometers,
+    limit switches, and encoders).
 
 Required tools - these need to be installed and hooked to the roborio
 
