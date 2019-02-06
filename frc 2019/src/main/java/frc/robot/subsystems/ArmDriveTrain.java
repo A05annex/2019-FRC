@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class ArmDriveTrain extends Subsystem{
 
@@ -20,25 +22,27 @@ public class ArmDriveTrain extends Subsystem{
         baseAngle = new AnalogPotentiometer(2, -360, 334.1),
         secondAngle = new AnalogPotentiometer(3, -360, 360);
 
+    //construction of arm motors
     public WPI_TalonSRX
         armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
     
     public ArmDriveTrain(){
-        //constructs and configures all six drive motors
+        //configures both drive motors for the motors
         armMotorLower.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setNeutralMode(NeutralMode.Brake);
     }
-
+    //default command for the subsystem, this one being teleoperation for the arm
     public void initDefaultCommand(){
         setDefaultCommand(new ArmTeleop());
     }
+    //method for driving arms with stick input
     public void stickDrive(Joystick stick){
         if(stick.getRawButton(5)){
-            armMotorLower.set(.3);
+          
         }
         else if(stick.getRawButton(6)){
-            armMotorLower.set(-.3);
+            armMotorLower.set(-.5);
         }
         else{
             armMotorLower.set(0);
@@ -54,10 +58,13 @@ public class ArmDriveTrain extends Subsystem{
             armMotorUpper.set(0);
         }
     }
-
-    public void inputDrive(double[] motorInput){
+    //methods to drive the arms independently, if necessary
+    public void inputDriveLowArm(double motorInput){
+        armMotorLower.set(motorInput);
     }
-
+    public void inputDriveUppArm(double motorInput){
+        armMotorUpper.set(motorInput);
+    }
     public void setNeutralMode(NeutralMode mode){
         //method to easily set the neutral mode of all of the driveTrain motors
         armMotorLower.setNeutralMode(mode);
@@ -66,8 +73,10 @@ public class ArmDriveTrain extends Subsystem{
 
     public void stop(){
         //method to easily stop the motors
+        armMotorLower.set(0);
+        armMotorUpper.set(0);
     }
-
+    //buncha math
     public void setHeight(int height){
         double
             arm1 = 39.25,

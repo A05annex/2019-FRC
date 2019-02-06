@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.GripDetection;
 
 public class TapeStraighten extends Command{
     
@@ -11,17 +12,17 @@ public class TapeStraighten extends Command{
 
         //only functions if the drive train is not in use by another command
         requires(Robot.driveTrain);
+        requires(Robot.gripDetection);
         this.direction=direction;
       }
       @Override
       protected void initialize() {
-          if(direction=='L'){
-              
-          }
+          Robot.gripDetection.startVision();
       }
     
       @Override
       protected void execute() {
+        Robot.driveTrain.inputDrive(Robot.gripDetection.findTape(direction));
       }
     
       @Override

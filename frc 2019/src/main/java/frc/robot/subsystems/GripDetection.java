@@ -30,7 +30,8 @@ public class GripDetection extends Subsystem {
 	public static final int IMG_WIDTH = 320;
 	public static final int IMG_HEIGHT = 240;
 	
-	private VisionThread visionThread;
+  private VisionThread visionThread;
+  private boolean tapeSeen = false;
   private double centerX1 = 0.0;
   private double centerX2 = 0.0;
   private double centerY1 = 0.0;
@@ -52,7 +53,9 @@ public class GripDetection extends Subsystem {
 	private final Object imgLockCW1 = new Object();
 	private final Object imgLockCW2 = new Object();
 	private final Object imgLockCH1 = new Object();
-	private final Object imgLockCH2 = new Object();
+  private final Object imgLockCH2 = new Object();
+  
+	private final Object imgLockSEEN = new Object();
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public GripDetection(){
@@ -73,6 +76,8 @@ public class GripDetection extends Subsystem {
             synchronized (imgLockCW2) {Width2 = r2.width;}
             synchronized (imgLockCH1) {Height1 = r1.height;}
             synchronized (imgLockCH2) {Height2 = r2.height;}
+
+            synchronized (imgLockSEEN) {tapeSeen=(pipeline.filterContoursOutput().size()>1);};
             if(pipeline.filterContoursOutput().size()>2){
               System.out.println("More than two oh god something is bad please jesus help me");
             }
@@ -84,17 +89,30 @@ public class GripDetection extends Subsystem {
   public void startVision(){
     visionThread.start();
   }
+  public void endVision(){
+    visionThread.stop();
+  }
   public double[] findTape(char direction){
     double mlPower=0;
     double mrPower=0;
-    if(direction=='L'){
-      mlPower=-.2;
-      mrPower= .2;
+    boolean tapeSeen;
+    synchronized(imgLockSEEN){tapeSeen=this.tapeSeen;};
+    if(tapeSeen){
+      if(direction=='L'){
+        mlPower=-.2;
+        mrPower= .2;
+      }
+      if(direction=='R'){
+        mlPower= .2;
+        mrPower=-.2;
+      }
     }
-    if(direction=='R'){
-      mlPower= .2;
-      mrPower=-.2;
+    else{
+      mlPower=0;
+      mrPower=0;
     }
+    motorPower[0]=mlPower;
+    motorPower[1]=mrPower;
     return(motorPower);
 
   }
