@@ -3,7 +3,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+<<<<<<< HEAD
+=======
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Joystick;
+>>>>>>> 6af5e3dc97d4b701c78a613eebee650433a62301
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
 
@@ -20,8 +26,13 @@ import frc.robot.commands.ArmTeleop;
  */
 public class ArmDriveTrain extends Subsystem{
 
-    public WPI_TalonSRX armMotorLower = new WPI_TalonSRX(RobotMap.arm1);
-    public WPI_TalonSRX armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
+    public AnalogPotentiometer
+        baseAngle = new AnalogPotentiometer(2, -360, 334.1),
+        secondAngle = new AnalogPotentiometer(3, -360, 360);
+
+    public WPI_TalonSRX
+        armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
+        armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
     // TODO: once the arms and done and the positions of the potentiometers are fixed, manually
     // rotate the arms and track the potentiometer values at the limits of motion. These become
     // the constraints for arm movement - i.e. if you try to move the arm beyond these values
@@ -37,7 +48,7 @@ public class ArmDriveTrain extends Subsystem{
                                             // should cut power to creep power
     private double armCreepPower = 0.1;     // The maximum power in the creep zone
 
-    
+     
     public ArmDriveTrain(){
         //constructs and configures all six drive motors
         armMotorLower.setNeutralMode(NeutralMode.Brake);
@@ -117,5 +128,16 @@ public class ArmDriveTrain extends Subsystem{
         //method to easily stop the motors
         armMotorLower.set(0.0);
         armMotorUpper.set(0.0);
+    }
+
+    public void setHeight(int height){
+        double
+            arm1 = 39.25,
+            arm2 = 34.5,
+            xdifference = 26;
+        double angle1 = Math.toDegrees(Math.atan(height/xdifference) + Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
+        double angle2 = Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height) / (2 * arm1 * arm2)));
+        SmartDashboard.putString("DB/String 6", Double.toString(angle1));
+        SmartDashboard.putString("DB/String 7", Double.toString(angle2));
     }
 }
