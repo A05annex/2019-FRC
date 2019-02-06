@@ -11,7 +11,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
 
 public class ArmDriveTrain extends Subsystem{
-    
+
     public double
         angle1,
         angle2;
@@ -73,9 +73,18 @@ public class ArmDriveTrain extends Subsystem{
             arm1 = 39.25,
             arm2 = 34.5,
             xdifference = 26;
-        double angle1 = Math.toDegrees(Math.atan(height/xdifference) + Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
-        double angle2 = Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height) / (2 * arm1 * arm2)));
+        angle1 = Math.toDegrees(Math.atan(height/xdifference) + Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
+        angle2 = Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height) / (2 * arm1 * arm2)));
         SmartDashboard.putString("DB/String 6", Double.toString(angle1));
         SmartDashboard.putString("DB/String 7", Double.toString(angle2));
+    }
+
+    public void moveToHeight(){
+        
+    }
+
+    public void lockPosition(){
+        armMotorLower.set(0);
+        armMotorUpper.set(0);
     }
 }
