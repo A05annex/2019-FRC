@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -34,6 +33,7 @@ public class Robot extends TimedRobot {
   public static GripDetection gripDetection = new GripDetection();
   public static OI oi;
   public static Bucket bucket = new Bucket();
+  public static GripDetection grip = new GripDetection();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    CameraServer.getInstance().startAutomaticCapture();
+    grip.startGrip();
     oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -130,9 +130,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    //SmartDashboard.putString("DB/String 2", Integer.toString(driveTrain.rightMotor.getSelectedSensorPosition()));
+    SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.baseAngle.get()));
+    SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.secondAngle.get()));
+    armDriveTrain.setHeight(26);
     //SmartDashboard.putString("DB/String 3", "functional");
-    //SmartDashboard.putString("DB/String 4", Double.toString(driveTrain.ahrs.getAngle()));
+
   }
 
   /**
