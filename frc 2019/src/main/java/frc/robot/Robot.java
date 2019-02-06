@@ -18,6 +18,7 @@ import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ArmDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.GripDetection;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static GripDetection gripDetection = new GripDetection();
   public static OI oi;
   public static Bucket bucket = new Bucket();
   Command m_autonomousCommand;

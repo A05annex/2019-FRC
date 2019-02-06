@@ -30,7 +30,8 @@ public class GripDetection extends Subsystem {
 	public static final int IMG_WIDTH = 320;
 	public static final int IMG_HEIGHT = 240;
 	
-	private VisionThread visionThread;
+  private VisionThread visionThread;
+  private boolean tapeSeen = false;
   private double centerX1 = 0.0;
   private double centerX2 = 0.0;
   private double centerY1 = 0.0;
