@@ -43,7 +43,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    grip.startGrip();
     oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());

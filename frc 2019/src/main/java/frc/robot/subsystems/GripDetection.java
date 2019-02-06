@@ -89,6 +89,9 @@ public class GripDetection extends Subsystem {
   public void startVision(){
     visionThread.start();
   }
+  public void endVision(){
+    visionThread.stop();
+  }
   public double[] findTape(char direction){
     double mlPower=0;
     double mrPower=0;
