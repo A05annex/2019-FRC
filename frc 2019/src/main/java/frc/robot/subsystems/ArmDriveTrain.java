@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class ArmDriveTrain extends Subsystem{
+    //construction of potentiometers
     public AnalogPotentiometer
         baseAngle = new AnalogPotentiometer(2, -360, 334.1),
         secondAngle = new AnalogPotentiometer(3, -360, 360);
@@ -71,6 +72,7 @@ public class ArmDriveTrain extends Subsystem{
         armMotorLower.set(0);
         armMotorUpper.set(0);
     }
+    //buncha math
     public void setHeight(int height){
         double
             arm1 = 39.25,
