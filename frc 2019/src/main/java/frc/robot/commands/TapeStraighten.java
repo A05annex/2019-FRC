@@ -17,11 +17,12 @@ public class TapeStraighten extends Command{
       }
       @Override
       protected void initialize() {
-
+          Robot.gripDetection.startVision();
       }
     
       @Override
       protected void execute() {
+        Robot.driveTrain.inputDrive(Robot.gripDetection.findTape(direction));
       }
     
       @Override

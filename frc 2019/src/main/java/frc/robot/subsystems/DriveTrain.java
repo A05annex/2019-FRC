@@ -55,7 +55,8 @@ public class DriveTrain extends Subsystem{
     }
 
     public void inputDrive(double[] motorInput){
-
+        leftMaster.set(motorInput[0]);
+        rightMaster.set(motorInput[1]);
     }
 
     public void setNeutralMode(NeutralMode mode){

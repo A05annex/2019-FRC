@@ -9,20 +9,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class ArmDriveTrain extends Subsystem{
-    //construction of arm motors
+    //construction of potentiometers
     public AnalogPotentiometer
         baseAngle = new AnalogPotentiometer(2, -360, 334.1),
         secondAngle = new AnalogPotentiometer(3, -360, 360);
 
+    //construction of arm motors
     public WPI_TalonSRX
         armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
-    static double
-        armLengthUpper=6.0,
-        armLengthLower=8.0;
-
     
     public ArmDriveTrain(){
         //configures both drive motors for the motors
@@ -70,8 +69,10 @@ public class ArmDriveTrain extends Subsystem{
 
     public void stop(){
         //method to easily stop the motors
+        armMotorLower.set(0);
+        armMotorUpper.set(0);
     }
-
+    //buncha math
     public void setHeight(int height){
         double
             arm1 = 39.25,
