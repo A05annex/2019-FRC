@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.MoveServo;
 import frc.robot.commands.Shift;
-import frc.robot.commands.TapeStraighten;
+import frc.robot.commands.TapeFind;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -41,7 +41,7 @@ public class OI {
     thumb.whenPressed(new Shift(false));
     top.whenPressed(new MoveServo(0));
     top2.whenPressed(new MoveServo(1));
-    button7.whileHeld(new TapeStraighten('L'));
-    button8.whileHeld(new TapeStraighten('R'));
+    button7.whileHeld(new TapeFind('L'));
+    button8.whileHeld(new TapeFind('R'));
   }
 }

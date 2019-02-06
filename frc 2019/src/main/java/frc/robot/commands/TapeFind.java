@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.GripDetection;
 
-public class TapeStraighten extends Command{
+public class TapeFind extends Command{
     
     char direction;
 
-    public TapeStraighten(char direction) {
+    public TapeFind(char direction) {
 
         //only functions if the drive train is not in use by another command
         requires(Robot.driveTrain);
