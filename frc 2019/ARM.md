@@ -26,15 +26,21 @@ These are the details:
     * page 17 - 1.4.1 Data connector pin description.
     * page 18 - 1.4.2 Analog sensor connection.
     * page 20 - 1.4.4 Limit switch connections.
+  * [The Sentinal - TALON SRX breakout board - Users Guide](http://wmralliance.com/wp-content/uploads/2016/12/TheSentinel-Talon-SRXBreakoutBoardUsersGuide.pdf) -
+    The breakout board for wiring the arm potentiometer and limit switches directly to the TALON SRX.
   * [TALON SRX Software Reference Manual](https://www.ctr-electronics.com/downloads/pdf/Talon%20SRX%20Software%20Reference%20Manual-1.pdf) -
     specifically:
+    * page 19 - 2.3. Firmware Field-upgrade a Talon SRX - How you do it.
     * page 52 - 7.5.2. Analog Potentiometer / Analog Encoder - describing potentiometer
       control.
-  * [Prepare Robot Controller](https://phoenix-documentation.readthedocs.io/en/latest/ch06_PrepRobot.html)
-    - describes installing and usning software that lets you 
-  * [Bring Up: Talon SRX Sensors](https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html) -
-    describes how to setup/configure the TALON SRX motor controller with different sensors (like potentiometers,
-    limit switches, and encoders).
+  * [Phoenix Documentation](https://phoenix-documentation.readthedocs.io/en/latest/index.html)
+    * [BLOG: FRC 2019 Week 4](https://phoenix-documentation.readthedocs.io/en/latest/blog/blog-week4.html) - Updates
+      for Phoenix Tuner and TALON SRX firmware released. WE NEED TO UPDATE THESE ON OUR ROBOT.
+    * [Prepare Robot Controller](https://phoenix-documentation.readthedocs.io/en/latest/ch06_PrepRobot.html) - 
+      describes installing and usning software that lets you setup/tunk TALON SRX motor controllers.
+    * [Bring Up: Talon SRX Sensors](https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html) -
+      describes how to setup/configure the TALON SRX motor controller with different sensors (like potentiometers,
+      limit switches, and encoders).
 
 Required tools - these need to be installed and hooked to the roborio
 
@@ -47,7 +53,8 @@ at a height of 3'7-1/2" and deliver cargo at:
   * at 2'3-1/2" for the cargo ship;
   * at 2'3-1/2",4'7-1/2", and 6'11-1/2" for the rocket.
 * The robot arm needs to park at some stable 'home' position for driving.
-* The robot arm needs to work in conjunction with the pneumatic lifts to liift and park the robot on the top platform at endgame (height 1'7").
+* The robot arm needs to work in conjunction with the pneumatic lifts to lift and park the robot on the top
+  platform at endgame (height 1'7").
 
 ## Physical Implementation
 
