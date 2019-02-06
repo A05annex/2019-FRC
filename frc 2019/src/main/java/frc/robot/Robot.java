@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static GripDetection gripDetection = new GripDetection();
   public static OI oi;
   public static Bucket bucket = new Bucket();
   public static GripDetection grip = new GripDetection();
