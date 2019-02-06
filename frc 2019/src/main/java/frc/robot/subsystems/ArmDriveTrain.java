@@ -11,6 +11,11 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
 
 public class ArmDriveTrain extends Subsystem{
+    
+    public double
+        angle1,
+        angle2;
+
     public AnalogPotentiometer
         baseAngle = new AnalogPotentiometer(2, -360, 334.1),
         secondAngle = new AnalogPotentiometer(3, -360, 360);
