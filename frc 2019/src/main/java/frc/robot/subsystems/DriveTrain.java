@@ -54,7 +54,8 @@ public class DriveTrain extends Subsystem{
         leftMaster.set((stick.getRawAxis(1) - (stick.getRawAxis(2)/2))/3);
     }
     public void inputDrive(double[] motorInput){
-
+        leftMaster.set(motorInput[0]);
+        rightMaster.set(motorInput[1]);
     }
 
     public void setNeutralMode(NeutralMode mode){

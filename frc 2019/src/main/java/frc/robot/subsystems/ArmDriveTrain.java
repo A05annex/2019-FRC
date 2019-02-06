@@ -4,20 +4,21 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class ArmDriveTrain extends Subsystem{
+    public AnalogPotentiometer
+        baseAngle = new AnalogPotentiometer(2, -360, 334.1),
+        secondAngle = new AnalogPotentiometer(3, -360, 360);
+
     //construction of arm motors
     public WPI_TalonSRX
         armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
-    static double
-        armLengthUpper=6.0,
-        armLengthLower=8.0;
-
     
     public ArmDriveTrain(){
         //configures both drive motors for the motors
@@ -56,5 +57,19 @@ public class ArmDriveTrain extends Subsystem{
 
     public void stop(){
         //method to easily stop the motors
+        armMotorLower.set(0);
+        armMotorUpper.set(0);
+    }
+    public void setHeight(int height){
+        double
+            arm1 = 39.25,
+            arm2 = 34.5,
+            xdifference = 26;
+        double angle1 = Math.toDegrees(Math.atan(height/xdifference) + Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
+        double angle2 = Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height) / (2 * arm1 * arm2)));
+        double power1;
+        double power2;
+        SmartDashboard.putString("DB/String 6", Double.toString(angle1));
+        SmartDashboard.putString("DB/String 7", Double.toString(angle2));
     }
 }
