@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Bucket;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.ArmDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.GripDetection;
 
@@ -27,6 +28,7 @@ import frc.robot.subsystems.GripDetection;
  */
 public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
+  public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI oi;
   public static Bucket bucket = new Bucket();
@@ -111,7 +113,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    driveTrain.rightMotor.setSelectedSensorPosition(0);
+    //driveTrain.rightMotor.setSelectedSensorPosition(0);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -127,11 +129,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    SmartDashboard.putString("DB/String 2", Integer.toString(driveTrain.rightMotor.getSelectedSensorPosition()));
+    //SmartDashboard.putString("DB/String 2", Integer.toString(driveTrain.rightMotor.getSelectedSensorPosition()));
     //SmartDashboard.putString("DB/String 3", "functional");
-    SmartDashboard.putString("DB/String 4", Double.toString(driveTrain.ahrs.getAngle()));
-    SmartDashboard.putString("DB/String 5", Double.toString(grip.sendXY1()[0]));
-    SmartDashboard.putString("DB/String 6", Double.toString(grip.sendXY1()[1]));
+
   }
 
   /**

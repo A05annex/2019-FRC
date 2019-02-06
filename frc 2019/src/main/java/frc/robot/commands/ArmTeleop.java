@@ -5,24 +5,24 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Teleop extends Command{
+public class ArmTeleop extends Command{
 
-    public Teleop() {
+    public ArmTeleop() {
 
         //only functions if the drive train is not in use by another command
-        requires(Robot.driveTrain);
+        requires(Robot.armDriveTrain);
       }
     
       @Override
       protected void initialize() {
           //sets the wheels to brake when assigned a motor power of 0
-          Robot.driveTrain.setNeutralMode(NeutralMode.Brake);
+        Robot.armDriveTrain.setNeutralMode(NeutralMode.Brake);
       }
     
       @Override
       protected void execute() {
           //runs the arcadeDrive function from the drive train
-          Robot.driveTrain.arcadeDrive(Robot.oi.getStick());
+          Robot.armDriveTrain.stickDrive(Robot.oi.getStick());
       }
     
       @Override
@@ -34,7 +34,7 @@ public class Teleop extends Command{
       @Override
       protected void end() {
           //calls function to stop the motors
-          Robot.driveTrain.stop();
+          Robot.armDriveTrain.stop();
       }
     
       @Override
