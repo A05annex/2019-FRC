@@ -16,8 +16,8 @@ These are the details:
 * The arm is a 2-part arm supporting a collector/ejector head. We don't have the
   physical collector/ejector head yet. We need a guess on the geometry of the collector/ejector head.
 * Each arm is powered by a [CIM motor](https://www.andymark.com/products/2-5-in-cim-motor),
-  free speed 5310rpm. Each motor has a ??:? gearbox to a chain drive with a ?? gear ratio -
-  for a combined ratio of ??:??, or free speed at the arm pivot of ??rpm or ??rps.
+  free speed 5310rpm. Each motor has a 64:1 gearbox to a chain drive with a 4:1 gear ratio -
+  for a combined ratio of 256:1, or free speed at the arm pivot of 20rpm or 120&deg;/sec.
 * Each motor is controlled by a Cross the Road Electronics (CTR) Talon SRX motor
   controller. This controller includes limit switch and encoder/potentiometer inputs
   to on-board PID and limit switch capability. These documents describe the controller

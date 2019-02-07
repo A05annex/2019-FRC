@@ -37,14 +37,15 @@ public class ArmTeleop extends Command{
         else if(stick.getRawButton(6)){
             lowerArmPower = -0.3;
         }
-        // set the arm lower and upper power components
+          Robot.armDriveTrain.inputDriveLowArm(lowerArmPower);
+          // set the arm lower and upper power components
         if(stick.getRawButton(7)){
             upperArmPower = 0.3;
         }
         else if(stick.getRawButton(8)){
             upperArmPower = -0.3;
         }
-        Robot.armDriveTrain.setArmPower(lowerArmPower, upperArmPower);
+        Robot.armDriveTrain.inputDriveUppArm(upperArmPower);
       }
     
       @Override

@@ -39,13 +39,13 @@ public class ArmDriveTrain extends Subsystem{
     // the constraints for arm movement - i.e. if you try to move the arm beyond these values
     // you will run into the frame or some other hard stop that could damage the robot/arm - don't
     // let that happen !!
-    private double lowerArmMin = 0.0;
-    private double lowerArmMax = 5.0;
-    private double upperArmMin = 0.0;
-    private double upperArmMax = 5.0;
-    private double armStopBuffer = 0.25;    // The distance before the hard stop that you should
+    private double lowerArmMin = 30.0;
+    private double lowerArmMax = 130.0;
+    private double upperArmMin = 40.0;
+    private double upperArmMax = 140.0;
+    private double armStopBuffer = 5.0;     // The degrees before the hard stop that you should
                                             // cut power to 0.0
-    private double armCreepBuffer = 0.50;   // The distance before the hard stop that you
+    private double armCreepBuffer = 15.0;   // The distance before the hard stop that you
                                             // should cut power to creep power
     private double armCreepPower = 0.1;     // The maximum power in the creep zone
 
@@ -69,7 +69,7 @@ public class ArmDriveTrain extends Subsystem{
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
-        return 2.5;
+        return baseAngle.get();
     }
 
     /**
@@ -80,51 +80,49 @@ public class ArmDriveTrain extends Subsystem{
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
-        return 2.5;
+        return secondAngle.get();
     }
 
     /**
-     * Set the arm motor powers for the lower and upper arms.
+     * Set the arm motor power for the lower arm.
      * @param lowerArmPower (double) The power to the lower arm in the range -1 to 1.
-     * @param upperArmPower (double) The power to the upper arm in the range -1 to 1.
      */
-    public void setArmPower( double lowerArmPower, double upperArmPower ) {
+    public void inputDriveLowArm(double lowerArmPower){
         // TODO: check lower arm power direction, test against arm position and/or limit
         // switch and set to 0 if we have hit the constraint for that direction
         if (lowerArmPower < 0.0) {
             if (getLowerArmPosition() < (lowerArmMin + armCreepBuffer)) {
                 lowerArmPower = (getLowerArmPosition() < (lowerArmMin + armStopBuffer)) ?
-                    0.0 : armCreepPower;
+                        0.0 : armCreepPower;
             }
         } else if (lowerArmPower > 0.0) {
             if (getLowerArmPosition() > (lowerArmMax - armCreepBuffer)) {
                 lowerArmPower = (getLowerArmPosition() > (lowerArmMax - armStopBuffer)) ?
-                    0.0 : armCreepPower;
+                        0.0 : armCreepPower;
             }
         }
+        armMotorLower.set(lowerArmPower);
+    }
+
+    /**
+     * Set the arm motor power for the upper arm.
+     * @param upperArmPower (double) The power to the upper arm in the range -1 to 1.
+     */
+    public void inputDriveUppArm(double upperArmPower){
         // TODO: check upper arm power direction, test against arm position and/or limit
         // switch and set to 0 if we have hit the constraint for that direction
         if (upperArmPower < 0.0) {
             if (getLowerArmPosition() < (upperArmMin + armCreepBuffer)) {
                 upperArmPower = (getLowerArmPosition() < (upperArmMin + armStopBuffer)) ?
-                    0.0 : armCreepPower;
+                        0.0 : armCreepPower;
             }
         } else if (upperArmPower > 0.0) {
             if (getUpperArmPosition() > (upperArmMax - armCreepBuffer)) {
                 upperArmPower = (getUpperArmPosition() > (upperArmMax - armStopBuffer)) ?
-                    0.0 : armCreepPower;
+                        0.0 : armCreepPower;
             }
         }
-        // now that we have conditioned the power to the constraints, set the power
-        armMotorLower.set(lowerArmPower);
         armMotorUpper.set(upperArmPower);
-    }
-    //methods to drive the arms independently, if necessary
-    public void inputDriveLowArm(double motorInput){
-        armMotorLower.set(motorInput);
-    }
-    public void inputDriveUppArm(double motorInput){
-        armMotorUpper.set(motorInput);
     }
     public void setNeutralMode(NeutralMode mode){
         //method to easily set the neutral mode of all of the driveTrain motors
