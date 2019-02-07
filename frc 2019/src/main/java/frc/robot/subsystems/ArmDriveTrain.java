@@ -9,18 +9,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class ArmDriveTrain extends Subsystem{
 
     public double
         angle1,
-        angle2;
+        angle2,
+        angle3;
 
     public AnalogPotentiometer
         baseAngle = new AnalogPotentiometer(2, -360, 334.1),
-        secondAngle = new AnalogPotentiometer(3, -360, 360);
+        secondAngle = new AnalogPotentiometer(3, -360, 189);
 
     //construction of arm motors
     public WPI_TalonSRX
@@ -29,7 +28,7 @@ public class ArmDriveTrain extends Subsystem{
     
     public ArmDriveTrain(){
         //configures both drive motors for the motors
-        armMotorLower.setNeutralMode(NeutralMode.Brake);
+        armMotorLower.setNeutralMode(NeutralMode.Coast);
         armMotorUpper.setNeutralMode(NeutralMode.Brake);
     }
     //default command for the subsystem, this one being teleoperation for the arm
@@ -38,7 +37,7 @@ public class ArmDriveTrain extends Subsystem{
     }
     //method for driving arms with stick input
     public void stickDrive(Joystick stick){
-        if(stick.getRawButton(5)){
+        /*if(stick.getRawButton(5)){
           
         }
         else if(stick.getRawButton(6)){
@@ -56,7 +55,7 @@ public class ArmDriveTrain extends Subsystem{
         }
         else{
             armMotorUpper.set(0);
-        }
+        }*/
     }
     //methods to drive the arms independently, if necessary
     public void inputDriveLowArm(double motorInput){
@@ -84,16 +83,28 @@ public class ArmDriveTrain extends Subsystem{
             xdifference = 26;
         angle1 = Math.toDegrees(Math.atan(height/xdifference) + Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
         angle2 = Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height) / (2 * arm1 * arm2)));
+        angle3 = angle1 + angle2;
         SmartDashboard.putString("DB/String 6", Double.toString(angle1));
         SmartDashboard.putString("DB/String 7", Double.toString(angle2));
     }
 
     public void moveToHeight(){
-        
+        armMotorLower.set(limitTo(angle1 - baseAngle.get(), -.2, .2));
+        //armMotorUpper.set(limitTo(angle2 - secondAngle.get(), -.2, .2));
     }
 
     public void lockPosition(){
         armMotorLower.set(0);
         armMotorUpper.set(0);
+    }
+
+    public double limitTo(double value, double lowerLimit, double upperLimit){
+        if(value > upperLimit){
+            value = upperLimit;
+        }
+        if(value < lowerLimit){
+            value = lowerLimit;
+        }
+        return value;
     }
 }
