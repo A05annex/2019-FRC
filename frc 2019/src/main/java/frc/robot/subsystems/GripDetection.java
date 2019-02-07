@@ -84,7 +84,8 @@ public class GripDetection extends Subsystem {
 
             synchronized (imgLockSEEN) {tapeSeen=(pipeline.filterContoursOutput().size()>1);};
             if(pipeline.filterContoursOutput().size()>2){
-              System.out.println("More than two oh god something is bad please jesus help me");
+              System.out.print("seeing more than 2");
+              System.out.println();
             }
           }
         }
@@ -94,7 +95,7 @@ public class GripDetection extends Subsystem {
   public void startVision(){
     visionThread.start();
   }
-  public void endVision(){
+  public void stopVision(){
     visionThread.stop();
   }
   public double[] findTape(char direction){

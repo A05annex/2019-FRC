@@ -18,10 +18,9 @@ public class TapeStraighten extends Command{
       }
     
       @Override
-      protected void execute() {
-        Robot.driveTrain.inputDrive(0,0);
+      protected void execute(){
+          Robot.driveTrain.inputDriveS(0,0);
       }
-    
       @Override
       protected boolean isFinished() {
         //only returns false because the command cannot end without being interrupted
