@@ -54,7 +54,7 @@ public class DriveTrain extends Subsystem{
         //this is called from commands to drive the robot
         double forward = stick.getRawAxis(1)/3.0;
         double rotate = stick.getRawAxis(2)/6.0;
-        setArcadePower(forward, rotate);
+//        setArcadePower(forward, rotate);
     }
 
     /**
@@ -71,17 +71,9 @@ public class DriveTrain extends Subsystem{
         leftMaster.set(scale * (forward - rotate));
     }
 
-    /**
-     * Set the drive motor power based on a tank drivew model of right and left tread speed.
-     * @param right (double) The right power in the range -1 to 1 (negative is
-     *        backwards, positive is forward).
-     * @param left (double) The left power in the range -1 to 1 (negative is
-     *        backwards, positive is forward).
-     */
-    public void setTankPower(double right, double left){
-        rightMaster.set(right);
-        leftMaster.set(left);
- 
+    public void inputDrive(double[] motorInput){
+        leftMaster.set(motorInput[0]);
+        rightMaster.set(motorInput[1]);
     }
 
     public void setNeutralMode(NeutralMode mode){

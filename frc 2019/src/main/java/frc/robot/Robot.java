@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static GripDetection gripDetection = new GripDetection();
   public static OI oi;
   public static Bucket bucket = new Bucket();
   public static GripDetection grip = new GripDetection();
@@ -42,7 +43,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    grip.startGrip();
     oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());

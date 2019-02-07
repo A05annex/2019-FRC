@@ -14,7 +14,7 @@ import frc.robot.commands.ArmTeleop;
  * and the upper arm motor only. There are position potentiometers for the lower and
  * upper arms controlled by those motors. The controll of the head/bucket is
  * independent of the arm.
- * 
+ *
  * Roy's note: I'm thinking the arm drive subsystem knows about the potentiometers
  * and the reporting of arm position, and that the control happens in the commands
  * initially - some control method may move to the arm once we really know how to
@@ -22,10 +22,15 @@ import frc.robot.commands.ArmTeleop;
  */
 public class ArmDriveTrain extends Subsystem{
 
+    public double
+        angle1,
+        angle2;
+
     public AnalogPotentiometer
         baseAngle = new AnalogPotentiometer(2, -360, 334.1),
         secondAngle = new AnalogPotentiometer(3, -360, 360);
 
+    //construction of arm motors
     public WPI_TalonSRX
         armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
@@ -44,13 +49,14 @@ public class ArmDriveTrain extends Subsystem{
                                             // should cut power to creep power
     private double armCreepPower = 0.1;     // The maximum power in the creep zone
 
-     
+
     public ArmDriveTrain(){
-        //constructs and configures all six drive motors
+        //configures both drive motors for the motors
         armMotorLower.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setNeutralMode(NeutralMode.Brake);
     }
 
+    //default command for the subsystem, this one being teleoperation for the arm
     public void initDefaultCommand(){
         setDefaultCommand(new ArmTeleop());
     }
@@ -113,9 +119,15 @@ public class ArmDriveTrain extends Subsystem{
         armMotorLower.set(lowerArmPower);
         armMotorUpper.set(upperArmPower);
     }
-
+    //methods to drive the arms independently, if necessary
+    public void inputDriveLowArm(double motorInput){
+        armMotorLower.set(motorInput);
+    }
+    public void inputDriveUppArm(double motorInput){
+        armMotorUpper.set(motorInput);
+    }
     public void setNeutralMode(NeutralMode mode){
-        // probably don't want this - don't think we ever want tne arms to float
+        //method to easily set the neutral mode of all of the driveTrain motors
         armMotorLower.setNeutralMode(mode);
         armMotorUpper.setNeutralMode(mode);
     }
@@ -125,15 +137,24 @@ public class ArmDriveTrain extends Subsystem{
         armMotorLower.set(0.0);
         armMotorUpper.set(0.0);
     }
-
+    //buncha math
     public void setHeight(int height){
         double
             arm1 = 39.25,
             arm2 = 34.5,
             xdifference = 26;
-        double angle1 = Math.toDegrees(Math.atan(height/xdifference) + Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
-        double angle2 = Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height) / (2 * arm1 * arm2)));
+        angle1 = Math.toDegrees(Math.atan(height/xdifference) + Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
+        angle2 = Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height) / (2 * arm1 * arm2)));
         SmartDashboard.putString("DB/String 6", Double.toString(angle1));
         SmartDashboard.putString("DB/String 7", Double.toString(angle2));
+    }
+
+    public void moveToHeight(){
+
+    }
+
+    public void lockPosition(){
+        armMotorLower.set(0);
+        armMotorUpper.set(0);
     }
 }
