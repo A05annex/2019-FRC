@@ -58,9 +58,13 @@ public class DriveTrain extends Subsystem{
         leftMaster.set(motorInput[0]);
         rightMaster.set(motorInput[1]);
     }
-    public void inputDriveS(double motorleft,double motorright){
+    public void inputDriveDB(double motorleft,double motorright){
         leftMaster.set(motorleft);
         rightMaster.set(motorright);
+    }
+    public void inputDriveSG(double motorpow){
+        leftMaster.set(motorpow);
+        rightMaster.set(motorpow);
     }
     public void inputPDrive(double motorleft,double motorright,double threshold){
         leftMaster.set((motorright-threshold)/threshold);

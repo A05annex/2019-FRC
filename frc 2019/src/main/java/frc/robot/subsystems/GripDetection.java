@@ -159,17 +159,24 @@ public class GripDetection extends Subsystem {
   public void initialRect(){
 
   }
-  public double slowToRect(double threshold){
+  public double slowToRect(){
     double width1;
     double height1;
     double width2;
     double height2;
-    double powerRect;
+    double powerRectH;
+    double powerRectW;
+    double powerRectM;
+    double rectWT=IMG_WIDTH/3;
+    double rectHT=IMG_HEIGHT/3;
     synchronized(imgLockCH1){height1=this.Height1;};
     synchronized(imgLockCW1){width1=this.Width1;};
     synchronized(imgLockCH2){height2=this.Height2;};
     synchronized(imgLockCW2){width2=this.Width2;};
-    return(1);
+    powerRectH=((((height1+height2)/2)-rectHT)/rectHT);
+    powerRectW=((((width1+width2)/2)-rectWT)/rectWT);
+    powerRectM=((powerRectH+powerRectW)/2);
+    return(powerRectM);
   }
   @Override
   public void initDefaultCommand() {
