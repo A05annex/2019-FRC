@@ -88,20 +88,19 @@ public class ArmDriveTrain extends Subsystem{
             xdifference = 26;
         //first angle set
         angle1 = 
-        (Math.toDegrees(Math.atan(height/xdifference) + 
+        Math.toDegrees(Math.atan(height/xdifference) + 
         Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) 
-        / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))))
-        -baseAngle);
+        / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
         //second angle set
         angle2 = 
-        (Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height)
-         / (2 * arm1 * arm2)))
-         -secondAngle);
+        Math.toDegrees(Math.acos((arm1*arm1 + arm2*arm2 - xdifference*xdifference - height*height)
+         / (2 * arm1 * arm2)));
         SmartDashboard.putString("DB/String 6", Double.toString(angle1));
         SmartDashboard.putString("DB/String 7", Double.toString(angle2));
     }
     public void resetArms(){
         baseAngle=basePot.get();
+        secondAngle=secondPot.get();
     }
     public void setArms(int height){
         
