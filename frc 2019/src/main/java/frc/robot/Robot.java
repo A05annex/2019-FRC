@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    SmartDashboard.putString("DB/String 1", "test");
     Scheduler.getInstance().run();
   }
 
@@ -129,9 +130,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putString("DB/String 0", "functional");
     SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.baseAngle.get()));
     SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.secondAngle.get()));
-    armDriveTrain.setHeight(26);
+    SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.secondAngle.get()-90));
     //SmartDashboard.putString("DB/String 3", "functional");
 
   }
