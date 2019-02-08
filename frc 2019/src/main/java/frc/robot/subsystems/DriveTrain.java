@@ -49,10 +49,27 @@ public class DriveTrain extends Subsystem{
         setDefaultCommand(new Teleop());
     }
 
+    // Jason: I would move this to the command. It is a mapping functions and
+    // different drive commands would have different matting functions.
     public void arcadeDrive(Joystick stick){
         //this is called from commands to drive the robot
-        //rightMaster.set((stick.getRawAxis(1) + (stick.getRawAxis(2)/2))/3);
-        //leftMaster.set((stick.getRawAxis(1) - (stick.getRawAxis(2)/2))/3);
+        double forward = stick.getRawAxis(1)/3.0;
+        double rotate = stick.getRawAxis(2)/6.0;
+//        setArcadePower(forward, rotate);
+    }
+
+    /**
+     * Set the drive motor power based on an arcade control model of forward and turn speed.
+     * @param forward (double) forward speed in the range -1.0 to 1.0 (negative is
+     *        backwards, positive is forward).
+     * @param rotate (double) rotation speed in the range -1.0 to 1.0 (negative is
+     *        clockwise, positive is counter-clockwise).
+     */
+    public void setArcadePower(double forward, double rotate) {
+        double max = Math.abs(forward) + Math.abs(rotate);
+        double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
+        rightMaster.set(scale * (forward + rotate));
+        leftMaster.set(scale * (forward - rotate));
     }
 
     public void inputDrive(double[] motorInput){
