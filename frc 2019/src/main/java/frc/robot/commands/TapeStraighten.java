@@ -19,7 +19,7 @@ public class TapeStraighten extends Command{
     
       @Override
       protected void execute(){
-          Robot.driveTrain.inputDriveSG(Robot.gripDetection.slowToRect());
+          Robot.driveTrain.inputDriveSG(Robot.gripDetection.slowToRect()<.2? 0 : Robot.gripDetection.slowToRect());
       }
       @Override
       protected boolean isFinished() {

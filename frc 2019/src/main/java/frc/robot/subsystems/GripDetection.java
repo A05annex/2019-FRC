@@ -176,6 +176,9 @@ public class GripDetection extends Subsystem {
     powerRectH=((((height1+height2)/2)-rectHT)/rectHT);
     powerRectW=((((width1+width2)/2)-rectWT)/rectWT);
     powerRectM=((powerRectH+powerRectW)/2);
+    if(powerRectM<.1){
+      powerRectM=0;
+    }
     return(powerRectM);
   }
   @Override
