@@ -87,7 +87,7 @@ public class ArmDriveTrain extends Subsystem{
             arm2 = 34.5,
             xdifference = 26;
         //first angle set
-        angle1 = 
+        angle1 =
         Math.toDegrees(Math.atan(height/xdifference) + 
         Math.acos((arm1*arm1 + height*height + xdifference*xdifference - arm2*arm2) 
         / (2 * arm1 * Math.sqrt(xdifference*xdifference + height*height))));
