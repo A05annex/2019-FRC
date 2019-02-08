@@ -70,6 +70,8 @@ public class GripDetection extends Subsystem {
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
         if (!pipeline.filterContoursOutput().isEmpty()) {
           if(pipeline.filterContoursOutput().size()>=2){
+            camera.setBrightness(50);
+            pipeline.hslThresholdOutput();
             Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
             Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
             synchronized (imgLockCX1) {centerX1 = r1.x + (r1.width / 2);}
@@ -173,12 +175,10 @@ public class GripDetection extends Subsystem {
     synchronized(imgLockCW1){width1=this.Width1;};
     synchronized(imgLockCH2){height2=this.Height2;};
     synchronized(imgLockCW2){width2=this.Width2;};
-    powerRectH=((((height1+height2)/2)-rectHT)/rectHT);
-    powerRectW=((((width1+width2)/2)-rectWT)/rectWT);
+    powerRectH=((((height1+height2)/2)-rectHT)/100);
+    powerRectW=((((width1+width2)/2)-rectWT)/100);
     powerRectM=((powerRectH+powerRectW)/2);
-    if(powerRectM<.1){
-      powerRectM=0;
-    }
+    if(powerRectM<.1){powerRectM=0;}
     return(powerRectM);
   }
   @Override
