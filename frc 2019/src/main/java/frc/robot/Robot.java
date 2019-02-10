@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Bucket;
+import frc.robot.subsystems.BucketWheelz;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ArmDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static Bucket bucket = new Bucket();
   public static GripDetection grip = new GripDetection();
+  public static BucketWheelz bucketWheelz = new BucketWheelz();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 

@@ -31,5 +31,6 @@ public class RobotMap {
     arm2 = 1,
     shifter1 = 0,
     shifter2 = 1,
-    servo = 0;
+    servo = 0,
+    servo2 = 1;
 }
