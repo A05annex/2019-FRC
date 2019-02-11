@@ -14,10 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Bucket;
+import frc.robot.subsystems.BucketWheelz;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ArmDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.GripDetection;
+import frc.robot.subsystems.Lift;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +36,8 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static Bucket bucket = new Bucket();
   public static GripDetection grip = new GripDetection();
+  public static BucketWheelz bucketWheelz = new BucketWheelz();
+  public static Lift lift = new Lift();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 

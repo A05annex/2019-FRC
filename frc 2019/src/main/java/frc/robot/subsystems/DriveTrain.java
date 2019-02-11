@@ -15,7 +15,7 @@ import frc.robot.commands.Teleop;
 public class DriveTrain extends Subsystem{
 
     public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-    //public DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
+    public DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
     public WPI_TalonSRX
         rightMaster = new WPI_TalonSRX(RobotMap.rm1),
         rm2 = new WPI_TalonSRX(RobotMap.rm2),
@@ -71,6 +71,7 @@ public class DriveTrain extends Subsystem{
         leftMaster.set(scale * (forward - rotate));
     }
 
+    //theos thingy
     public void inputDrive(double[] motorInput){
         leftMaster.set(motorInput[0]);
         rightMaster.set(motorInput[1]);

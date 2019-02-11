@@ -30,6 +30,8 @@ public class OI {
   JoystickButton button6 = new JoystickButton(this.stick, 6);
   JoystickButton button7 = new JoystickButton(this.stick, 7);
   JoystickButton button8 = new JoystickButton(this.stick, 8);
+  JoystickButton button9 = new JoystickButton(this.stick, 9);
+  JoystickButton button10 = new JoystickButton(this.stick, 10);
 
   public Joystick getStick(){
   //method to be called by other commands or subsystems to use the joystick
@@ -45,5 +47,6 @@ public class OI {
     button8.whileHeld(new TapeStraighten('R'));
     //button5.whenPressed(new TapeStraighten('L'));
     //button6.whenPressed(new TapeStraighten('R'));
+    
   }
 }
