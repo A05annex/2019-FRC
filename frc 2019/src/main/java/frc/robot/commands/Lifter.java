@@ -32,6 +32,9 @@ public class Lifter extends Command {
     else if(stick.getRawButton(10)){
       Robot.lift.down();
     }
+    else{
+      Robot.lift.off(); 
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

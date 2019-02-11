@@ -31,6 +31,8 @@ public class RobotMap {
     arm2 = 1,
     shifter1 = 0,
     shifter2 = 1,
+    lift1 = 2,
+    lift2 = 3,
     servo = 1, //not plugged in right now
     cargoMotor = 0; //plugged into PWM port 0
 }

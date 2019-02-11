@@ -13,7 +13,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.Lifter;
 
 public class Lift extends Subsystem {
-  DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
+  DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lift1, RobotMap.lift2);
  
   @Override
   public void initDefaultCommand() {
@@ -26,5 +26,9 @@ public class Lift extends Subsystem {
 
   public void down(){
     liftSolenoid.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  public void off(){
+    liftSolenoid.set(DoubleSolenoid.Value.kOff);
   }
 }
