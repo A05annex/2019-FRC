@@ -9,26 +9,26 @@ public class BucketWheelz extends Subsystem {
 
     VictorSP cargoMotor = new VictorSP(RobotMap.cargoMotor);
 
-	public BucketWheelz() {
-        
+    public BucketWheelz() {
+        super();
     }
-    
 
-	@Override
+
+    @Override
     public void initDefaultCommand() {
         setDefaultCommand(new BallCollector());
-    
+
     }
 
-    public void collect(){
+    public void collect() {
         cargoMotor.set(1.0);
     }
 
-    public void eject(){
+    public void eject() {
         cargoMotor.set(-1.0);
     }
 
-    public void stop(){
+    public void stop() {
         cargoMotor.set(0.0);
     }
 }

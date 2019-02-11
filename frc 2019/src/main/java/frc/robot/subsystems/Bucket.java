@@ -10,10 +10,10 @@ public class Bucket extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-    
+
     }
 
-    public Bucket(){
+    public Bucket() {
         servo.set(0);
     }
 }

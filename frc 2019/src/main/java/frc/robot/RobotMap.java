@@ -15,24 +15,24 @@ package frc.robot;
  */
 public class RobotMap {
 
-  /*
-  defines the ports of each part of the robot
-  r/lm1, 2, and 3 are the right/left drivetrain motors, with r/lm1 as the top & lead motor
-  shifter 0 & 1 are the double solenoid ports for pneumatic shifting
-  */
-  public static int 
-    rm1 = 2,
-    rm2 = 3,
-    rm3 = 6,
-    lm1 = 5,
-    lm2 = 7,
-    lm3 = 0,
-    arm1 = 4,
-    arm2 = 1,
-    shifter1 = 0,
-    shifter2 = 1,
-    lift1 = 2,
-    lift2 = 3,
-    servo = 1, 
-    cargoMotor = 0; //plugged into PWM port 0
+    /*
+    defines the ports of each part of the robot
+    r/lm1, 2, and 3 are the right/left drivetrain motors, with r/lm1 as the top & lead motor
+    shifter 0 & 1 are the double solenoid ports for pneumatic shifting
+    */
+    public static int
+            rm1 = 2,
+            rm2 = 3,
+            rm3 = 6,
+            lm1 = 5,
+            lm2 = 7,
+            lm3 = 0,
+            arm1 = 4,
+            arm2 = 1,
+            shifter1 = 0,
+            shifter2 = 1,
+            lift1 = 2,
+            lift2 = 3,
+            servo = 1,
+            cargoMotor = 0; //plugged into PWM port 0
 }
