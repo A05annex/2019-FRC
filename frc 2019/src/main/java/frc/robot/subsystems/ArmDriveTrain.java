@@ -52,6 +52,7 @@ public class ArmDriveTrain extends Subsystem {
         // configures both drive motors for the motors
         armMotorLower.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setNeutralMode(NeutralMode.Brake);
+        armMotorUpper.setInverted(true);
     }
 
     // default command for the subsystem, this one being teleoperation for the arm
@@ -126,8 +127,7 @@ public class ArmDriveTrain extends Subsystem {
                 upperArmPower = (getUpperArmPosition() > (upperArmMax - armStopBuffer)) ? 0.0 : armCreepPower;
             }
         }
-        // this is awkward - there is no equivalent of the FTC motor reverse
-        armMotorUpper.set(-upperArmPower);
+        armMotorUpper.set(upperArmPower);
     }
 
     public void setNeutralMode(NeutralMode mode) {
