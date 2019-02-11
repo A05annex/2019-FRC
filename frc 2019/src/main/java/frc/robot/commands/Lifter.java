@@ -12,45 +12,44 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class Lifter extends Command {
-  public Lifter() {
-    requires(Robot.lift);
-  }
-
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    //button control of pneumatics
-    Joystick stick = Robot.oi.getStick();
-    if(stick.getRawButton(9)){
-      Robot.lift.up();
+    public Lifter() {
+        super();
+        requires(Robot.lift);
     }
-    else if(stick.getRawButton(10)){
-      Robot.lift.down();
+
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
     }
-    else{
-      Robot.lift.off(); 
+
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        //button control of pneumatics
+        Joystick stick = Robot.oi.getStick();
+        if (stick.getRawButton(9)) {
+            Robot.lift.up();
+        } else if (stick.getRawButton(10)) {
+            Robot.lift.down();
+        } else {
+            Robot.lift.off();
+        }
     }
-  }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+    }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    @Override
+    protected void interrupted() {
+    }
 }
