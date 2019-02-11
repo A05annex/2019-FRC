@@ -1,12 +1,29 @@
 # 6831 - AO5 Annex - FRC 2019
 
-Entirely new robot. Big electronics and control system change is that we are using
-[TALON SRX motor controllers](#TALON-SRX-Motor-Controllers) and wiring
+Entirely new robot. The big electronics and control system change is that we are using
+[Talon SRX motor controllers](#TALON-SRX-Motor-Controllers) and wiring
 everything together using the CAN bus instead of PWM (see
 [PWM and CAN](https://alex-spataru.gitbooks.io/frc-robot-programming/content/Book/Chapters/1.3.html) for what that
-means). Big software change is that we are using the
+means). The big software change is that we are using the
 [WPILib](https://wpilib.screenstepslive.com/s/currentCS/m/java/l/272787-frc-java-wpilib-api-documentation) framework
 for programming the robot.
+
+## Current Controls
+The current control mappings - we want to move towards 2 peron control - driver, arm operator:
+* joystick (driver)
+  * driving:  
+    - joystick Y to forward-backward speed
+    - joystick twist to turn speed
+  * shifting:  
+    - thumb button - downshift
+    - trigger - upshift
+  * button 3 & 4 - hatch grabber servo (needs to move to gamepad)
+  * button 9 & 10 - lift cylinder up/down
+  * button 11 & 12 - bucket wheels to collect/expel cargo (needs to move to gamepad)
+
+* Gamepad (arm operator)
+  * left stick - lower are
+  * right stick - upper arm
 
 ## Subsystems
 These are our subsystems and programmer responsibilities:
@@ -63,11 +80,11 @@ Most :
 * **Arm Positioning**:
 * **Bucket Operation**:
 * **Endgame Lift**: (??)
-  * **Requires** - Drive, Arm, Pneumatics-lift
+  * **Requires** - (Allison) Drive, Arm, Pneumatics-lift
 
-## TALON SRX Motor Controllers
+## Talon SRX Motor Controllers
 To find out everything about these, start at
-[TALON SRX](http://www.ctr-electronics.com/control-system/motor-control/talon-srx.html) - all the important
+[Talon SRX](http://www.ctr-electronics.com/control-system/motor-control/talon-srx.html) - all the important
 documentation links are in the
 [Tech Resources](http://www.ctr-electronics.com/control-system/motor-control/talon-srx.html#product_tabs_technical_resources).
 The cool things about these controllers are:
@@ -83,8 +100,29 @@ as advertised. Specifically, we need the Phoenix Tuner (from
 [Cross the Road Electronics](http://www.ctr-electronics.com/)). Specific setup notes are with the subsystem
 notes (next section); the common stuff for all setup is in the next subsection.
 
-### TALON SRX Configuration
+### Talon SRX Configuration
 The deal here is that some of the configuration can be changed programmatically, but all of it can be burned into
 the controller through configuration. What that means is that how limit switches are setup, how encoders are setup,
 etc. will just be correct when the robot powers up, and configuration programming is then not required. These are
-the high level details. Low level details are in the subsystem notes.
+the high level details. Low level details are in the subsystem notes. Documentation seems a bit mixed on that and
+says ultimately it should all be done in software.
+
+These are the documents we have found to be most useful relative to controlling the Talon SRX
+  * [Talon SRX - User’s Guide](http://www.ctr-electronics.com/Talon%20SRX%20User's%20Guide.pdf) - specifically:
+    * page 17 - 1.4.1 Data connector pin description.
+    * page 18 - 1.4.2 Analog sensor connection.
+    * page 20 - 1.4.4 Limit switch connections.
+  * [Phoenix Documentation](https://phoenix-documentation.readthedocs.io/en/latest/index.html)
+    * [BLOG: FRC 2019 Week 4](https://phoenix-documentation.readthedocs.io/en/latest/blog/blog-week4.html) - Updates
+      for Phoenix Tuner and Talon SRX firmware released. WE NEED TO UPDATE THESE ON OUR ROBOT (did that).
+    * [Prepare Robot Controller](https://phoenix-documentation.readthedocs.io/en/latest/ch06_PrepRobot.html) - 
+      describes installing and using software that lets you setup/tune Talon SRX motor controllers.
+    * [Bring Up: Talon SRX / Victor SPX](https://phoenix-documentation.readthedocs.io/en/latest/ch13_MC.html) -
+      basically getting Talon SRX controllers configured on the CAN bus.
+    * [Bring Up: Talon SRX Sensors](https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html) -
+      describes how to setup/configure the Talon SRX motor controller with different sensors (like potentiometers,
+      limit switches, and encoders).
+    * [Motor Controller Closed Loop](https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html) -
+      A good description of the various closed loop (PID) control modes available in the Talon SRX.
+  * [Talon SRX Software Reference Manual](https://www.ctr-electronics.com/downloads/pdf/Talon%20SRX%20Software%20Reference%20Manual-1.pdf) -
+    This seems a bit outdated. Only look here if you can't find what you need in the Phoenix docs.
