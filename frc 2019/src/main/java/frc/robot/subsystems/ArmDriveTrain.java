@@ -47,7 +47,7 @@ public class ArmDriveTrain extends Subsystem{
                                             // cut power to 0.0
     private double armCreepBuffer = 15.0;   // The distance before the hard stop that you
                                             // should cut power to creep power
-    private double armCreepPower = 0.1;     // The maximum power in the creep zone
+    private double armCreepPower = 0.2;     // The maximum power in the creep zone
 
 
     public ArmDriveTrain(){
@@ -111,18 +111,18 @@ public class ArmDriveTrain extends Subsystem{
     public void inputDriveUppArm(double upperArmPower){
         // TODO: check upper arm power direction, test against arm position and/or limit
         // switch and set to 0 if we have hit the constraint for that direction
-        if (upperArmPower < 0.0) {
+        if (upperArmPower > 0.0) {
             if (getLowerArmPosition() < (upperArmMin + armCreepBuffer)) {
                 upperArmPower = (getLowerArmPosition() < (upperArmMin + armStopBuffer)) ?
                         0.0 : armCreepPower;
             }
-        } else if (upperArmPower > 0.0) {
+        } else if (upperArmPower < 0.0) {
             if (getUpperArmPosition() > (upperArmMax - armCreepBuffer)) {
                 upperArmPower = (getUpperArmPosition() > (upperArmMax - armStopBuffer)) ?
                         0.0 : armCreepPower;
             }
         }
-        armMotorUpper.set(upperArmPower);
+        armMotorUpper.set(-upperArmPower);
     }
     public void setNeutralMode(NeutralMode mode){
         //method to easily set the neutral mode of all of the driveTrain motors

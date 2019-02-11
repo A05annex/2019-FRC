@@ -54,7 +54,7 @@ public class DriveTrain extends Subsystem{
         //this is called from commands to drive the robot
         double forward = stick.getRawAxis(1)/3.0;
         double rotate = stick.getRawAxis(2)/6.0;
-//        setArcadePower(forward, rotate);
+        setArcadePower(forward, rotate);
     }
 
     /**

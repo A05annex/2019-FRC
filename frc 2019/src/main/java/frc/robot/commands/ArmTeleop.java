@@ -2,7 +2,9 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -26,27 +28,11 @@ public class ArmTeleop extends Command{
     
       @Override
       protected void execute() {
-        Joystick stick = Robot.oi.getStick();
-        double lowerArmPower = 0.0;
-        double upperArmPower = 0.0;
-        // Adjust the arm power if any arm power controls are activated.
-        if(stick.getRawButton(5)){
-            lowerArmPower = 0.3;
-
-        }
-        else if(stick.getRawButton(6)){
-            lowerArmPower = -0.3;
-        }
-          Robot.armDriveTrain.inputDriveLowArm(lowerArmPower);
-          // set the arm lower and upper power components
-        if(stick.getRawButton(7)){
-            upperArmPower = 0.3;
-        }
-        else if(stick.getRawButton(8)){
-            upperArmPower = -0.3;
-        }
-        Robot.armDriveTrain.inputDriveUppArm(upperArmPower);
-      }
+          XboxController xbox = Robot.oi.getXbox();
+          // left stick is lower arm up-down, right stick is upper arm up-down
+          Robot.armDriveTrain.inputDriveLowArm(xbox.getY(GenericHID.Hand.kLeft) * 0.75);
+          Robot.armDriveTrain.inputDriveUppArm(xbox.getY(GenericHID.Hand.kRight) * 0.75);
+       }
     
       @Override
       protected boolean isFinished() {
