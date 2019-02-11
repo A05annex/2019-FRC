@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.MoveServo;
 import frc.robot.commands.Shift;
@@ -21,6 +22,7 @@ public class OI {
 
   //creation of the joystick
   public Joystick stick = new Joystick(0);
+  public XboxController xbox = new XboxController(1);
 
   JoystickButton trigger = new JoystickButton(this.stick, 1);
   JoystickButton thumb = new JoystickButton(this.stick, 2);
@@ -33,7 +35,11 @@ public class OI {
 
   public Joystick getStick(){
   //method to be called by other commands or subsystems to use the joystick
-    return(this.stick);
+    return(stick);
+  }
+
+  public XboxController getXbox() {
+    return(xbox);
   }
 
   public OI(){

@@ -52,7 +52,7 @@ public class Shift extends Command {
     @Override
     protected void end() {
         //calls function to stop the shifter when finished
-        //Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kOff);
+        Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kOff);
         time.stop();
         time.reset();
     }
