@@ -27,13 +27,13 @@ import frc.robot.subsystems.GripDetection;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static OI oi;
   public static DriveTrain driveTrain = new DriveTrain();
   public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static GripDetection gripDetection = new GripDetection();
-  public static OI oi;
   public static Bucket bucket = new Bucket();
-  public static GripDetection grip = new GripDetection();
+  //public static GripDetection grip = new GripDetection();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    //m_autonomousCommand = m_chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

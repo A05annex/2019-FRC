@@ -33,11 +33,12 @@ public class SetArmHeight extends Command{
       protected boolean isFinished() {
           SmartDashboard.putString("DB/String 0", Double.toString(Math.abs(Robot.armDriveTrain.baseAngle.get()-Robot.armDriveTrain.angle1)));
           SmartDashboard.putString("DB/String 1", Double.toString(Math.abs(Robot.armDriveTrain.secondAngle.get()-Robot.armDriveTrain.angle2)));
-          if(Math.abs(Robot.armDriveTrain.baseAngle.get()-Robot.armDriveTrain.angle1) < 5 && Math.abs(Robot.armDriveTrain.secondAngle.get()-Robot.armDriveTrain.angle2)< 5){
+          /*if(Math.abs(Robot.armDriveTrain.baseAngle.get()-Robot.armDriveTrain.angle1) < 5 && Math.abs(Robot.armDriveTrain.secondAngle.get()-Robot.armDriveTrain.angle2)< 5){
             return(true);
           }else{
               return(false);
-          }
+          }*/
+          return false;
       }
     
       // Called once after isFinished returns true

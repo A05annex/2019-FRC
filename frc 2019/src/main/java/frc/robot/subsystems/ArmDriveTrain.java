@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -24,11 +25,10 @@ public class ArmDriveTrain extends Subsystem{
         secondAngle = new AnalogPotentiometer(3, -360, 162);
 
     //construction of arm motors
-
-    public TalonSRX bucketmover = new TalonSRX(0);
     public WPI_TalonSRX
         armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
-        armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
+        armMotorUpper = new WPI_TalonSRX(RobotMap.arm2),
+        bucket = new WPI_TalonSRX(RobotMap.bucket);
     
     public ArmDriveTrain(){
         //configures both drive motors for the motors
@@ -45,9 +45,11 @@ public class ArmDriveTrain extends Subsystem{
     public void inputDriveLowArm(double motorInput){
         armMotorLower.set(motorInput);
     }
+
     public void inputDriveUppArm(double motorInput){
         armMotorUpper.set(motorInput);
     }
+
     public void setNeutralMode(NeutralMode mode){
         //method to easily set the neutral mode of all of the driveTrain motors
         armMotorLower.setNeutralMode(mode);

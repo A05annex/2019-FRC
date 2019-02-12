@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class ArmTeleop extends Command{
@@ -45,6 +46,17 @@ public class ArmTeleop extends Command{
             Robot.armDriveTrain.armMotorUpper.set(-.8);
         }else{
             Robot.armDriveTrain.armMotorUpper.set(0);
+        }
+
+        if(stick.getRawButton(1)){
+            Robot.armDriveTrain.bucket.set(.3);
+            SmartDashboard.putString("DB/String 8", "1");
+        }else if(stick.getRawButton(2)){
+            Robot.armDriveTrain.bucket.set(-.3);
+            SmartDashboard.putString("DB/String 8", "2");
+        }else{
+            Robot.armDriveTrain.bucket.set(0);
+            SmartDashboard.putString("DB/String 8", "0");
         }
           //runs the arcadeDrive function from the drive train
       }

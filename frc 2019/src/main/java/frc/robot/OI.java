@@ -38,14 +38,6 @@ public class OI {
   }
 
   public OI(){
-    trigger.whenPressed(new Shift(true));
-    thumb.whenPressed(new Shift(false));
-    top.whenPressed(new MoveServo(0));
-    top2.whenPressed(new MoveServo(1));
-    //button7.whileHeld(new TapeStraighten('L'));
-    //button8.whileHeld(new TapeStraighten('R'));
     button5.whenPressed(new SetArmHeight(60));
-    //button5.whenPressed(new TapeStraighten('L'));
-    //button6.whenPressed(new TapeStraighten('R'));
   }
 }
