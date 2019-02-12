@@ -19,34 +19,30 @@ import frc.robot.commands.ArmTeleop;
  * happens in the commands initially - some control method may move to the arm
  * once we really know how to control them.
  */
-public class ArmDriveTrain extends Subsystem {
+public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     public double angle1, angle2;
 
-    public AnalogPotentiometer baseAngle = new AnalogPotentiometer(2, -360, 334.1),
-            secondAngle = new AnalogPotentiometer(3, -360, 360);
+    // construction os the sensor potentiometers hooked to the analog inputs of the Roborio
+    private final AnalogPotentiometer lowerArmAngle =
+            new AnalogPotentiometer(2, -360, 334.1);
+    private final AnalogPotentiometer upperArmAngle =
+            new AnalogPotentiometer(3, -360, 360.0);
 
     // construction of arm motors
-    public WPI_TalonSRX armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
-            armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
-    // TODO: once the arms and done and the positions of the potentiometers are
-    // fixed, manually
-    // rotate the arms and track the potentiometer values at the limits of motion.
-    // These become
-    // the constraints for arm movement - i.e. if you try to move the arm beyond
-    // these values
-    // you will run into the frame or some other hard stop that could damage the
-    // robot/arm - don't
-    // let that happen !!
-    private double lowerArmMin = 30.0;
-    private double lowerArmMax = 130.0;
-    private double upperArmMin = 40.0;
-    private double upperArmMax = 140.0;
-    private double armStopBuffer = 5.0; // The degrees before the hard stop that you should
+    private final WPI_TalonSRX armMotorLower = new WPI_TalonSRX(RobotMap.arm1);
+    private final WPI_TalonSRX armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
+
+    // Limit angles determined by manually moving the arms to the positions we would like to have as limits of motion.
+    private final double lowerArmMin = 30.0;
+    private final double lowerArmMax = 130.0;
+    private final double upperArmMin = 40.0;
+    private final double upperArmMax = 140.0;
+    private final double armStopBuffer = 5.0; // The degrees before the hard stop that you should
     // cut power to 0.0
-    private double armCreepBuffer = 15.0; // The distance before the hard stop that you
+    private final double armCreepBuffer = 15.0; // The distance before the hard stop that you
     // should cut power to creep power
-    private double armCreepPower = 0.2; // The maximum power in the creep zone
+    private final double armCreepPower = 0.2; // The maximum power in the creep zone
 
     public ArmDriveTrain() {
         // configures both drive motors for the motors
@@ -55,44 +51,25 @@ public class ArmDriveTrain extends Subsystem {
         armMotorUpper.setInverted(true);
     }
 
-    // default command for the subsystem, this one being teleoperation for the arm
+    // default command for the subsystem, this one being tele-operation for the arm
     public void initDefaultCommand() {
         setDefaultCommand(new ArmTeleop());
     }
 
-    /**
-     * The position of the lower arm in the range <tt>lowerArmMin</tt> to
-     * <tt>lowerArmMax</tt>
-     *
-     * @return (double) The position of the lower arm.
-     */
     public double getLowerArmPosition() {
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
-        return baseAngle.get();
+        return lowerArmAngle.get();
     }
 
-    /**
-     * The position of the upper arm in the range <tt>upperArmMin</tt> to
-     * <tt>upperArmMax</tt>
-     *
-     * @return (double) The position of the upper arm.
-     */
     public double getUpperArmPosition() {
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
-        return secondAngle.get();
+        return upperArmAngle.get();
     }
 
-    /**
-     * Set the arm motor power for the lower arm.
-     *
-     * @param lowerArmPower (double) The power to the lower arm in the range -1 to
-     *                      1; where a positive value is up and a negative value is
-     *                      down.
-     */
     public void inputDriveLowArm(double lowerArmPower) {
         // TODO: check lower arm power direction, test against arm position and/or limit
         // switch and set to 0 if we have hit the constraint for that direction
@@ -128,12 +105,6 @@ public class ArmDriveTrain extends Subsystem {
             }
         }
         armMotorUpper.set(upperArmPower);
-    }
-
-    public void setNeutralMode(NeutralMode mode) {
-        // method to easily set the neutral mode of all of the driveTrain motors
-        armMotorLower.setNeutralMode(mode);
-        armMotorUpper.setNeutralMode(mode);
     }
 
     public void stop() {

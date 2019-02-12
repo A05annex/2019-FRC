@@ -24,7 +24,8 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
     public static DriveTrain driveTrain = new DriveTrain();
-    public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
+    public static IUseArm armDriveTrain = new ArmDriveTrain();
+    //public static IUseArm armDriveTrain = new ArmDriveSrx();
     public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
     public static GripDetection gripDetection = new GripDetection();
     public static OI oi;
@@ -128,7 +129,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.baseAngle.get()));
-        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.secondAngle.get()));
+        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.upperArmAngle.get()));
         armDriveTrain.setHeight(26);
         //SmartDashboard.putString("DB/String 3", "functional");
 

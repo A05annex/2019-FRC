@@ -7,8 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 /**
- * This command runs the arm from the driver station using buttons on the
- * joystick for testing.
+ * Is the default command for the arm that lets the driver control the arm position from the joysticks of the
+ * arm-control gamepad. While manual control is good for testing. It sucks for competition. This command mode
+ * is the default; but, is immediately interrupted be any commands to set the arm to any specific position.
+ *
+ * A button/trigger/signal could be set to return control to the operator.
  */
 public class ArmTeleop extends Command {
 
@@ -19,14 +22,6 @@ public class ArmTeleop extends Command {
         // This command can only function if the robot arm is NOT being controlled by
         // something else.
         requires(Robot.armDriveTrain);
-    }
-
-    @Override
-    protected void initialize() {
-        // Sets the arms to brake when assigned a power of 0.0 - note, this does not
-        // keep the motors from
-        // dirfing when a heavy load is applied.
-        Robot.armDriveTrain.setNeutralMode(NeutralMode.Brake);
     }
 
     @Override
