@@ -1,9 +1,9 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
 /**
@@ -21,7 +21,7 @@ public class ArmTeleop extends Command {
         super();
         // This command can only function if the robot arm is NOT being controlled by
         // something else.
-        requires(Robot.armDriveTrain);
+        requires((Subsystem)Robot.armDriveTrain);
     }
 
     @Override

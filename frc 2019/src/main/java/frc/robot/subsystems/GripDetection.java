@@ -90,7 +90,6 @@ public class GripDetection extends Subsystem {
                     synchronized (imgLockSEEN) {
                         tapeSeen = (pipeline.filterContoursOutput().size() > 1);
                     }
-                    ;
                     if (pipeline.filterContoursOutput().size() > 2) {
                         System.out.println("More than two oh god something is bad please jesus help me");
                     }
@@ -115,7 +114,6 @@ public class GripDetection extends Subsystem {
         synchronized (imgLockSEEN) {
             tapeSeen = this.tapeSeen;
         }
-        ;
         if (tapeSeen) {
             if (direction == 'L') {
                 mlPower = -.2;

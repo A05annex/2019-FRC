@@ -4,9 +4,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.ArmTeleop;
+import frc.robot.commands.MoveArmToTarget;
 
 /**
  * The robot arm drive subsystem. This subsystem is controlling the lower arm
@@ -20,6 +19,15 @@ import frc.robot.commands.ArmTeleop;
  * once we really know how to control them.
  */
 public class ArmDriveTrain extends Subsystem implements IUseArm {
+
+
+    static final int LOWER = 0;
+    static final int UPPER = 1;
+    static final int BUCKET = 2;
+
+    private double[][] targetPositions = {
+            {0.0, 0.0, 0.0},
+    };
 
     public double angle1, angle2;
 
@@ -53,33 +61,41 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     // default command for the subsystem, this one being tele-operation for the arm
     public void initDefaultCommand() {
-        setDefaultCommand(new ArmTeleop());
+        setDefaultCommand(new MoveArmToTarget());
     }
 
-    public double getLowerArmPosition() {
+    @Override
+    public double getLowerArmAngle() {
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
         return lowerArmAngle.get();
     }
 
-    public double getUpperArmPosition() {
+    @Override
+    public double getUpperArmAngle() {
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
         return upperArmAngle.get();
     }
 
+    @Override
+    public double getBucketAngle() {
+        return 0;
+    }
+
+    @Override
     public void inputDriveLowArm(double lowerArmPower) {
         // TODO: check lower arm power direction, test against arm position and/or limit
         // switch and set to 0 if we have hit the constraint for that direction
         if (lowerArmPower < 0.0) {
-            if (getLowerArmPosition() < (lowerArmMin + armCreepBuffer)) {
-                lowerArmPower = (getLowerArmPosition() < (lowerArmMin + armStopBuffer)) ? 0.0 : -armCreepPower;
+            if (getLowerArmAngle() < (lowerArmMin + armCreepBuffer)) {
+                lowerArmPower = (getLowerArmAngle() < (lowerArmMin + armStopBuffer)) ? 0.0 : -armCreepPower;
             }
         } else if (lowerArmPower > 0.0) {
-            if (getLowerArmPosition() > (lowerArmMax - armCreepBuffer)) {
-                lowerArmPower = (getLowerArmPosition() > (lowerArmMax - armStopBuffer)) ? 0.0 : armCreepPower;
+            if (getLowerArmAngle() > (lowerArmMax - armCreepBuffer)) {
+                lowerArmPower = (getLowerArmAngle() > (lowerArmMax - armStopBuffer)) ? 0.0 : armCreepPower;
             }
         }
         armMotorLower.set(lowerArmPower);
@@ -92,45 +108,36 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
      *                      1; where a positive value is up and a negative value is
      *                      down.
      */
+    @Override
     public void inputDriveUppArm(double upperArmPower) {
         // TODO: check upper arm power direction, test against arm position and/or limit
         // switch and set to 0 if we have hit the constraint for that direction
         if (upperArmPower < 0.0) {
-            if (getLowerArmPosition() < (upperArmMin + armCreepBuffer)) {
-                upperArmPower = (getLowerArmPosition() < (upperArmMin + armStopBuffer)) ? 0.0 : -armCreepPower;
+            if (getUpperArmAngle() < (upperArmMin + armCreepBuffer)) {
+                upperArmPower = (getUpperArmAngle() < (upperArmMin + armStopBuffer)) ? 0.0 : -armCreepPower;
             }
         } else if (upperArmPower > 0.0) {
-            if (getUpperArmPosition() > (upperArmMax - armCreepBuffer)) {
-                upperArmPower = (getUpperArmPosition() > (upperArmMax - armStopBuffer)) ? 0.0 : armCreepPower;
+            if (getUpperArmAngle() > (upperArmMax - armCreepBuffer)) {
+                upperArmPower = (getUpperArmAngle() > (upperArmMax - armStopBuffer)) ? 0.0 : armCreepPower;
             }
         }
         armMotorUpper.set(upperArmPower);
     }
 
+    @Override
+    public void setTargetPosition(ArmPositions armPosition) {
+
+    }
+
+    @Override
+    public void moveToTarget() {
+
+    }
+
+    @Override
     public void stop() {
         // method to easily stop the motors
         armMotorLower.set(0.0);
         armMotorUpper.set(0.0);
     }
-
-    // buncha math
-    public void setHeight(int height) {
-        double arm1 = 39.25, arm2 = 34.5, xdifference = 26;
-        angle1 = Math.toDegrees(Math.atan(height / xdifference)
-                + Math.acos((arm1 * arm1 + height * height + xdifference * xdifference - arm2 * arm2)
-                / (2 * arm1 * Math.sqrt(xdifference * xdifference + height * height))));
-        angle2 = Math.toDegrees(Math
-                .acos((arm1 * arm1 + arm2 * arm2 - xdifference * xdifference - height * height) / (2 * arm1 * arm2)));
-        SmartDashboard.putString("DB/String 6", Double.toString(angle1));
-        SmartDashboard.putString("DB/String 7", Double.toString(angle2));
-    }
-
-    public void moveToHeight() {
-
-    }
-
-    public void lockPosition() {
-        armMotorLower.set(0);
-        armMotorUpper.set(0);
-    }
-}
+ }

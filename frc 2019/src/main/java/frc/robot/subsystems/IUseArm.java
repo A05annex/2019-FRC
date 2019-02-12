@@ -7,20 +7,23 @@ package frc.robot.subsystems;
  */
 public interface IUseArm {
     /**
-     * The position of the lower arm in the range <tt>lowerArmMin</tt> to
-     * <tt>lowerArmMax</tt>
+     * The angle of the lower arm.
      *
      * @return (double) The position of the lower arm.
      */
-    double getLowerArmPosition();
+    double getLowerArmAngle();
 
     /**
-     * The position of the upper arm in the range <tt>upperArmMin</tt> to
-     * <tt>upperArmMax</tt>
+     * The angle of the upper arm.
      *
      * @return (double) The position of the upper arm.
      */
-    double getUpperArmPosition();
+    double getUpperArmAngle();
+
+    /**
+     *
+     */
+    double getBucketAngle();
 
     /**
      * Set the arm motor power for the lower arm.
@@ -49,6 +52,11 @@ public interface IUseArm {
      *                    known target positions
      */
     void setTargetPosition(ArmPositions armPosition);
+
+    /**
+     * Call this repeatedly to move the arm to target
+     */
+    void moveToTarget();
 
     void stop();
 }

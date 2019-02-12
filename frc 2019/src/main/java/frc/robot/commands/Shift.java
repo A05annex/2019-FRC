@@ -42,11 +42,7 @@ public class Shift extends Command {
     @Override
     protected boolean isFinished() {
         //returns true after .3 seconds
-        if (time.get() > .3) {
-            return true;
-        } else {
-            return false;
-        }
+        return time.get() > .3;
     }
 
     @Override

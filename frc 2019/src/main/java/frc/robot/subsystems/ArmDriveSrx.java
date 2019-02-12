@@ -32,14 +32,9 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
     public void initDefaultCommand() {
         setDefaultCommand(new ArmTeleop());
     }
-    /**
-     * The position of the lower arm in the range <tt>lowerArmMin</tt> to
-     * <tt>lowerArmMax</tt>
-     *
-     * @return (double) The position of the lower arm.
-     */
-    public double getLowerArmPosition() {
-        // TODO: Map from the potentiometer to some position. This could just be the
+
+    @Override
+    public double getLowerArmAngle() {
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
         return armMotorLower.getSelectedSensorPosition();
@@ -51,11 +46,16 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
      *
      * @return (double) The position of the upper arm.
      */
-    public double getUpperArmPosition() {
+    public double getUpperArmAngle() {
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
         return armMotorLower.getSelectedSensorPosition();
+    }
+
+    @Override
+    public double getBucketAngle() {
+        return 0;
     }
 
     @Override
@@ -70,6 +70,11 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
 
     @Override
     public void setTargetPosition(ArmPositions armPosition) {
+
+    }
+
+    @Override
+    public void moveToTarget() {
 
     }
 
