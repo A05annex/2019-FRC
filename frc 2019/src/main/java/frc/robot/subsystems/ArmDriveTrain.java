@@ -73,7 +73,7 @@ public class ArmDriveTrain extends Subsystem{
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
-        return baseAngle.get();
+        return basePot.get();
     }
 
     /**
@@ -84,7 +84,7 @@ public class ArmDriveTrain extends Subsystem{
         // TODO: Map from the potentiometer to some position. This could just be the
         // potentiometer value, or it could be mapped to a 'more meaningful' value
         // like degrees from horizontal.
-        return secondAngle.get();
+        return secondPot.get();
     }
 
     /**
