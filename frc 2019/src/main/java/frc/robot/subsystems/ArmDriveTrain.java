@@ -11,6 +11,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmTeleop;
 
+/**
+ * The robot arm drive subsystem. This subsystem is controlling the lower arm motor
+ * and the upper arm motor only. There are position potentiometers for the lower and
+ * upper arms controlled by those motors. The controll of the head/bucket is
+ * independent of the arm.
+ *
+ * Roy's note: I'm thinking the arm drive subsystem knows about the potentiometers
+ * and the reporting of arm position, and that the control happens in the commands
+ * initially - some control method may move to the arm once we really know how to
+ * control them.
+ */
 public class ArmDriveTrain extends Subsystem{
 
     public double
@@ -30,6 +41,21 @@ public class ArmDriveTrain extends Subsystem{
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2),
         bucket = new WPI_TalonSRX(RobotMap.bucket);
     
+    // TODO: once the arms and done and the positions of the potentiometers are fixed, manually
+    // rotate the arms and track the potentiometer values at the limits of motion. These become
+    // the constraints for arm movement - i.e. if you try to move the arm beyond these values
+    // you will run into the frame or some other hard stop that could damage the robot/arm - don't
+    // let that happen !!
+    private double lowerArmMin = 30.0;
+    private double lowerArmMax = 130.0;
+    private double upperArmMin = 40.0;
+    private double upperArmMax = 140.0;
+    private double armStopBuffer = 5.0;     // The degrees before the hard stop that you should
+                                            // cut power to 0.0
+    private double armCreepBuffer = 15.0;   // The distance before the hard stop that you
+                                            // should cut power to creep power
+    private double armCreepPower = 0.1;     // The maximum power in the creep zone
+
     public ArmDriveTrain(){
         //configures both drive motors for the motors
         armMotorLower.setNeutralMode(NeutralMode.Brake);
@@ -58,8 +84,8 @@ public class ArmDriveTrain extends Subsystem{
 
     public void stop(){
         //method to easily stop the motors
-        armMotorLower.set(0);
-        armMotorUpper.set(0);
+        armMotorLower.set(0.0);
+        armMotorUpper.set(0.0);
     }
 
     //buncha math
