@@ -1,11 +1,10 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -13,19 +12,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.Teleop;
 
-public class DriveTrain extends Subsystem{
+public class DriveTrain extends Subsystem {
 
     public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
     public DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
     public WPI_TalonSRX
-        rightMaster = new WPI_TalonSRX(RobotMap.rm1),
-        rm2 = new WPI_TalonSRX(RobotMap.rm2),
-        rm3 = new WPI_TalonSRX(RobotMap.rm3),
-        leftMaster = new WPI_TalonSRX(RobotMap.lm1),
-        lm2 = new WPI_TalonSRX(RobotMap.lm2),
-        lm3 = new WPI_TalonSRX(RobotMap.lm3);
-    
-    public DriveTrain(){
+            rightMaster = new WPI_TalonSRX(RobotMap.rm1),
+            rm2 = new WPI_TalonSRX(RobotMap.rm2),
+            rm3 = new WPI_TalonSRX(RobotMap.rm3),
+            leftMaster = new WPI_TalonSRX(RobotMap.lm1),
+            lm2 = new WPI_TalonSRX(RobotMap.lm2),
+            lm3 = new WPI_TalonSRX(RobotMap.lm3);
+
+    public DriveTrain() {
         //constructs and configures all six drive motors
         rm2.follow(rightMaster);
         rm3.follow(rightMaster);
@@ -45,25 +44,17 @@ public class DriveTrain extends Subsystem{
         ahrs.reset();
     }
 
-    public void initDefaultCommand(){
+    public void initDefaultCommand() {
         setDefaultCommand(new Teleop());
-    }
-
-    // Jason: I would move this to the command. It is a mapping functions and
-    // different drive commands would have different matting functions.
-    public void arcadeDrive(Joystick stick){
-        //this is called from commands to drive the robot
-        double forward = stick.getRawAxis(1)/3.0;
-        double rotate = stick.getRawAxis(2)/6.0;
-//        setArcadePower(forward, rotate);
     }
 
     /**
      * Set the drive motor power based on an arcade control model of forward and turn speed.
+     *
      * @param forward (double) forward speed in the range -1.0 to 1.0 (negative is
-     *        backwards, positive is forward).
-     * @param rotate (double) rotation speed in the range -1.0 to 1.0 (negative is
-     *        clockwise, positive is counter-clockwise).
+     *                backwards, positive is forward).
+     * @param rotate  (double) rotation speed in the range -1.0 to 1.0 (negative is
+     *                clockwise, positive is counter-clockwise).
      */
     public void setArcadePower(double forward, double rotate) {
         double max = Math.abs(forward) + Math.abs(rotate);
@@ -72,7 +63,8 @@ public class DriveTrain extends Subsystem{
         leftMaster.set(scale * (forward - rotate));
     }
 
-    public void inputDrive(double[] motorInput){
+    //theos thingy
+    public void inputDrive(double[] motorInput) {
         leftMaster.set(motorInput[0]);
         rightMaster.set(motorInput[1]);
     }
@@ -89,7 +81,7 @@ public class DriveTrain extends Subsystem{
         rightMaster.set((motorleft-threshold)/threshold);
     }
 
-    public void setNeutralMode(NeutralMode mode){
+    public void setNeutralMode(NeutralMode mode) {
         //method to easily set the neutral mode of all of the driveTrain motors
         rightMaster.setNeutralMode(mode);
         rm2.setNeutralMode(mode);
@@ -99,7 +91,7 @@ public class DriveTrain extends Subsystem{
         lm3.setNeutralMode(mode);
     }
 
-    public void stop(){
+    public void stop() {
         //method to easily stop the motors
         rightMaster.set(0);
         leftMaster.set(0);

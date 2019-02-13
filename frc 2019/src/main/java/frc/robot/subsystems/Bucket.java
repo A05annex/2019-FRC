@@ -6,14 +6,14 @@ import frc.robot.RobotMap;
 
 public class Bucket extends Subsystem {
 
-    //public Servo servo = new Servo(RobotMap.servo);
+    public Servo servo = new Servo(RobotMap.servo);
 
     @Override
     public void initDefaultCommand() {
-    
+
     }
 
-    public Bucket(){
-        //servo.set(0);
+    public Bucket() {
+        servo.set(0);
     }
 }
