@@ -22,8 +22,8 @@ import frc.robot.commands.TapeFind;
 public class OI {
 
     //creation of the joystick and xbox Controller object
-    public final Joystick stick = new Joystick(0);
-    public final XboxController xbox = new XboxController(1);
+    private final Joystick stick = new Joystick(0);
+    private final XboxController xbox = new XboxController(1);
 
     JoystickButton trigger = new JoystickButton(this.stick, 1);
     JoystickButton thumb = new JoystickButton(this.stick, 2);

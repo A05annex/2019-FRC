@@ -19,18 +19,26 @@ public class TapeStraighten extends Command{
 
     @Override
     protected void execute() {
+        Robot.driveTrain.inputDriveSG(Robot.gripDetection.slowToRect());
     }
 
     @Override
     protected boolean isFinished() {
         //only returns false because the command cannot end without being interrupted
-        return false;
+        if(Robot.gripDetection.slowToRect()==0){
+            return true;
+        }
+        else{
+            return false;
+
+        }
     }
 
     @Override
     protected void end() {
         //calls function to stop the motors
         Robot.driveTrain.stop();
+        Robot.gripDetection.stopVision();
     }
 
     @Override

@@ -22,8 +22,8 @@ public class SetArmHeight extends Command{
       // Called repeatedly when this Command is scheduled to run
       @Override
       protected void execute() {
-          SmartDashboard.putString("DB/String 9", Double.toString((-Robot.oi.stick.getRawAxis(3)+1)/2));
-          int flipper = (int)(Math.round(((-Robot.oi.stick.getRawAxis(3)+1)/2)*55) + 5);
+          SmartDashboard.putString("DB/String 9", Double.toString((-Robot.oi.getStick().getRawAxis(3)+1)/2));
+          int flipper = (int)(Math.round(((-Robot.oi.getStick().getRawAxis(3)+1)/2)*55) + 5);
           Robot.armDriveTrain.setHeight(flipper);
           Robot.armDriveTrain.moveToHeight();
       }
