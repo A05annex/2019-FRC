@@ -23,17 +23,17 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static DriveTrain driveTrain = new DriveTrain();
-    public static IUseArm armDriveTrain = new ArmDriveTrain();
+    public final static DriveTrain driveTrain = new DriveTrain();
+    public final static IUseArm armDriveTrain = new ArmDriveTrain();
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
-    public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
-    public static GripDetection gripDetection = new GripDetection();
-    public static OI oi;
-    public static Bucket bucket = new Bucket();
-    public static GripDetection grip = new GripDetection();
-    public static BucketWheelz bucketWheelz = new BucketWheelz();
-    public static Lift lift = new Lift();
-    Command m_autonomousCommand;
+    public final static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+    public final static GripDetection gripDetection = new GripDetection();
+    private static OI oi;
+    public final static Bucket bucket = new Bucket();
+    public final static GripDetection grip = new GripDetection();
+    public final static BucketWheelz bucketWheelz = new BucketWheelz();
+    public final static Lift lift = new Lift();
+    private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     /**
@@ -139,5 +139,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
+    }
+
+    public static OI getOI() {
+        return oi;
     }
 }

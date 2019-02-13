@@ -21,13 +21,31 @@ import frc.robot.commands.MoveArmToTarget;
 public class ArmDriveTrain extends Subsystem implements IUseArm {
 
 
-    static final int LOWER = 0;
-    static final int UPPER = 1;
-    static final int BUCKET = 2;
+    private static final int LOWER = 0;
+    private static final int UPPER = 1;
+    private static final int BUCKET = 2;
+
+    // picked this because it unambiguously represented and way outside any reasonable angle range.
+    private static final double AUTO_POSITION_BUCKET = 1024.0;
 
     private double[][] targetPositions = {
-            {0.0, 0.0, 0.0},
+            {92.0, 23.0, 0.0},                          // PREGAME
+            {100.0, 25.0, 5.0},                         // HOME
+            {120.5, 23.0, AUTO_POSITION_BUCKET},        // LOW_HATCH
+            {92.0, 23.0, AUTO_POSITION_BUCKET},         // LOW_CARGO
+            {127.5, 65.0, AUTO_POSITION_BUCKET},        // MID_HATCH
+            {127.5, 65.0, AUTO_POSITION_BUCKET},        // MID_CARGO
+            {105.5, 110.0, AUTO_POSITION_BUCKET},       // HIGH_HATCH
+            {105.5, 110.0, AUTO_POSITION_BUCKET},       // HIGH_CARGO
+            {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
+            {46.0, 72.5, 0.0},                          // PRE_ENDGAME_LIFT
+            {29.5, 95.0, 0.0},                          // ENDGAME_LIFT
+            {29.5, 95.0, 0.0},                          // ENDGAME_LAND
+            {29.5, 95.0, 0.0},                          // ENDGAME_PARK
+            {100.0, 25.0, 5.0}                          // POST_ENDGAME_PARK
     };
+
+    private ArmPositions targatPosition = ArmPositions.PREGAME;
 
     public double angle1, angle2;
 
@@ -126,7 +144,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void setTargetPosition(ArmPositions armPosition) {
-
+        targatPosition = armPosition;
     }
 
     @Override

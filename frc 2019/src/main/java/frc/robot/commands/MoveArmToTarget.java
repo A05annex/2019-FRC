@@ -9,6 +9,8 @@ public class MoveArmToTarget extends Command {
     public MoveArmToTarget() {
         super();
         requires((Subsystem) Robot.armDriveTrain);
+        // this is the only thing that ever controls the arm, it cannot be interrupted.
+        setInterruptible(false);
     }
 
     @Override

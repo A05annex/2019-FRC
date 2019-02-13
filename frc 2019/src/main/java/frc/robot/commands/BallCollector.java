@@ -14,7 +14,7 @@ public class BallCollector extends Command {
 
     @Override
     protected void execute() {
-        Joystick stick = Robot.oi.getStick();
+        Joystick stick = Robot.getOI().getStick();
         if (stick.getRawButton(11)) {
             Robot.bucketWheelz.collect();
         } else if (stick.getRawButton(12)) {

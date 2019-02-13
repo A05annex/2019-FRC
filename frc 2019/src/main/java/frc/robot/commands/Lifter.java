@@ -26,7 +26,7 @@ public class Lifter extends Command {
     @Override
     protected void execute() {
         //button control of pneumatics
-        Joystick stick = Robot.oi.getStick();
+        Joystick stick = Robot.getOI().getStick();
         if (stick.getRawButton(9)) {
             Robot.lift.up();
         } else if (stick.getRawButton(10)) {

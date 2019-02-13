@@ -16,25 +16,31 @@ package frc.robot.subsystems;
  *     <li><tt>PICKUP_FROM_FLOOR</tt> - The position to pickup a cargo ball from the floor;</li>
  *     <li><tt>PRE_ENDGAME_LIFT</tt> - The position of the arm before the lift cylinders are extended;</li>
  *     <li><tt>ENDGAME_LIFT</tt> - The position of the arm that pushes the robot onto the platform post lift
- *     and re-lift retraction.;</li>
+ *     and pre-lift retraction;</li>
  *     <li><tt>ENDGAME_LAND</tt> - The position to land the rear wheels of the robot on the platform;</li>
  *     <li><tt>ENDGAME_PARK</tt> - The position that parks the robot on the platform;</li>
- *     <li><tt>POST_ENDGAME_LIFT</tt> - The position for the arm once the robot is parked on the platform</li>
+ *     <li><tt>POST_ENDGAME_PARK</tt> - The position for the arm once the robot is parked on the platform</li>
  * </ul>
  */
-public class ArmPositions {
-    public static final int PREGAME = 0;
-    public static final int HOME = 1;
-    public static final int LOW_HATCH = 2;
-    public static final int LOW_CARGO = 3;
-    public static final int MID_HATCH = 4;
-    public static final int MID_CARGO = 5;
-    public static final int HIGH_HATCH = 6;
-    public static final int HIGH_CARGO = 7;
-    public static final int PICKUP_FROM_FLOOR = 8;
-    public static final int PRE_ENDGAME_LIFT = 9;
-    public static final int ENDGAME_LIFT = 10;
-    public static final int ENDGAME_LAND = 11;
-    public static final int ENDGAME_PARK = 12;
-    public static final int POST_ENDGAME_LIFT = 13;
+public enum ArmPositions {
+    PREGAME(0),
+    HOME(1),
+    LOW_HATCH(2),
+    LOW_CARGO(3),
+    MID_HATCH(4),
+    MID_CARGO(5),
+    HIGH_HATCH(6),
+    HIGH_CARGO(7),
+    PICKUP_FROM_FLOOR(8),
+    PRE_ENDGAME_LIFT(9),
+    ENDGAME_LIFT(10),
+    ENDGAME_LAND(11),
+    ENDGAME_PARK(12),
+    POST_ENDGAME_PARK(13);
+
+    public final int value;
+
+    ArmPositions(int value) {
+        this.value = value;
+    }
 }
