@@ -25,9 +25,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     private static final int UPPER = 1;
     private static final int BUCKET = 2;
 
-    // picked this because it unambiguously represented and way outside any reasonable angle range.
+    // picked this because it is unambiguously represented and way outside any reasonable angle range.
     private static final double AUTO_POSITION_BUCKET = 1024.0;
 
+    // The target positions. these are not final because we may be tuning/calibrating positions and the
+    // bumpTargetPosition() method may be called to dynamically modify these.
     private double[][] targetPositions = {
             {92.0, 23.0, 0.0},                          // PREGAME
             {100.0, 25.0, 5.0},                         // HOME
@@ -45,7 +47,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {100.0, 25.0, 5.0}                          // POST_ENDGAME_PARK
     };
 
-    private ArmPositions targatPosition = ArmPositions.PREGAME;
+    private int targetPosition = ArmPositions.PREGAME.value;
 
     public double angle1, angle2;
 
@@ -144,7 +146,16 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void setTargetPosition(ArmPositions armPosition) {
-        targatPosition = armPosition;
+        targetPosition = armPosition.value;
+    }
+
+    @Override
+    public void bumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta) {
+        targetPositions[targetPosition][LOWER] += lowerAngleDelta;
+        targetPositions[targetPosition][UPPER] += upperAngleDelta;
+        if (AUTO_POSITION_BUCKET != targetPositions[targetPosition][BUCKET]) {
+            targetPositions[targetPosition][BUCKET] += bucketAngleDelta;
+        }
     }
 
     @Override

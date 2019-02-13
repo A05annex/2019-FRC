@@ -9,9 +9,6 @@ import frc.robot.commands.ArmTeleop;
 
 public class ArmDriveSrx extends Subsystem implements IUseArm {
 
-    public double lower_angle;
-    public double upper_angle;
-
     // construction of arm motors
     public WPI_TalonSRX armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
             armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
@@ -70,6 +67,11 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
 
     @Override
     public void setTargetPosition(ArmPositions armPosition) {
+
+    }
+
+    @Override
+    public void bumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta) {
 
     }
 
