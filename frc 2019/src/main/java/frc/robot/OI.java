@@ -40,11 +40,7 @@ public class OI {
 
     // These are test and calibration initializations - they are NOT required for competition.
     private final XboxController xbox = new XboxController(1);
-    static private final double BUMP_INCREMENT = 0.25;
-    private final POVButton decArmAngle = new POVButton(xbox, xbox.getPOV(0));
-    private final POVButton incArmAngle = new POVButton(xbox, xbox.getPOV(180));
-    private final POVButton decBucketAngle = new POVButton(xbox, xbox.getPOV(90));
-    private final POVButton incBucketAngle = new POVButton(xbox, xbox.getPOV(270));
+    private static final double BUMP_INCREMENT = 0.25;
 
 
 
@@ -68,13 +64,20 @@ public class OI {
         //button6.whenPressed(new TapeStraighten('R'));
 
         // These are test and calibration initializations - they are NOT required for competition.
+        final POVButton decArmAngle = new POVButton(xbox, xbox.getPOV(0));
         decArmAngle.whenPressed(xbox.getBumper(GenericHID.Hand.kLeft) ?
                 new BumpTargetPosition(0.0, -BUMP_INCREMENT, 0.0) :
                 new BumpTargetPosition( -BUMP_INCREMENT, 0.0, 0.0));
+
+        final POVButton incArmAngle = new POVButton(xbox, xbox.getPOV(180));
         incArmAngle.whenPressed(xbox.getBumper(GenericHID.Hand.kLeft) ?
                 new BumpTargetPosition(0.0, BUMP_INCREMENT, 0.0) :
                 new BumpTargetPosition( BUMP_INCREMENT, 0.0, 0.0));
+
+        final POVButton decBucketAngle = new POVButton(xbox, xbox.getPOV(90));
         decBucketAngle.whenPressed(new BumpTargetPosition(0.0, 0.0, -BUMP_INCREMENT));
+
+        final POVButton incBucketAngle = new POVButton(xbox, xbox.getPOV(270));
         incBucketAngle.whenPressed(new BumpTargetPosition(0.0, 0.0, BUMP_INCREMENT));
 
     }
