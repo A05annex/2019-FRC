@@ -85,24 +85,17 @@ public class GripDetection extends Subsystem {
           }
         }
       });
-
     }
 
     public void startVision() {
         visionThread.start();
     }
 
-    public void endVision() {
-        visionThread.stop();
-    }
-
     public double[] findTape(char direction) {
         double mlPower = 0;
         double mrPower = 0;
         boolean tapeSeen;
-        synchronized (imgLockSEEN) {
-            tapeSeen = this.tapeSeen;
-        };
+        synchronized (imgLockSEEN) {tapeSeen = this.tapeSeen;};
         if (tapeSeen) {
             if (direction == 'L') {
                 mlPower = -.2;
@@ -125,46 +118,42 @@ public class GripDetection extends Subsystem {
     visionThread.stop();
   }
 
-    private double[] sendWidthHeight2() {
-        double Width2;
-        double Height2;
-        synchronized (imgLockCW2) {
-            Width2 = this.Width2;
-        }
-        synchronized (imgLockCH2) {
-            Height2 = this.Height2;
-        }
-        double[] WidthHeight1 = new double[]{Width2, Height2};
-        return WidthHeight1;
-    }
+  private double[] sendWidthHeight2() {
+    double Width2;
+    double Height2;
+    synchronized (imgLockCW2) {Width2 = this.Width2;}
+    synchronized (imgLockCH2) {Height2 = this.Height2;}
+    double[] WidthHeight1 = new double[]{Width2, Height2};
+    return WidthHeight1;
+  }
 
-    public double[] sendXY1() {
-        double centerX1;
-        double centerY1;
-        synchronized (imgLockCX1) {
-            centerX1 = this.centerX1;
-        }
-        synchronized (imgLockCY1) {
-            centerY1 = this.centerY1;
-        }
-        coords1[0] = centerX1;
-        coords1[1] = centerY1;
-        return (coords1);
+  public double[] sendXY1() {
+    double centerX1;
+    double centerY1;
+    synchronized (imgLockCX1) {
+        centerX1 = this.centerX1;
     }
+    synchronized (imgLockCY1) {
+        centerY1 = this.centerY1;
+    }
+    coords1[0] = centerX1;
+    coords1[1] = centerY1;
+    return (coords1);
+  }
 
-    public double[] sendXY2() {
-        double centerX2;
-        double centerY2;
-        synchronized (imgLockCX2) {
-            centerX2 = this.centerX2;
-        }
-        synchronized (imgLockCY2) {
-            centerY2 = this.centerY2;
-        }
-        coords2[0] = centerX2;
-        coords2[1] = centerY2;
-        return (coords2);
+  public double[] sendXY2() {
+    double centerX2;
+    double centerY2;
+    synchronized (imgLockCX2) {
+        centerX2 = this.centerX2;
     }
+    synchronized (imgLockCY2) {
+        centerY2 = this.centerY2;
+    }
+    coords2[0] = centerX2;
+    coords2[1] = centerY2;
+    return (coords2);
+  }
 
   private double[] sendWidthHeight1(){
     double Width1;
