@@ -27,13 +27,13 @@ import frc.robot.subsystems.GripDetection;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static OI oi;
   public static DriveTrain driveTrain = new DriveTrain();
   public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static GripDetection gripDetection = new GripDetection();
-  public static OI oi;
   public static Bucket bucket = new Bucket();
-  public static GripDetection grip = new GripDetection();
+  //public static GripDetection grip = new GripDetection();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    SmartDashboard.putString("DB/String 1", "test");
     Scheduler.getInstance().run();
   }
 
@@ -88,7 +89,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    //m_autonomousCommand = m_chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -129,9 +130,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.basePot.get()));
-    SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.secondPot.get()));
-    armDriveTrain.setHeight(26);
+    SmartDashboard.putString("DB/String 0", "functional");
+    SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.baseAngle.get()));
+    SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.secondAngle.get()));
+    SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.secondAngle.get()-90));
     //SmartDashboard.putString("DB/String 3", "functional");
 
   }

@@ -3,8 +3,8 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 /**
@@ -12,9 +12,12 @@ import frc.robot.Robot;
  */
 public class ArmTeleop extends Command{
 
+    Joystick stick;
+
     public ArmTeleop() {
         // This command can only function if the robot arm is NOT being controlled by something else.
         requires(Robot.armDriveTrain);
+        this.stick = Robot.oi.getStick();
       }
     
       @Override
@@ -22,30 +25,43 @@ public class ArmTeleop extends Command{
         // Sets the arms to brake when assigned a power of 0.0 (does this
         // apply when you don't have encoders?)
         Robot.armDriveTrain.setNeutralMode(NeutralMode.Brake);
+
       }
     
       @Override
       protected void execute() {
-        Joystick stick = Robot.oi.getStick();
-        double lowerArmPower = 0.0;
-        double upperArmPower = 0.0;
-        // Adjust the arm power if any arm power controls are activated.
-        if(stick.getRawButton(5)){
-            lowerArmPower = 0.3;
+        if(stick.getRawButton(9)){
+          Robot.armDriveTrain.armMotorLower.set(.5);
+        }
+        else if(Robot.oi.stick.getRawButton(10)){
+            Robot.armDriveTrain.armMotorLower.set(-.3);
+        }
+        else{
+            Robot.armDriveTrain.armMotorLower.set(0);
+        }
 
-        }
-        else if(stick.getRawButton(6)){
-            lowerArmPower = -0.3;
-        }
-          Robot.armDriveTrain.inputDriveLowArm(lowerArmPower);
-          // set the arm lower and upper power components
         if(stick.getRawButton(7)){
-            upperArmPower = 0.3;
+            Robot.armDriveTrain.armMotorUpper.set(.3);
         }
         else if(stick.getRawButton(8)){
-            upperArmPower = -0.3;
+            Robot.armDriveTrain.armMotorUpper.set(-.5);
+        }else if(stick.getRawButton(11)){
+            Robot.armDriveTrain.armMotorUpper.set(-.8);
+        }else{
+            Robot.armDriveTrain.armMotorUpper.set(0);
         }
-        Robot.armDriveTrain.inputDriveUppArm(upperArmPower);
+
+        if(stick.getRawButton(1)){
+            Robot.armDriveTrain.bucket.set(.3);
+            SmartDashboard.putString("DB/String 8", "1");
+        }else if(stick.getRawButton(2)){
+            Robot.armDriveTrain.bucket.set(-.3);
+            SmartDashboard.putString("DB/String 8", "2");
+        }else{
+            Robot.armDriveTrain.bucket.set(0);
+            SmartDashboard.putString("DB/String 8", "0");
+        }
+          //runs the arcadeDrive function from the drive train
       }
     
       @Override

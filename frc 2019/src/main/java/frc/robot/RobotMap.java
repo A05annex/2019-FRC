@@ -29,6 +29,7 @@ public class RobotMap {
     lm3 = 0,
     arm1 = 4,
     arm2 = 1,
+    bucket = 8,
     shifter1 = 0,
     shifter2 = 1,
     servo = 0;

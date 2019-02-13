@@ -22,7 +22,7 @@ public class Teleop extends Command{
       @Override
       protected void execute() {
           //runs the arcadeDrive function from the drive train
-          Robot.driveTrain.arcadeDrive(Robot.oi.getStick());
+          //Robot.driveTrain.arcadeDrive(Robot.oi.getStick());
       }
     
       @Override

@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.MoveServo;
+import frc.robot.commands.SetArmHeight;
 import frc.robot.commands.Shift;
 import frc.robot.commands.TapeFind;
 
@@ -37,6 +38,7 @@ public class OI {
   }
 
   public OI(){
+    button5.whenPressed(new SetArmHeight(60));
     trigger.whenPressed(new Shift(true));
     thumb.whenPressed(new Shift(false));
     top.whenPressed(new MoveServo(0));
