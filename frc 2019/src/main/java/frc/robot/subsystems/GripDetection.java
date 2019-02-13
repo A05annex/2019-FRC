@@ -61,59 +61,59 @@ public class GripDetection extends Subsystem {
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     //dont know why this is deprecated. help? it works, but i really hate the green lines.
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-        if (!pipeline.filterContoursOutput().isEmpty()) {
-          if(pipeline.filterContoursOutput().size()>=2){
-            camera.setBrightness(50);
-            pipeline.hslThresholdOutput();
-            Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-            Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
-            synchronized (imgLockCX1) {centerX1 = r1.x + (r1.width / 2);}
-            synchronized (imgLockCX2) {centerX2 = r2.x + (r2.width / 2);}
-            synchronized (imgLockCY1) {centerY1 = r1.y + (r1.height / 2);}
-            synchronized (imgLockCY2) {centerY2 = r2.y + (r2.height / 2);}
+      if (!pipeline.filterContoursOutput().isEmpty()) {
+        if(pipeline.filterContoursOutput().size()>=2){
+          camera.setBrightness(50);
+          pipeline.hslThresholdOutput();
+          Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+          Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+          synchronized (imgLockCX1) {centerX1 = r1.x + (r1.width / 2);}
+          synchronized (imgLockCX2) {centerX2 = r2.x + (r2.width / 2);}
+          synchronized (imgLockCY1) {centerY1 = r1.y + (r1.height / 2);}
+          synchronized (imgLockCY2) {centerY2 = r2.y + (r2.height / 2);}
 
-            synchronized (imgLockCW1) {Width1 = r1.width;}
-            synchronized (imgLockCW2) {Width2 = r2.width;}
-            synchronized (imgLockCH1) {Height1 = r1.height;}
-            synchronized (imgLockCH2) {Height2 = r2.height;}
+          synchronized (imgLockCW1) {Width1 = r1.width;}
+          synchronized (imgLockCW2) {Width2 = r2.width;}
+          synchronized (imgLockCH1) {Height1 = r1.height;}
+          synchronized (imgLockCH2) {Height2 = r2.height;}
 
-            synchronized (imgLockSEEN) {tapeSeen=(pipeline.filterContoursOutput().size()>1);};
-            if(pipeline.filterContoursOutput().size()>2){
-              System.out.print("seeing more than 2");
-              System.out.println();
-            }
+          synchronized (imgLockSEEN) {tapeSeen=(pipeline.filterContoursOutput().size()>1);};
+          if(pipeline.filterContoursOutput().size()>2){
+            System.out.print("seeing more than 2");
+            System.out.println();
           }
         }
-      });
-    }
+      }
+    });
+  }
 
-    public void startVision() {
-        visionThread.start();
-    }
+  public void startVision() {
+    visionThread.start();
+  }
 
-    public double[] findTape(char direction) {
-        double mlPower = 0;
-        double mrPower = 0;
-        boolean tapeSeen;
-        synchronized (imgLockSEEN) {tapeSeen = this.tapeSeen;};
-        if (tapeSeen) {
-            if (direction == 'L') {
-                mlPower = -.2;
-                mrPower = .2;
-            }
-            if (direction == 'R') {
-                mlPower = .2;
-                mrPower = -.2;
-            }
-        } else {
-            mlPower = 0;
-            mrPower = 0;
-        }
-        motorPower[0] = mlPower;
-        motorPower[1] = mrPower;
-        return (motorPower);
-
+  public double[] findTape(char direction) {
+    double mlPower = 0;
+    double mrPower = 0;
+    boolean tapeSeen;
+    synchronized (imgLockSEEN) {tapeSeen = this.tapeSeen;};
+    if (tapeSeen) {
+      if (direction == 'L') {
+        mlPower = -.2;
+        mrPower = .2;
+      }
+      if (direction == 'R') {
+        mlPower = .2;
+        mrPower = -.2;
+      }
+    } else {
+      mlPower = 0;
+      mrPower = 0;
     }
+    motorPower[0] = mlPower;
+    motorPower[1] = mrPower;
+    return (motorPower);
+
+  }
   public void stopVision(){
     visionThread.stop();
   }
@@ -130,12 +130,8 @@ public class GripDetection extends Subsystem {
   public double[] sendXY1() {
     double centerX1;
     double centerY1;
-    synchronized (imgLockCX1) {
-        centerX1 = this.centerX1;
-    }
-    synchronized (imgLockCY1) {
-        centerY1 = this.centerY1;
-    }
+    synchronized (imgLockCX1) {centerX1 = this.centerX1;}
+    synchronized (imgLockCY1) {centerY1 = this.centerY1;}
     coords1[0] = centerX1;
     coords1[1] = centerY1;
     return (coords1);
@@ -144,12 +140,8 @@ public class GripDetection extends Subsystem {
   public double[] sendXY2() {
     double centerX2;
     double centerY2;
-    synchronized (imgLockCX2) {
-        centerX2 = this.centerX2;
-    }
-    synchronized (imgLockCY2) {
-        centerY2 = this.centerY2;
-    }
+    synchronized (imgLockCX2) {centerX2 = this.centerX2;}
+    synchronized (imgLockCY2) {centerY2 = this.centerY2;}
     coords2[0] = centerX2;
     coords2[1] = centerY2;
     return (coords2);

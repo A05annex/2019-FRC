@@ -17,7 +17,7 @@ public class TapeFind extends Command{
       }
       @Override
       protected void initialize() {
-          Robot.gripDetection.startVision();
+        Robot.gripDetection.startVision();
       }
     
       @Override
@@ -33,13 +33,14 @@ public class TapeFind extends Command{
     
       @Override
       protected void end() {
-          //calls function to stop the motors
-          Robot.driveTrain.stop();
+        //calls function to stop the motors
+        Robot.driveTrain.stop();
+        Robot.gripDetection.stopVision();
       }
     
       @Override
       protected void interrupted() {
-          //runs the end method when another command requests use of the drivetrain
-          end();
+        //runs the end method when another command requests use of the drivetrain
+        end();
       }
 }
