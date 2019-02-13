@@ -96,7 +96,7 @@ public class GripDetection extends Subsystem {
     double mrPower = 0;
     boolean tapeSeen;
     synchronized (imgLockSEEN) {tapeSeen = this.tapeSeen;};
-    if (tapeSeen) {
+    if (!tapeSeen) {
       if (direction == 'L') {
         mlPower = -.2;
         mrPower = .2;
