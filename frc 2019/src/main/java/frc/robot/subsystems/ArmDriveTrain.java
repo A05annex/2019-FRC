@@ -119,8 +119,8 @@ public class ArmDriveTrain extends Subsystem {
         // TODO: check upper arm power direction, test against arm position and/or limit
         // switch and set to 0 if we have hit the constraint for that direction
         if (upperArmPower < 0.0) {
-            if (getLowerArmPosition() < (upperArmMin + armCreepBuffer)) {
-                upperArmPower = (getLowerArmPosition() < (upperArmMin + armStopBuffer)) ? 0.0 : -armCreepPower;
+            if (getUpperArmPosition() < (upperArmMin + armCreepBuffer)) {
+                upperArmPower = (getUpperArmPosition() < (upperArmMin + armStopBuffer)) ? 0.0 : -armCreepPower;
             }
         } else if (upperArmPower > 0.0) {
             if (getUpperArmPosition() > (upperArmMax - armCreepBuffer)) {
