@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
 public class BumpTargetPosition extends Command {
 
@@ -14,6 +15,7 @@ public class BumpTargetPosition extends Command {
      */
     public BumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta) {
         super();
+        Robot.armDriveTrain.bumpTargetPosition(lowerAngleDelta, upperAngleDelta, bucketAngleDelta);
     }
 
     @Override
