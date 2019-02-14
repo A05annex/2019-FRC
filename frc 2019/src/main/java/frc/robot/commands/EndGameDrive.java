@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class EndGameDrive extends Command {
-  
+
   private final Timer time = new Timer();
 
   public EndGameDrive() {
@@ -30,6 +30,8 @@ public class EndGameDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //how make motors go backwards? 
+    //negative double?
     Robot.driveTrain.leftMaster.set(0.7);
     Robot.driveTrain.rightMaster.set(0.7);
   }

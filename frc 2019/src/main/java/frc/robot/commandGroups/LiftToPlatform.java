@@ -16,16 +16,16 @@ public class LiftToPlatform extends CommandGroup {
    */
   public void LiftToplatform() {
 
-    addSequential(new IUseArm(setTargetPosition.PRE_ENDGAME_LIFT));
+    addSequential(new SetArmTarget(PRE_ENDGAME_LIFT));
     addSequential(new SetAndWaitForArmPosition()); 
-    addParallel(new IUseArm(setTargetPosition.DURING_LIFT));
-    addSequential(new Lift(up());
-    addSequential(new IUseArm(setTargetPosition.ENDGAME_LIFT));
+    addParallel(new SetArmTarget(DURING_LIFT));
+    addSequential(new Lift(up()));
+    addSequential(new SetArmTarget(ENDGAME_LIFT));
     addParallel(new Lift(down()));
-    addSequential(new IUseArm(setTargetPosition.ENDGAME_LAND));
+    addSequential(new SetArmTarget(ENDGAME_LAND));
     addParallel(new EndGameDrive());
-    addSequential(new IUseArm(setTargetPosition.ENDGAME_PARK));
-    addSequential(new IUseArm(setTargetPosition.POST_ENDGAME_PARK));
+    addSequential(new SetArmTarget(ENDGAME_PARK));
+    addSequential(new SetArmTarget(POST_ENDGAME_PARK));
     
 
     // Add Commands here:
