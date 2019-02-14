@@ -8,36 +8,24 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.EndGameDrive;
-import frc.robot.commands.EndGameLifter;
 import frc.robot.commands.MoveArmToTarget;
-import frc.robot.commands.SetAndWaitForArmPosition;
-import frc.robot.subsystems.ArmPositions;
+import frc.robot.commands.PickUpBall;
 
-
-public class LiftToPlatform extends CommandGroup {
+public class PickUpBallFromGround extends CommandGroup {
   /**
    * Add your docs here.
- * @return 
    */
-  public void LiftToPlatform() {
+  public PickUpBallFromGround() {
 
-    addSequential(new MoveArmToTarget(ArmPositions.PRE_ENDGAME_LIFT));
-    //can MoveArmToTarget() take arguments yet? 
-    //need to learn how to get target in here
-    addSequential(new SetAndWaitForArmPosition()); 
-    addParallel(new MoveArmToTarget(DURING_LIFT));
-    addSequential(new EndGameLifter(liftUp()));
-    //may have to make separate commands for both lifting up and going down?
-    //find way to get this going as a command
-    addSequential(new MoveArmToTarget(ENDGAME_LIFT));
-    addParallel(new EndGameLifter(goDown()));
-    addSequential(new MoveArmToTarget(ENDGAME_LAND));
-    addParallel(new EndGameDrive());
-    addSequential(new MoveArmToTarget(ENDGAME_PARK));
-    addSequential(new MoveArmToTarget(POST_ENDGAME_PARK));
+    addSequential(new MoveArmToTarget());
+    //add argument PICKUP_FROM_FLOOR
+    //does MoveToTarget() take arguments yet?
+    addSequential(new PickUpBall());
+    addSequential(new MoveArmToTarget());
+
+    //not hooked up to button yet 
     
-
+    //add argument HOME
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
