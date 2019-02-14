@@ -137,8 +137,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
      * Set the arm motor power for the upper arm.
      *
      * @param upperArmPower (double) The power to the upper arm in the range -1 to
-     *                      1; where a positive value is up and a negative value is
-     *                      down.
+     *                      1; where a positive value is lift_robot and a negative value is
+     *                      retract_lifters.
      */
     @Override
     public void inputDriveUppArm(double upperArmPower) {

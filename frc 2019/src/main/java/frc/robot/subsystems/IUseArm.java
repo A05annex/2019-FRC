@@ -8,9 +8,9 @@ package frc.robot.subsystems;
 public interface IUseArm {
     /**
      * Get the angle of the lower arm. The angle of the lower arm is 90&deg; when perfectly vertical
-     * to the ground surface; 0&deg; would be the arm moved towards the front of the robot (moved down)
+     * to the ground surface; 0&deg; would be the arm moved towards the front of the robot (moved retract_lifters)
      * until it is parallel to the ground, 180&deg; would be the arm moved towards the rear of the robot
-     * (moved up) until it is parallel to the ground.
+     * (moved lift_robot) until it is parallel to the ground.
      *
      * @return (double) The position angle of the lower arm.
      */
@@ -34,8 +34,8 @@ public interface IUseArm {
      * Set the arm motor power (or speed, depending on the implementation)for the lower arm.
      *
      * @param lowerArmPower (double) The power to the lower arm in the range -1 to
-     *                      1; where a positive value is up and a negative value is
-     *                      down.
+     *                      1; where a positive value is lift_robot and a negative value is
+     *                      retract_lifters.
      */
     void inputDriveLowArm(double lowerArmPower);
 
@@ -43,16 +43,16 @@ public interface IUseArm {
      * Set the arm motor power (or speed, depending on the implementation) for the upper arm.
      *
      * @param upperArmPower (double) The power to the upper arm in the range -1 to
-     *                      1; where a positive value is up and a negative value is
-     *                      down.
+     *                      1; where a positive value is lift_robot and a negative value is
+     *                      retract_lifters.
      */
     void inputDriveUppArm(double upperArmPower);
 
     /**
      * Set the bucket motor power (or speed, depending on the implementation) for the upper arm.
      * @param bucketPower (double) The power to the upper arm in the range -1 to
-     *                    1; where a positive value is up and a negative value is
-     *                    down.
+     *                    1; where a positive value is lift_robot and a negative value is
+     *                    retract_lifters.
      */
     void inputDriveBucket(double bucketPower);
 

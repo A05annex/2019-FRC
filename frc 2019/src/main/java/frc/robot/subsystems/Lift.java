@@ -18,22 +18,25 @@ import frc.robot.commands.Lifter;
 public class Lift extends Subsystem {
     private final DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lift1, RobotMap.lift2);
 
+    public Lift() {
+        super();
+    }
+
     @Override
     public void initDefaultCommand() {
-        setDefaultCommand(new Lifter());
     }
 
     /**
-     * Lifts the robot up. Only needs to be applied for a short time to move the switching piston.
+     * Lifts the robot lift_robot. Only needs to be applied for a short time to move the switching piston.
      */
-    public void up() {
+    public void lift_robot() {
         liftSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 
     /**
      * Lowers the robot. Only needs to be applied for a short time to move the switching piston.
      */
-    public void down() {
+    public void retract_lifters() {
         liftSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
