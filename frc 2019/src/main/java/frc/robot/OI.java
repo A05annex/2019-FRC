@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import frc.robot.commandGroups.LiftToplatform;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.MoveServo;
 import frc.robot.commands.Shift;
@@ -37,6 +38,8 @@ public class OI {
     private final JoystickButton button8 = new JoystickButton(this.stick, 8);
     private final JoystickButton button9 = new JoystickButton(this.stick, 9);
     private final JoystickButton button10 = new JoystickButton(this.stick, 10);
+    private final JoystickButton button13 = new JoystickButton(this.stick, 13);
+    //need to use other button, 13 doesn't exist. this is temporary
 
     // These are test and calibration initializations - they are NOT required for competition.
     private final XboxController xbox = new XboxController(1);
@@ -62,6 +65,7 @@ public class OI {
         button8.whileHeld(new TapeStraighten('R'));
         //button5.whenPressed(new TapeStraighten('L'));
         //button6.whenPressed(new TapeStraighten('R'));
+        button13.whenPressed(new LiftToplatform());
 
         // These are test and calibration initializations - they are NOT required for competition.
         final POVButton decArmAngle = new POVButton(xbox, xbox.getPOV(0));
