@@ -10,12 +10,15 @@ import frc.robot.commands.ArmTeleop;
 public class ArmDriveSrx extends Subsystem implements IUseArm {
 
     // construction of arm motors
-    public WPI_TalonSRX armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
-            armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
+    public WPI_TalonSRX armMotorLower = new WPI_TalonSRX(RobotMap.arm1);
+    public WPI_TalonSRX armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
 
     public ArmDriveSrx() {
+        super();
+        // Initialize to a known configuration
+        armMotorLower.configFactoryDefault();
+        armMotorUpper.configFactoryDefault();
         // configure the lower arm drive motor
-        //
         armMotorLower.setNeutralMode(NeutralMode.Brake);
         armMotorLower.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 
@@ -66,8 +69,23 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
     }
 
     @Override
+    public void inputDriveBucket(double bucketPower) {
+
+    }
+
+    @Override
     public void setTargetPosition(ArmPositions armPosition) {
 
+    }
+
+    @Override
+    public ArmPositions getTargetPosition() {
+        return null;
+    }
+
+    @Override
+    public boolean isAtTargetPosition() {
+        return false;
     }
 
     @Override

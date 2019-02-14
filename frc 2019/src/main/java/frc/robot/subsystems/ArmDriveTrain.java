@@ -28,6 +28,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // picked this because it is unambiguously represented and way outside any reasonable angle range.
     private static final double AUTO_POSITION_BUCKET = 1024.0;
 
+    private static final double TARGET_POSITION_TOLERANCE = 2.5;
+
     // The target positions. these are not final because we may be tuning/calibrating positions and the
     // bumpTargetPosition() method may be called to dynamically modify these.
     private double[][] targetPositions = {
@@ -47,9 +49,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {100.0, 25.0, 5.0}                          // POST_ENDGAME_PARK
     };
 
-    private int targetPosition = ArmPositions.PREGAME.value;
-
-    public double angle1, angle2;
+    private ArmPositions targetPosition = ArmPositions.PREGAME;
+    private int targetPositionIndx = targetPosition.value;
 
     // construction os the sensor potentiometers hooked to the analog inputs of the Roborio
     private final AnalogPotentiometer lowerArmAngle =
@@ -62,23 +63,50 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     private final WPI_TalonSRX armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
 
     // Limit angles determined by manually moving the arms to the positions we would like to have as limits of motion.
-    private final double lowerArmMin = 30.0;
-    private final double lowerArmMax = 130.0;
+    private final double lowerArmMin = 29.0;    // hits frame
+    private final double lowerArmMax = 135.0;   // hits wires and stuff on frame, hits frame at 141.5
     private final double upperArmMin = 40.0;
     private final double upperArmMax = 140.0;
-    private final double armStopBuffer = 5.0; // The degrees before the hard stop that you should
+
+    private final double armStopBuffer = 3.0; // The degrees before the hard stop that you should
     // cut power to 0.0
-    private final double armCreepBuffer = 15.0; // The distance before the hard stop that you
+    private final double armCreepBuffer = 3.0; // The distance before the hard stop that you
     // should cut power to creep power
-    private final double armCreepPower = 0.2; // The maximum power in the creep zone
+    private final double armCreepPower = 0.5; // The maximum power in the creep zone
 
     public ArmDriveTrain() {
+        super();
+        // Initialize to a known configuration
+        armMotorLower.configFactoryDefault();
+        armMotorUpper.configFactoryDefault();
         // configures both drive motors for the motors
         armMotorLower.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setInverted(true);
     }
 
+    /**
+     * This implements a soft limit switch for the power/angle combination.
+     * @param power (double) the requested power.
+     * @param angle (double) the current angle.
+     * @param minAngle (double) the maximum angle (something hits a physical limit like hitting the frame, crushing
+     *                  other parts of the robot, etc. Whatever is moving needs to stop before it reaches this limit.
+     * @param maxAngle (double) the maximum angle (something hits a physical limit like hitting the frame, crushing
+     *                 other parts of the robot, etc. Whatever is moving needs to stop before it reaches this limit.
+     * @return (double) the power that should be used.
+     */
+    private double softLimitSwitch(double power, double angle, double minAngle, double maxAngle) {
+        if (power < 0.0) {
+            if (angle < (minAngle + armCreepBuffer)) {
+                power = (angle < (minAngle + armStopBuffer)) ? 0.0 : -armCreepPower;
+            }
+        } else if (power > 0.0) {
+            if (angle > (maxAngle - armCreepBuffer)) {
+                power = (angle > (maxAngle - armStopBuffer)) ? 0.0 : armCreepPower;
+            }
+        }
+        return power;
+    }
     // default command for the subsystem, this one being tele-operation for the arm
     public void initDefaultCommand() {
         setDefaultCommand(new MoveArmToTarget());
@@ -86,17 +114,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public double getLowerArmAngle() {
-        // TODO: Map from the potentiometer to some position. This could just be the
-        // potentiometer value, or it could be mapped to a 'more meaningful' value
-        // like degrees from horizontal.
         return lowerArmAngle.get();
     }
 
     @Override
     public double getUpperArmAngle() {
-        // TODO: Map from the potentiometer to some position. This could just be the
-        // potentiometer value, or it could be mapped to a 'more meaningful' value
-        // like degrees from horizontal.
         return upperArmAngle.get();
     }
 
@@ -107,19 +129,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void inputDriveLowArm(double lowerArmPower) {
-        // TODO: check lower arm power direction, test against arm position and/or limit
-        // switch and set to 0 if we have hit the constraint for that direction
-        if (lowerArmPower < 0.0) {
-            if (getLowerArmAngle() < (lowerArmMin + armCreepBuffer)) {
-                lowerArmPower = (getLowerArmAngle() < (lowerArmMin + armStopBuffer)) ? 0.0 : -armCreepPower;
-            }
-        } else if (lowerArmPower > 0.0) {
-            if (getLowerArmAngle() > (lowerArmMax - armCreepBuffer)) {
-                lowerArmPower = (getLowerArmAngle() > (lowerArmMax - armStopBuffer)) ? 0.0 : armCreepPower;
-            }
-        }
-        armMotorLower.set(lowerArmPower);
+        armMotorLower.set(softLimitSwitch(lowerArmPower, getLowerArmAngle(), lowerArmMin, lowerArmMax));
     }
+
 
     /**
      * Set the arm motor power for the upper arm.
@@ -130,31 +142,38 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
      */
     @Override
     public void inputDriveUppArm(double upperArmPower) {
-        // TODO: check upper arm power direction, test against arm position and/or limit
-        // switch and set to 0 if we have hit the constraint for that direction
-        if (upperArmPower < 0.0) {
-            if (getUpperArmAngle() < (upperArmMin + armCreepBuffer)) {
-                upperArmPower = (getUpperArmAngle() < (upperArmMin + armStopBuffer)) ? 0.0 : -armCreepPower;
-            }
-        } else if (upperArmPower > 0.0) {
-            if (getUpperArmAngle() > (upperArmMax - armCreepBuffer)) {
-                upperArmPower = (getUpperArmAngle() > (upperArmMax - armStopBuffer)) ? 0.0 : armCreepPower;
-            }
-        }
-        armMotorUpper.set(upperArmPower);
+        armMotorUpper.set(softLimitSwitch(upperArmPower, getUpperArmAngle(), upperArmMin, upperArmMax));
+    }
+
+    @Override
+    public void inputDriveBucket(double bucketPower) {
+
     }
 
     @Override
     public void setTargetPosition(ArmPositions armPosition) {
-        targetPosition = armPosition.value;
+        targetPositionIndx = armPosition.value;
+    }
+
+    @Override
+    public ArmPositions getTargetPosition() {
+        return targetPosition;
+    }
+
+    @Override
+    public boolean isAtTargetPosition() {
+        double angles[] = targetPositions[targetPositionIndx];
+        return (Math.abs(angles[LOWER] - getLowerArmAngle()) < TARGET_POSITION_TOLERANCE) &&
+                (Math.abs(angles[UPPER] - getUpperArmAngle()) < TARGET_POSITION_TOLERANCE) &&
+                (Math.abs(angles[BUCKET] - getBucketAngle()) < TARGET_POSITION_TOLERANCE);
     }
 
     @Override
     public void bumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta) {
-        targetPositions[targetPosition][LOWER] += lowerAngleDelta;
-        targetPositions[targetPosition][UPPER] += upperAngleDelta;
-        if (AUTO_POSITION_BUCKET != targetPositions[targetPosition][BUCKET]) {
-            targetPositions[targetPosition][BUCKET] += bucketAngleDelta;
+        targetPositions[targetPositionIndx][LOWER] += lowerAngleDelta;
+        targetPositions[targetPositionIndx][UPPER] += upperAngleDelta;
+        if (AUTO_POSITION_BUCKET != targetPositions[targetPositionIndx][BUCKET]) {
+            targetPositions[targetPositionIndx][BUCKET] += bucketAngleDelta;
         }
     }
 

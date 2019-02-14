@@ -12,22 +12,34 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.Lifter;
 
+/**
+ * The robot lift pnematics
+ */
 public class Lift extends Subsystem {
-    DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lift1, RobotMap.lift2);
+    private final DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lift1, RobotMap.lift2);
 
     @Override
     public void initDefaultCommand() {
         setDefaultCommand(new Lifter());
     }
 
+    /**
+     * Lifts the robot up. Only needs to be applied for a short time to move the switching piston.
+     */
     public void up() {
         liftSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 
+    /**
+     * Lowers the robot. Only needs to be applied for a short time to move the switching piston.
+     */
     public void down() {
         liftSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
+    /**
+     * No power to the cylinder solenoids, the cylinders stay in the position they are
+     */
     public void off() {
         liftSolenoid.set(DoubleSolenoid.Value.kOff);
     }

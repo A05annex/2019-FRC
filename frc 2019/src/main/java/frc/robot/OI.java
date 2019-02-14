@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GamepadBase;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,6 +22,8 @@ import frc.robot.commands.TapeStraighten;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+
+    public static final boolean CONFIGURATION_MODE = true;
 
     //creation of the joystick and xbox Controller object
     private final Joystick stick = new Joystick(0);
