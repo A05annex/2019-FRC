@@ -7,7 +7,10 @@ package frc.robot.subsystems;
  */
 public interface IUseArm {
     /**
-     * Get the angle of the lower arm.
+     * Get the angle of the lower arm. The angle of the lower arm is 90&deg; when perfectly vertical
+     * to the ground surface; 0&deg; would be the arm moved towards the front of the robot (moved down)
+     * until it is parallel to the ground, 180&deg; would be the arm moved towards the rear of the robot
+     * (moved up) until it is parallel to the ground.
      *
      * @return (double) The position angle of the lower arm.
      */
@@ -28,7 +31,7 @@ public interface IUseArm {
     double getBucketAngle();
 
     /**
-     * Set the arm motor power for the lower arm.
+     * Set the arm motor power (or speed, depending on the implementation)for the lower arm.
      *
      * @param lowerArmPower (double) The power to the lower arm in the range -1 to
      *                      1; where a positive value is up and a negative value is
@@ -37,13 +40,21 @@ public interface IUseArm {
     void inputDriveLowArm(double lowerArmPower);
 
     /**
-     * Set the arm motor power for the upper arm.
+     * Set the arm motor power (or speed, depending on the implementation) for the upper arm.
      *
      * @param upperArmPower (double) The power to the upper arm in the range -1 to
      *                      1; where a positive value is up and a negative value is
      *                      down.
      */
     void inputDriveUppArm(double upperArmPower);
+
+    /**
+     * Set the bucket motor power (or speed, depending on the implementation) for the upper arm.
+     * @param bucketPower (double) The power to the upper arm in the range -1 to
+     *                    1; where a positive value is up and a negative value is
+     *                    down.
+     */
+    void inputDriveBucket(double bucketPower);
 
     /**
      * Set a target arm position. The arm will move and hold at that target position until either another
@@ -55,6 +66,19 @@ public interface IUseArm {
      *                    known target positions
      */
     void setTargetPosition(ArmPositions armPosition);
+
+    /**
+     * Get the currently set target position.
+     * @return ({@link ArmPositions}) The currently set target position.
+     */
+    ArmPositions getTargetPosition();
+
+    /**
+     * Is the arm at the currently set target point
+     * @return (boolean) Returns <tt>true</tt> if the arm is at the target point (within a reasonable tolerance),
+     *  <tt>false</tt> otherwise.
+     */
+    boolean isAtTargetPosition();
 
     /**
      * A calibration function used to bump the arm target by a small delta to aid in refining rough target
