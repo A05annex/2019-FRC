@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -67,6 +68,18 @@ public class DriveTrain extends Subsystem {
         leftMaster.set(motorInput[0]);
         rightMaster.set(motorInput[1]);
     }
+    public void inputDriveDB(double motorleft,double motorright){
+        leftMaster.set(motorleft);
+        rightMaster.set(limitTo(motorright,-.1,.1));
+    }
+    public void inputDriveSG(double motorpow){
+        leftMaster.set(motorpow);
+        rightMaster.set(motorpow);
+    }
+    public void inputPDrive(double motorleft,double motorright,double threshold){
+        leftMaster.set((motorright-threshold)/threshold);
+        rightMaster.set((motorleft-threshold)/threshold);
+    }
 
     public void setNeutralMode(NeutralMode mode) {
         //method to easily set the neutral mode of all of the driveTrain motors
@@ -82,5 +95,14 @@ public class DriveTrain extends Subsystem {
         //method to easily stop the motors
         rightMaster.set(0);
         leftMaster.set(0);
+    }
+    public double limitTo(double value,double lowerlim,double upperlim){
+        if(value > upperlim){
+            value=upperlim;
+        }
+        if(value < lowerlim){
+            value=lowerlim;
+        }
+        return(value);
     }
 }

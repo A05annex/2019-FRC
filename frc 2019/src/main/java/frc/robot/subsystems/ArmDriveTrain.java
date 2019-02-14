@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -42,14 +44,14 @@ public class ArmDriveTrain extends Subsystem {
     private double lowerArmMax = 130.0;
     private double upperArmMin = 40.0;
     private double upperArmMax = 140.0;
-    private double armStopBuffer = 5.0; // The degrees before the hard stop that you should
-    // cut power to 0.0
-    private double armCreepBuffer = 15.0; // The distance before the hard stop that you
-    // should cut power to creep power
-    private double armCreepPower = 0.2; // The maximum power in the creep zone
+    private double armStopBuffer = 5.0;     // The degrees before the hard stop that you should
+                                            // cut power to 0.0
+    private double armCreepBuffer = 15.0;   // The distance before the hard stop that you
+                                            // should cut power to creep power
+    private double armCreepPower = 0.1;     // The maximum power in the creep zone
 
-    public ArmDriveTrain() {
-        // configures both drive motors for the motors
+    public ArmDriveTrain(){
+        //configures both drive motors for the motors
         armMotorLower.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setInverted(true);
@@ -60,30 +62,13 @@ public class ArmDriveTrain extends Subsystem {
         setDefaultCommand(new ArmTeleop());
     }
 
-    /**
-     * The position of the lower arm in the range <tt>lowerArmMin</tt> to
-     * <tt>lowerArmMax</tt>
-     *
-     * @return (double) The position of the lower arm.
-     */
-    public double getLowerArmPosition() {
-        // TODO: Map from the potentiometer to some position. This could just be the
-        // potentiometer value, or it could be mapped to a 'more meaningful' value
-        // like degrees from horizontal.
-        return baseAngle.get();
+    //methods to drive the arms independently, if necessary
+    public void inputDriveLowArm(double motorInput){
+        armMotorLower.set(motorInput);
     }
 
-    /**
-     * The position of the upper arm in the range <tt>upperArmMin</tt> to
-     * <tt>upperArmMax</tt>
-     *
-     * @return (double) The position of the upper arm.
-     */
-    public double getUpperArmPosition() {
-        // TODO: Map from the potentiometer to some position. This could just be the
-        // potentiometer value, or it could be mapped to a 'more meaningful' value
-        // like degrees from horizontal.
-        return secondAngle.get();
+    public void inputDriveUppArm(double motorInput){
+        armMotorUpper.set(motorInput);
     }
 
     /**
@@ -152,14 +137,26 @@ public class ArmDriveTrain extends Subsystem {
                 .acos((arm1 * arm1 + arm2 * arm2 - xdifference * xdifference - height * height) / (2 * arm1 * arm2)));
         SmartDashboard.putString("DB/String 6", Double.toString(angle1));
         SmartDashboard.putString("DB/String 7", Double.toString(angle2));
+        SmartDashboard.putString("DB/String 8", Double.toString(height));
     }
 
-    public void moveToHeight() {
-
+    public void moveToHeight(){
+        armMotorLower.set(limitTo((angle1 - baseAngle.get())/arm1multiplier, -.3, .7));
+        armMotorUpper.set(limitTo((secondAngle.get() - angle2)/arm2multiplier, -.5, .5));
     }
 
     public void lockPosition() {
         armMotorLower.set(0);
         armMotorUpper.set(0);
+    }
+
+    public double limitTo(double value, double lowerLimit, double upperLimit){
+        if(value > upperLimit){
+            value = upperLimit;
+        }
+        if(value < lowerLimit){
+            value = lowerLimit;
+        }
+        return value;
     }
 }
