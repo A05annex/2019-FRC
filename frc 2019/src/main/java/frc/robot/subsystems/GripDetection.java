@@ -54,6 +54,7 @@ public class GripDetection extends Subsystem {
     imgLockCH2 = new Object(),
     
     imgLockSEEN = new Object();
+    
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public GripDetection(){
