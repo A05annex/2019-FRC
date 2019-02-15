@@ -13,12 +13,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.BumpTargetPosition;
-import frc.robot.commands.Lifter;
-import frc.robot.commands.MoveServo;
-import frc.robot.commands.Shift;
-import frc.robot.commands.TapeStraighten;
-
-import frc.robot.Constants.*;
+import frc.robot.commands.MoveArmToTarget;
+import frc.robot.commands.SetArmTarget;
+import frc.robot.subsystems.ArmPositions;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -61,6 +58,7 @@ public class OI {
     }
 
     public OI() {
+        /*
         trigger.whenPressed(new Shift(true));
         thumb.whenPressed(new Shift(false));
         top.whenPressed(new MoveServo(0));
@@ -71,9 +69,14 @@ public class OI {
         button8.whileHeld(new TapeStraighten('R'));
         button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS));
+        */
+
+        trigger.whenPressed(new SetArmTarget(ArmPositions.HOME));
+        thumb.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
+        button5.whenPressed(new MoveArmToTarget());
 
         // These are test and calibration initializations - they are NOT required for competition.
-        if (Constants.ENABLE_CALIBRATION) {
+        /*if (Constants.ENABLE_CALIBRATION) {
             xbox = new XboxController(1);
             final POVButton decArmAngle = new POVButton(xbox, xbox.getPOV(0));
             decArmAngle.whenPressed(xbox.getBumper(GenericHID.Hand.kLeft) ?
@@ -90,7 +93,7 @@ public class OI {
 
             final POVButton incBucketAngle = new POVButton(xbox, xbox.getPOV(270));
             incBucketAngle.whenPressed(new BumpTargetPosition(0.0, 0.0, Constants.BUMP_INCREMENT));
-        }
+        }*/
 
     }
 }

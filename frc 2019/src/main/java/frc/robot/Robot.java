@@ -73,7 +73,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        Scheduler.getInstance().removeAll();
+        SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
+        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
     }
 
     /**
