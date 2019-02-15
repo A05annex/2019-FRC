@@ -18,22 +18,25 @@ import frc.robot.RobotMap;
 public class Lift extends Subsystem {
     private final DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lift1, RobotMap.lift2);
 
-  /** public void up(){
-    *liftSolenoid.set(DoubleSolenoid.Value.kForward);
-  } *
-  **/
+    public Lift() {
+        super();
+    }
+
+    @Override
+    public void initDefaultCommand() {
+    }
 
     /**
-     * Lifts the robot up. Only needs to be applied for a short time to move the switching piston.
+     * Lifts the robot lift_robot. Only needs to be applied for a short time to move the switching piston.
      */
-    public void up() {
+    public void lift_robot() {
         liftSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 
     /**
      * Lowers the robot. Only needs to be applied for a short time to move the switching piston.
      */
-    public void down() {
+    public void retract_lifters() {
         liftSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
@@ -44,8 +47,5 @@ public class Lift extends Subsystem {
         liftSolenoid.set(DoubleSolenoid.Value.kOff);
     }
 
-  @Override
-  protected void initDefaultCommand() {
-
-  }
+  
 }

@@ -9,11 +9,11 @@ import frc.robot.Robot;
 public class Shift extends Command {
 
     boolean up;
-    Timer time = new Timer();
+    private static Timer time = new Timer();
 
     public Shift(boolean up) {
+        super();
         this.up = up;
-
         //only functions if the drive train is not in use by another command
         requires(Robot.driveTrain);
     }
@@ -30,7 +30,7 @@ public class Shift extends Command {
 
     @Override
     protected void execute() {
-        //shifts the motors based on the value of boolean "up"
+        //shifts the motors based on the value of boolean "lift_robot"
         Robot.driveTrain.stop();
         if (up) {
             Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kForward);
@@ -41,7 +41,7 @@ public class Shift extends Command {
 
     @Override
     protected boolean isFinished() {
-        //returns true after .3 seconds
+        //returns true after .3 seconds (should be long enough to reset the valve piston.
         return time.get() > .3;
     }
 

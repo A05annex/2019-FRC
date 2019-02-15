@@ -14,17 +14,15 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.BumpTargetPosition;
-import frc.robot.commands.MoveServo;
-import frc.robot.commands.Shift;
-import frc.robot.commands.TapeStraighten;
+import frc.robot.commands.MoveArmToTarget;
+import frc.robot.commands.SetArmTarget;
+import frc.robot.subsystems.ArmPositions;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-
-    public static final boolean CONFIGURATION_MODE = true;
 
     //creation of the joystick and xbox Controller object
     private final Joystick stick = new Joystick(0);
@@ -39,12 +37,11 @@ public class OI {
     private final JoystickButton button8 = new JoystickButton(this.stick, 8);
     private final JoystickButton button9 = new JoystickButton(this.stick, 9);
     private final JoystickButton button10 = new JoystickButton(this.stick, 10);
-    private final JoystickButton button13 = new JoystickButton(this.stick, 13);
-    //need to use other button, 13 doesn't exist. this is temporary
+    private final JoystickButton button11 = new JoystickButton(this.stick, 11);
+    private final JoystickButton button12 = new JoystickButton(this.stick, 12);
 
     // These are test and calibration initializations - they are NOT required for competition.
-    private final XboxController xbox = new XboxController(1);
-    private static final double BUMP_INCREMENT = 0.25;
+    private XboxController xbox = null;
 
 
 
@@ -53,37 +50,51 @@ public class OI {
         return (stick);
     }
 
+    /**
+     * Get the gamepad
+     * @return (XboxController) The gamepad if calibration is enabled, <tt>null</tt> otherwise.
+     */
     public XboxController getXbox() {
         return (xbox);
     }
 
     public OI() {
+        /*
         trigger.whenPressed(new Shift(true));
         thumb.whenPressed(new Shift(false));
         top.whenPressed(new MoveServo(0));
         top2.whenPressed(new MoveServo(1));
-        button7.whileHeld(new TapeStraighten('L'));
-        button8.whileHeld(new TapeStraighten('R'));
         //button5.whenPressed(new TapeStraighten('L'));
         //button6.whenPressed(new TapeStraighten('R'));
-        button13.whenPressed(new LiftToPlatform());
+        button7.whileHeld(new TapeStraighten('L'));
+        button8.whileHeld(new TapeStraighten('R'));
+        button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
+        button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS));
+        */
+
+        trigger.whenPressed(new SetArmTarget(ArmPositions.HOME));
+        thumb.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
+        button5.whenPressed(new MoveArmToTarget());
 
         // These are test and calibration initializations - they are NOT required for competition.
-        final POVButton decArmAngle = new POVButton(xbox, xbox.getPOV(0));
-        decArmAngle.whenPressed(xbox.getBumper(GenericHID.Hand.kLeft) ?
-                new BumpTargetPosition(0.0, -BUMP_INCREMENT, 0.0) :
-                new BumpTargetPosition( -BUMP_INCREMENT, 0.0, 0.0));
+        /*if (Constants.ENABLE_CALIBRATION) {
+            xbox = new XboxController(1);
+            final POVButton decArmAngle = new POVButton(xbox, xbox.getPOV(0));
+            decArmAngle.whenPressed(xbox.getBumper(GenericHID.Hand.kLeft) ?
+                    new BumpTargetPosition(0.0, -Constants.BUMP_INCREMENT, 0.0) :
+                    new BumpTargetPosition(-Constants.BUMP_INCREMENT, 0.0, 0.0));
 
-        final POVButton incArmAngle = new POVButton(xbox, xbox.getPOV(180));
-        incArmAngle.whenPressed(xbox.getBumper(GenericHID.Hand.kLeft) ?
-                new BumpTargetPosition(0.0, BUMP_INCREMENT, 0.0) :
-                new BumpTargetPosition( BUMP_INCREMENT, 0.0, 0.0));
+            final POVButton incArmAngle = new POVButton(xbox, xbox.getPOV(180));
+            incArmAngle.whenPressed(xbox.getBumper(GenericHID.Hand.kLeft) ?
+                    new BumpTargetPosition(0.0, Constants.BUMP_INCREMENT, 0.0) :
+                    new BumpTargetPosition(Constants.BUMP_INCREMENT, 0.0, 0.0));
 
-        final POVButton decBucketAngle = new POVButton(xbox, xbox.getPOV(90));
-        decBucketAngle.whenPressed(new BumpTargetPosition(0.0, 0.0, -BUMP_INCREMENT));
+            final POVButton decBucketAngle = new POVButton(xbox, xbox.getPOV(90));
+            decBucketAngle.whenPressed(new BumpTargetPosition(0.0, 0.0, -Constants.BUMP_INCREMENT));
 
-        final POVButton incBucketAngle = new POVButton(xbox, xbox.getPOV(270));
-        incBucketAngle.whenPressed(new BumpTargetPosition(0.0, 0.0, BUMP_INCREMENT));
+            final POVButton incBucketAngle = new POVButton(xbox, xbox.getPOV(270));
+            incBucketAngle.whenPressed(new BumpTargetPosition(0.0, 0.0, Constants.BUMP_INCREMENT));
+        }*/
 
     }
 }

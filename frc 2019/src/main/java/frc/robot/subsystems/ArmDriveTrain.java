@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveArmToTarget;
 
@@ -33,7 +34,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // The target positions. these are not final because we may be tuning/calibrating positions and the
     // bumpTargetPosition() method may be called to dynamically modify these.
     private double[][] targetPositions = {
-            {92.0, 23.0, 0.0},                          // PREGAME
+            {110.0, 35.0, 0.0},                         // PREGAME
             {100.0, 25.0, 5.0},                         // HOME
             {120.5, 23.0, AUTO_POSITION_BUCKET},        // LOW_HATCH
             {92.0, 23.0, AUTO_POSITION_BUCKET},         // LOW_CARGO
@@ -54,9 +55,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     // construction os the sensor potentiometers hooked to the analog inputs of the Roborio
     private final AnalogPotentiometer lowerArmAngle =
-            new AnalogPotentiometer(2, -360, 334.1);
+            new AnalogPotentiometer(2, -360, 322);
     private final AnalogPotentiometer upperArmAngle =
-            new AnalogPotentiometer(3, -360, 360.0);
+            new AnalogPotentiometer(3, -360, 198);
 
     // construction of arm motors
     private final WPI_TalonSRX armMotorLower = new WPI_TalonSRX(RobotMap.arm1);
@@ -80,8 +81,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         armMotorLower.configFactoryDefault();
         armMotorUpper.configFactoryDefault();
         // configures both drive motors for the motors
-        armMotorLower.setNeutralMode(NeutralMode.Brake);
-        armMotorUpper.setNeutralMode(NeutralMode.Brake);
+        armMotorLower.setNeutralMode(NeutralMode.Coast);
+        armMotorUpper.setNeutralMode(NeutralMode.Coast);
         armMotorUpper.setInverted(true);
     }
 
@@ -109,7 +110,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     }
     // default command for the subsystem, this one being tele-operation for the arm
     public void initDefaultCommand() {
-        setDefaultCommand(new MoveArmToTarget());
+        //setDefaultCommand(new MoveArmToTarget());
     }
 
     @Override
@@ -137,8 +138,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
      * Set the arm motor power for the upper arm.
      *
      * @param upperArmPower (double) The power to the upper arm in the range -1 to
-     *                      1; where a positive value is up and a negative value is
-     *                      down.
+     *                      1; where a positive value is lift_robot and a negative value is
+     *                      retract_lifters.
      */
     @Override
     public void inputDriveUppArm(double upperArmPower) {
@@ -152,6 +153,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void setTargetPosition(ArmPositions armPosition) {
+        targetPosition = armPosition;
         targetPositionIndx = armPosition.value;
     }
 
@@ -179,7 +181,16 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void moveToTarget() {
-
+        double lowerCoefficient = 30;
+        double upperCoefficient = 30;
+        armMotorLower.set(limit(.6, -.3, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
+        armMotorUpper.set(limit(.5, -.5, (targetPositions[targetPositionIndx][1]-upperArmAngle.get()/upperCoefficient)));
+        SmartDashboard.putString("DB/String 0", Double.toString(targetPositions[targetPositionIndx][0]));
+        SmartDashboard.putString("DB/String 1", Double.toString(targetPositions[targetPositionIndx][1]));
+        SmartDashboard.putString("DB/String 6", Double.toString(limit(.6, -.3, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient)));
+        SmartDashboard.putString("DB/String 7", Double.toString((targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
+        SmartDashboard.putString("DB/String 8", Double.toString(limit(.5, -.5, (targetPositions[targetPositionIndx][1]-upperArmAngle.get())/upperCoefficient)));
+        SmartDashboard.putString("DB/String 9", Double.toString((targetPositions[targetPositionIndx][1]-upperArmAngle.get())/upperCoefficient));
     }
 
     @Override
@@ -187,5 +198,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         // method to easily stop the motors
         armMotorLower.set(0.0);
         armMotorUpper.set(0.0);
+    }
+
+    public double limit(double upper, double lower, double input){
+        if(input>upper)input = upper;
+        if(input<lower)input = lower;
+        return input;
     }
  }

@@ -8,12 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.ArmPositions;
 
 public class SetAndWaitForArmPosition extends Command {
+
+  ArmPositions targetPosition;
   
-  public SetAndWaitForArmPosition(){
-    //take argument here
+  public SetAndWaitForArmPosition(ArmPositions targetPosition){
+    super();
+        this.targetPosition = targetPosition;
 
   }
   
@@ -26,29 +30,23 @@ public class SetAndWaitForArmPosition extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    super.execute();
+        Robot.armDriveTrain.setTargetPosition(targetPosition);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //need to take arm position as an argument
-    //make equal or close to equal to command that finds current angle of arm
-    if(armPosition == currentPosition){
-      return true;
-    }
-    else{
-      return false;
-    }
-
+ 
+    return Robot.armDriveTrain.isAtTargetPosition();
+    //returns true if is at target position
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
   }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
+  
   @Override
   protected void interrupted() {
   }

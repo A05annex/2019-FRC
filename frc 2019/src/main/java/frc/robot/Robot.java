@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Lifter;
 import frc.robot.subsystems.*;
 
 /**
@@ -23,6 +24,7 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
+
     public final static DriveTrain driveTrain = new DriveTrain();
     public final static IUseArm armDriveTrain = new ArmDriveTrain();
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
@@ -71,7 +73,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        Scheduler.getInstance().removeAll();
+        SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
+        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
     }
 
     /**
@@ -120,6 +124,8 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+        // Make sure the lifters are retracted before we start moving around.
+        new Lifter(Lifter.RETRACT_LIFTERS).start();
     }
 
     /**

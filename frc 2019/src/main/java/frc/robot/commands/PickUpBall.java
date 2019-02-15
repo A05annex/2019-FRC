@@ -39,7 +39,7 @@ public class PickUpBall extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(time.get()>2.0){
+    if(time.get()>1.5){
       return true;
     }
     else{

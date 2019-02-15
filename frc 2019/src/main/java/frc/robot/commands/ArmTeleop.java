@@ -27,7 +27,7 @@ public class ArmTeleop extends Command {
     @Override
     protected void execute() {
         XboxController xbox = Robot.getOI().getXbox();
-        // left stick is lower arm up-down, right stick is upper arm up-down
+        // left stick is lower arm lift_robot-retract_lifters, right stick is upper arm lift_robot-retract_lifters
         Robot.armDriveTrain.inputDriveLowArm(xbox.getY(GenericHID.Hand.kLeft) * s_maxSpeed);
         Robot.armDriveTrain.inputDriveUppArm(xbox.getY(GenericHID.Hand.kRight) * s_maxSpeed);
     }

@@ -11,12 +11,10 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class EndGameDrive extends Command {
-
+public class EndGameDowner extends Command {
   private final Timer time = new Timer();
-
-  public EndGameDrive() {
-    requires(Robot.driveTrain);
+  public EndGameDowner() {
+    requires(Robot.lift);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -30,24 +28,18 @@ public class EndGameDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //how make motors go backwards? 
-    //negative double?
-    Robot.driveTrain.leftMaster.set(-0.7);
-    Robot.driveTrain.rightMaster.set(-0.7);
+    Robot.lift.retract_lifters();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(time.get()>4.0){
-      //i am guessing on time here
-      //it should really be whatever time we need for the robot to drive onto the platform
+    if(time.get()>0.8){
       return true;
     }
     else{
       return false;
     }
-  
   }
 
   // Called once after isFinished returns true
@@ -55,7 +47,4 @@ public class EndGameDrive extends Command {
   protected void end() {
   }
 
-  @Override
-  protected void interrupted() {
-  }
 }
