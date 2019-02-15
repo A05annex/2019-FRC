@@ -8,17 +8,22 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.PickUpBall;
+import frc.robot.commands.DepositDrive;
+import frc.robot.commands.MoveServo;
+import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.commands.SetArmTarget;
 import frc.robot.subsystems.ArmPositions;
 
-public class PickUpBallFromGround extends CommandGroup {
+public class AttatchHatchPanelHigh extends CommandGroup {
   
-  public PickUpBallFromGround() {
+  public AttatchHatchPanelHigh() {
 
-    addSequential(new SetArmTarget(ArmPositions.PICKUP_FROM_FLOOR));
-    addSequential(new PickUpBall());
-    addSequential(new SetArmTarget(ArmPositions.HOME));
-    //is HOME the correct postition for travelling?
+    addSequential(new SetArmTarget(ArmPositions.HIGH_HATCH));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.HIGH_HATCH));
+    //addSequential(new Centering());
+    //We need to find a way to center the robot
+    addSequential(new DepositDrive());
+    addSequential(new MoveServo(1));
+
   }
 }

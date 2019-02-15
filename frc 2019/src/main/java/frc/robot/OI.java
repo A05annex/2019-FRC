@@ -75,6 +75,7 @@ public class OI {
         trigger.whenPressed(new SetArmTarget(ArmPositions.HOME));
         thumb.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
         button5.whenPressed(new MoveArmToTarget());
+        button12.whenPressed(new LiftToPlatform());
 
         // These are test and calibration initializations - they are NOT required for competition.
         /*if (Constants.ENABLE_CALIBRATION) {
