@@ -14,10 +14,6 @@ public class SetArmTarget extends Command {
         this.targetPosition = targetPosition;
     }
 
-    @Override
-    protected void initialize() {
-        Robot.armDriveTrain.setTargetPosition(targetPosition);
-    }
 
     @Override
     protected void execute() {
