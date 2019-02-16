@@ -26,23 +26,23 @@ public class LiftToPlatform extends CommandGroup {
 
     addSequential(new SetArmTarget(ArmPositions.PRE_ENDGAME_LIFT));
     addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+    //do i need both or just SetAndWaitForArmPosition()?
     addParallel(new SetArmTarget(ArmPositions.DURING_LIFT));
+    addParallel(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
     //still need to make DURING_LIFT
     addSequential(new EndGameLifter());
     addSequential(new SetArmTarget(ArmPositions.ENDGAME_LIFT));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_LIFT));
     addParallel(new EndGameDowner());
     addSequential(new SetArmTarget(ArmPositions.ENDGAME_LAND));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_LAND));
     addParallel(new EndGameDrive());
     addSequential(new SetArmTarget(ArmPositions.ENDGAME_PARK));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_PARK));
     addSequential(new SetArmTarget(ArmPositions.POST_ENDGAME_PARK));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK));
     
 
-    
-    // To run multiple commands at the same time,
-    // use addParallel()
-    // e.g. addParallel(new Command1());
-    // addSequential(new Command2());
-    // Command1 and Command2 will run in parallel.
 
   }
 }

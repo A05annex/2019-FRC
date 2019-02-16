@@ -8,28 +8,22 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.DepositDrive;
-import frc.robot.commands.MoveServo;
 import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.commands.SetArmTarget;
 import frc.robot.subsystems.ArmPositions;
 
-public class AttatchHatchPanelHigh extends CommandGroup {
+public class DepositBallHigh extends CommandGroup {
   
-  public AttatchHatchPanelHigh() {
-
-    //kinda a test idea
-    //efficient to combine all this into one command or unecessary?
-
-    addSequential(new SetArmTarget(ArmPositions.HIGH_HATCH));
-    addSequential(new SetAndWaitForArmPosition(ArmPositions.HIGH_HATCH));
+  public DepositBallHigh() {
+    
+    //also a test right now
+    //will hook up to button if deemed useful and button efficient
     //addSequential(new Centering());
-    //We need to find a way to center the robot
-    addSequential(new DepositDrive());
-    addSequential(new MoveServo(1));
+    //no way to center yet
 
-    //not hooked up to button
-    //will hook up if deemed good idea
+    addSequential(new SetArmTarget(ArmPositions.HIGH_CARGO));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.HIGH_CARGO));
+
 
   }
 }
