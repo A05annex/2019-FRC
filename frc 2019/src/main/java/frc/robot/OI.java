@@ -78,7 +78,8 @@ public class OI {
         xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
         xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-
+        xboxX.whenPressed(new SetArmTarget(ArmPositions.HOME));
+        //
         // These are test and calibration initializations - they are NOT required for competition.
         xbox = new XboxController(1);
         final POVButton decArmAngle = new POVButton(xbox, 0);
@@ -96,5 +97,6 @@ public class OI {
         final POVButton incBucketAngle = new POVButton(xbox,270);
         incBucketAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE,BumpTargetPosition.INCREMENT));
-    }
+    
+            }
 }

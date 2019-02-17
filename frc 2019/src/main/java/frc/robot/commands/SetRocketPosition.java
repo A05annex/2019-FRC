@@ -35,7 +35,7 @@ public class SetRocketPosition extends Command {
     protected void execute() {
         super.execute();
         XboxController xbox = Robot.getOI().getXbox();
-        if (xbox.getBumper(GenericHID.Hand.kLeft)) {
+        if (xbox.getBumper(GenericHID.Hand.kRight)) {
             Robot.armDriveTrain.setTargetPosition(ballPosition);
         } else {
             Robot.armDriveTrain.setTargetPosition(hatchPosition);
