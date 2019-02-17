@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
@@ -16,6 +17,8 @@ import frc.robot.Robot;
 public class ArmTeleop extends Command {
 
     static final double s_maxSpeed = 0.75;
+
+    Joystick stick;
 
     public ArmTeleop() {
         super();

@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commands.*;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.subsystems.ArmPositions;
+import frc.robot.commands.MoveServo;
+import frc.robot.commands.SetArmHeight;
+import frc.robot.commands.Shift;
+import frc.robot.commands.TapeFind;
 
 /**
  * This class is the glue that binds the controls on the physical operator
