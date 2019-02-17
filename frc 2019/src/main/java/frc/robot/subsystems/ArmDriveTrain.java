@@ -1,12 +1,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -70,6 +69,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2),
         bucketMotor = new WPI_TalonSRX(RobotMap.bucket);
 
+    private Timer time = new Timer();
+    double lastTime = 0;
+
     private final Encoder bucketEncoder = new Encoder(8, 9);
 
     // Limit angles determined by manually moving the arms to the positions we would like to have as limits of motion.
@@ -97,6 +99,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         bucketMotor.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setInverted(true);
         bucketEncoder.reset();
+        time.start();
+        lastTime = time.get();
     }
 
     /**
@@ -197,10 +201,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void moveToTarget() {
-        double lowerCoefficient = 30;
+        double lowerCoefficient = 10;
         double upperCoefficient = 30;
+        double constantErrorUpper = .15;
         inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
-        inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient));
+        inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
         if(Robot.getOI().getStick().getRawButton(5)){
             bucketMotor.set(.5);
         }else if(Robot.getOI().getStick().getRawButton(6)){
@@ -212,7 +217,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         SmartDashboard.putString("DB/String 1", Double.toString(targetPositions[targetPositionIndx][UPPER]));
         //SmartDashboard.putString("DB/String 6", Integer.toString(bucketEncoder.get()));
         SmartDashboard.putString("DB/String 7", Double.toString((targetPositions[targetPositionIndx][LOWER]-lowerArmAngle.get())/lowerCoefficient));
-        SmartDashboard.putString("DB/String 8", Double.toString(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient)));
+        SmartDashboard.putString("DB/String 8", Double.toString(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper)));
         SmartDashboard.putString("DB/String 9", Double.toString((targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient));
     }
 
