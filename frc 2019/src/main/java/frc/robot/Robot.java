@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Lifter;
 import frc.robot.subsystems.*;
 
 /**
@@ -23,16 +24,18 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static DriveTrain driveTrain = new DriveTrain();
-    public static ArmDriveTrain armDriveTrain = new ArmDriveTrain();
-    public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
-    public static GripDetection gripDetection = new GripDetection();
-    public static OI oi;
-    public static Bucket bucket = new Bucket();
-    public static GripDetection grip = new GripDetection();
-    public static BucketWheelz bucketWheelz = new BucketWheelz();
-    public static Lift lift = new Lift();
-    Command m_autonomousCommand;
+
+    public final static DriveTrain driveTrain = new DriveTrain();
+    public final static IUseArm armDriveTrain = new ArmDriveTrain();
+    //public static IUseArm armDriveTrain = new ArmDriveSrx();
+    public final static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+    public final static GripDetection gripDetection = new GripDetection();
+    private static OI oi;
+    public final static Bucket bucket = new Bucket();
+    public final static GripDetection grip = new GripDetection();
+    public final static BucketWheelz bucketWheelz = new BucketWheelz();
+    public final static Lift lift = new Lift();
+    private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     /**
@@ -70,7 +73,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        Scheduler.getInstance().removeAll();
+        SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
+        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
     }
 
     /**
@@ -119,19 +124,20 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+        // Make sure the lifters are retracted before we start moving around.
+        new Lifter(Lifter.RETRACT_LIFTERS).start();
     }
 
-  /**
-   * This function is called periodically during operator control.
-   */
-  @Override
-  public void teleopPeriodic() {
-    Scheduler.getInstance().run();
-    SmartDashboard.putString("DB/String 0", "functional");
-    SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.baseAngle.get()));
-    SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.secondAngle.get()));
-    SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.secondAngle.get()-90));
-    //SmartDashboard.putString("DB/String 3", "functional");
+    /**
+     * This function is called periodically during operator control.
+     */
+    @Override
+    public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+        SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
+        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.getBucketAngle()));
+        SmartDashboard.putString("DB/String 5", Boolean.toString(armDriveTrain.isAtTargetPosition()));
 
     }
 
@@ -140,5 +146,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
+    }
+
+    public static OI getOI() {
+        return oi;
     }
 }

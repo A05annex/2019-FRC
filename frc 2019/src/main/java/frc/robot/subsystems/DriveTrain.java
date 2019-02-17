@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -26,19 +26,24 @@ public class DriveTrain extends Subsystem {
 
     public DriveTrain() {
         //constructs and configures all six drive motors
+        // restore everything to known factory default state
+        rightMaster.configFactoryDefault();
+        rm2.configFactoryDefault();
+        rm3.configFactoryDefault();
+        leftMaster.configFactoryDefault();
+        lm2.configFactoryDefault();
+        lm3.configFactoryDefault();
+        // now configure them
         rm2.follow(rightMaster);
         rm3.follow(rightMaster);
         lm2.follow(leftMaster);
         lm3.follow(leftMaster);
-        rightMaster.setNeutralMode(NeutralMode.Brake);
-        rm2.setNeutralMode(NeutralMode.Brake);
-        rm3.setNeutralMode(NeutralMode.Brake);
-        leftMaster.setNeutralMode(NeutralMode.Brake);
-        lm2.setNeutralMode(NeutralMode.Brake);
-        lm3.setNeutralMode(NeutralMode.Brake);
-        leftMaster.setInverted(true);
-        lm2.setInverted(true);
-        lm3.setInverted(true);
+        rm2.setInverted(InvertType.FollowMaster);
+        rm3.setInverted(InvertType.FollowMaster);
+        lm2.setInverted(InvertType.FollowMaster);
+        lm3.setInverted(InvertType.FollowMaster);
+        setNeutralMode(NeutralMode.Brake);
+        leftMaster.setInverted(InvertType.InvertMotorOutput);
         rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         ahrs.reset();
