@@ -16,7 +16,6 @@ public class DepositBallHigh extends CommandGroup {
   
   public DepositBallHigh() {
     
-    //also a test right now
     //will hook up to button if deemed useful and button efficient
     //addSequential(new Centering());
     //no way to center yet

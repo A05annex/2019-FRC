@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveArmToTarget;
@@ -33,7 +34,6 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // picked this because it is unambiguously represented and way outside any reasonable angle range.
     private static final double AUTO_POSITION_BUCKET = 1024.0;
 
-    private static final double TARGET_POSITION_TOLERANCE = 2.5;
 
     // The target positions. these are not final because we may be tuning/calibrating positions and the
     // bumpTargetPosition() method may be called to dynamically modify these.
@@ -47,12 +47,14 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {105.5, 110.0, 30},       // HIGH_HATCH
             {98, 126, 800},       // HIGH_CARGO
             {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
-            {46.0, 72.5, 0.0},                          // PRE_ENDGAME_LIFT
-            {46.0, 72.5, 0.0},                          // DURING_LIFT
-            {29.5, 95.0, 0.0},                          // ENDGAME_LIFT
-            {29.5, 95.0, 0.0},                          // ENDGAME_LAND
-            {29.5, 95.0, 0.0},                          // ENDGAME_PARK
-            {100.0, 25.0, 5.0}                          // POST_ENDGAME_PARK
+
+            {75.4, 83.9, 0.0},                          // PRE_ENDGAME_LIFT
+            {57.6, 78.2, 0.0},                          // DURING_LIFT
+            {62.5, 62.4, 0.0},                          // PULL_IN (front lift only)
+            {29.5, 95.0, 0.0},                          // ENDGAME_LIFT (rear lift only)
+            {71.25, 55.05, 0.0},                          // ENDGAME_LAND
+            {80.25, 55.05, 0.0},                          // ENDGAME_PARK
+            {76.9, 49.8, 0.0}                           // POST_ENDGAME_PARK (not using)
     };
 
     private ArmPositions targetPosition = ArmPositions.HOME;
@@ -60,7 +62,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     // construction os the sensor potentiometers hooked to the analog inputs of the Roborio
     private final AnalogPotentiometer lowerArmAngle =
-            new AnalogPotentiometer(2, -360, 326);
+            new AnalogPotentiometer(2, -360, 352);
     private final AnalogPotentiometer upperArmAngle =
             new AnalogPotentiometer(3, -360, 198);
 
@@ -175,6 +177,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     public void setTargetPosition(ArmPositions armPosition) {
         targetPosition = armPosition;
         targetPositionIndx = armPosition.value;
+        resetIntegral();
     }
 
     @Override
@@ -185,8 +188,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     @Override
     public boolean isAtTargetPosition() {
         double angles[] = targetPositions[targetPositionIndx];
-        return (Math.abs(angles[LOWER] - getLowerArmAngle()) < TARGET_POSITION_TOLERANCE)
-                && (Math.abs(angles[UPPER] - getUpperArmAngle()) < TARGET_POSITION_TOLERANCE)
+        return (Math.abs(angles[LOWER] - getLowerArmAngle()) < Constants.TARGET_POSITION_TOLERANCE)
+                && (Math.abs(angles[UPPER] - getUpperArmAngle()) < Constants.TARGET_POSITION_TOLERANCE)
                 /* && (Math.abs(angles[BUCKET] - getBucketAngle()) < TARGET_POSITION_TOLERANCE) */;
     }
 
@@ -212,8 +215,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     public void moveToTarget() {
         double 
             period = time.get()-lastTime,
-            lowerCoefficient = 30,
-            upperCoefficient = 30,
+            lowerCoefficient = 20,
+            upperCoefficient = 20,
             bucketCoefficient = 30,
             lkI = 3;
         lP = (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient;
@@ -230,7 +233,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         //inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
         inputDriveLowArm(limit(.6, -1, (lP + lI)));
         inputDriveUppArm(limit(1, -.5, (uP + uI)));
-        inputDriveBucket(limit(.5, -.8, (bP)));
+        //inputDriveBucket(limit(.5, -.8, (bP))); 
 
         if(Robot.getOI().getStick().getRawButton(5)){
             bucketMotor.setSelectedSensorPosition(0);
@@ -241,6 +244,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         SmartDashboard.putString("DB/String 5", Double.toString(lI));
         SmartDashboard.putString("DB/String 6", Integer.toString(bucketMotor.getSelectedSensorPosition()));
         SmartDashboard.putString("DB/String 7", Double.toString((targetPositions[targetPositionIndx][LOWER]-lowerArmAngle.get())/lowerCoefficient));
+        SmartDashboard.putString("DB/String 8", Boolean.toString(isAtTargetPosition()));
     }
 
     @Override

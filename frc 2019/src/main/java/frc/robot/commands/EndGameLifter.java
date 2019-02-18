@@ -7,17 +7,13 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.Lift;
 
 public class EndGameLifter extends Command {
   
-  DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lift1, RobotMap.lift2);
   private final Timer time = new Timer();
 
   public EndGameLifter() {

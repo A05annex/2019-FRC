@@ -18,6 +18,7 @@ public class LiftAndDuringLift extends CommandGroup {
    */
   public LiftAndDuringLift() {
 
+  
     addParallel(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
     //still need to make DURING_LIFT
     addSequential(new EndGameLifter());

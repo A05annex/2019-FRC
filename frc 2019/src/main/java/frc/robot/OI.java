@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commandgroups.DownerAndLand;
-import frc.robot.commandgroups.DriveAndPark;
+import frc.robot.commandgroups.DriveAndLand;
+import frc.robot.commandgroups.DriveAndPullIn;
 import frc.robot.commandgroups.LiftAndDuringLift;
+import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.*;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Lifter;
@@ -79,13 +81,16 @@ public class OI {
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
         
 
-        //buttons for testing all end game lift code
         button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+        button8.whenPressed(new LiftToPlatform());
+        button9.whenPressed(new TimedDrive(2.0, 0.2));
+        //buttons for testing all end game lift code
+        /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftAndDuringLift());
-        button9.whenPressed(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_LIFT));
-        button10.whenPressed(new DownerAndLand());
-        button11.whenPressed(new DriveAndPark());
-        button12.whenPressed(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK));
+        button9.whenPressed(new DriveAndPullIn()); 
+        button10.whenPressed(new DriveAndLand()); 
+        button11.whenPressed(new DownerAndLand());
+        button12.whenPressed(new TimedDrive(0.5, -0.2)); */
         
 
         // Controlling position selection

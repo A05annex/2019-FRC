@@ -35,10 +35,11 @@ public enum ArmPositions {
     PICKUP_FROM_FLOOR(8),
     PRE_ENDGAME_LIFT(9),
     DURING_LIFT(10),
-    ENDGAME_LIFT(11),
-    ENDGAME_LAND(12),
-    ENDGAME_PARK(13),
-    POST_ENDGAME_PARK(14);
+    PULL_IN(11),
+    ENDGAME_LIFT(12),
+    ENDGAME_LAND(13),
+    ENDGAME_PARK(14),
+    POST_ENDGAME_PARK(15);
 
 
     public final int value;
