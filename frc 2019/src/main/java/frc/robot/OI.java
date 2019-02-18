@@ -12,9 +12,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import frc.robot.commandgroups.DownerAndLand;
+import frc.robot.commandgroups.DriveAndPark;
+import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.MoveArmToTarget;
+import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.commands.SetArmTarget;
 import frc.robot.subsystems.ArmPositions;
 
@@ -72,10 +76,14 @@ public class OI {
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS));
         */
 
-        trigger.whenPressed(new SetArmTarget(ArmPositions.HOME));
-        thumb.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
-        button5.whenPressed(new MoveArmToTarget());
-        button12.whenPressed(new LiftToPlatform());
+        //buttons for testing all end game lift code
+        button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+        button8.whenPressed(new LiftAndDuringLift());
+        button9.whenPressed(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_LIFT));
+        button10.whenPressed(new DownerAndLand());
+        button11.whenPressed(new DriveAndPark());
+        button12.whenPressed(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK));
+        
 
         // These are test and calibration initializations - they are NOT required for competition.
         /*if (Constants.ENABLE_CALIBRATION) {

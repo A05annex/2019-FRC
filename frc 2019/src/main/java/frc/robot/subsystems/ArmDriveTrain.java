@@ -44,6 +44,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {105.5, 110.0, AUTO_POSITION_BUCKET},       // HIGH_CARGO
             {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
             {46.0, 72.5, 0.0},                          // PRE_ENDGAME_LIFT
+            {46.0, 72.5, 0.0},                          // DURING_LIFT
             {29.5, 95.0, 0.0},                          // ENDGAME_LIFT
             {29.5, 95.0, 0.0},                          // ENDGAME_LAND
             {29.5, 95.0, 0.0},                          // ENDGAME_PARK

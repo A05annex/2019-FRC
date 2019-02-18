@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class EndGameDowner extends Command {
@@ -34,7 +35,7 @@ public class EndGameDowner extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(time.get()>0.8){
+    if(time.get()>Constants.END_GAME_PNEUMATICS_RETRACT_DURATION){
       return true;
     }
     else{

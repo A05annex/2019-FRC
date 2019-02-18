@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Lift;
@@ -36,7 +37,7 @@ public class EndGameLifter extends Command {
     
   @Override
   protected boolean isFinished() {
-    if(time.get()>0.8){
+    if(time.get()>Constants.END_GAME_PNEUMATICS_LIFT_DURATION){
       return true;
       }
       else{

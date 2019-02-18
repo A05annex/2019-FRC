@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class EndGameDrive extends Command {
@@ -32,14 +33,14 @@ public class EndGameDrive extends Command {
   protected void execute() {
     //how make motors go backwards? 
     //negative double?
-    Robot.driveTrain.leftMaster.set(-0.7);
-    Robot.driveTrain.rightMaster.set(-0.7);
+    Robot.driveTrain.leftMaster.set(Constants.END_GAME_MOTOR_POWER);
+    Robot.driveTrain.rightMaster.set(Constants.END_GAME_MOTOR_POWER);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(time.get()>4.0){
+    if(time.get()>Constants.END_GAME_DRIVE_DURATION){
       //i am guessing on time here
       //it should really be whatever time we need for the robot to drive onto the platform
       return true;

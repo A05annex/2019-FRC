@@ -15,6 +15,7 @@ package frc.robot.subsystems;
  *     <li><tt>HIGH_CARGO</tt> - The position to deliver the high rocket port cargo ball;</li>
  *     <li><tt>PICKUP_FROM_FLOOR</tt> - The position to pickup a cargo ball from the floor;</li>
  *     <li><tt>PRE_ENDGAME_LIFT</tt> - The position of the arm before the lift cylinders are extended;</li>
+ *     <li><tt>DURING_LIFT</tt> - Repositioning the arm as the pneumatics are extending;</li>
  *     <li><tt>ENDGAME_LIFT</tt> - The position of the arm that pushes the robot onto the platform post lift
  *     and pre-lift retraction;</li>
  *     <li><tt>ENDGAME_LAND</tt> - The position to land the rear wheels of the robot on the platform;</li>
@@ -33,10 +34,12 @@ public enum ArmPositions {
     HIGH_CARGO(7),
     PICKUP_FROM_FLOOR(8),
     PRE_ENDGAME_LIFT(9),
-    ENDGAME_LIFT(10),
-    ENDGAME_LAND(11),
-    ENDGAME_PARK(12),
-    POST_ENDGAME_PARK(13);
+    DURING_LIFT(10),
+    ENDGAME_LIFT(11),
+    ENDGAME_LAND(12),
+    ENDGAME_PARK(13),
+    POST_ENDGAME_PARK(14);
+
 
     public final int value;
 
