@@ -22,8 +22,8 @@ public class Teleop extends Command {
     @Override
     protected void execute() {
         Joystick stick = Robot.getOI().getStick();
-        double forward = stick.getRawAxis(1) / 3.0;
-        double rotate = stick.getRawAxis(2) / 6.0;
+        double forward = stick.getRawAxis(1) / 1.5;
+        double rotate = stick.getRawAxis(2) / 2.0;
         Robot.driveTrain.setArcadePower(forward, rotate);
     }
 

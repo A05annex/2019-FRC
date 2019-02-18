@@ -1,10 +1,15 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveArmToTarget;
 
@@ -35,13 +40,13 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // bumpTargetPosition() method may be called to dynamically modify these.
     private double[][] targetPositions = {
             {110.0, 35.0, 0.0},                         // PREGAME
-            {100.0, 25.0, 5.0},                         // HOME
-            {120.5, 23.0, AUTO_POSITION_BUCKET},        // LOW_HATCH
-            {92.0, 23.0, AUTO_POSITION_BUCKET},         // LOW_CARGO
-            {127.5, 65.0, AUTO_POSITION_BUCKET},        // MID_HATCH
-            {127.5, 65.0, AUTO_POSITION_BUCKET},        // MID_CARGO
+            {96.0, 33.0, 5.0},                          // HOME
+            {96, 30, AUTO_POSITION_BUCKET},        // LOW_HATCH
+            {120, 36, AUTO_POSITION_BUCKET},         // LOW_CARGO
+            {116, 54, AUTO_POSITION_BUCKET},        // MID_HATCH
+            {120, 71, AUTO_POSITION_BUCKET},        // MID_CARGO
             {105.5, 110.0, AUTO_POSITION_BUCKET},       // HIGH_HATCH
-            {105.5, 110.0, AUTO_POSITION_BUCKET},       // HIGH_CARGO
+            {98, 126, AUTO_POSITION_BUCKET},       // HIGH_CARGO
             {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
             {46.0, 72.5, 0.0},                          // PRE_ENDGAME_LIFT
             {46.0, 72.5, 0.0},                          // DURING_LIFT
@@ -51,7 +56,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {100.0, 25.0, 5.0}                          // POST_ENDGAME_PARK
     };
 
-    private ArmPositions targetPosition = ArmPositions.PREGAME;
+    private ArmPositions targetPosition = ArmPositions.HOME;
     private int targetPositionIndx = targetPosition.value;
 
     // construction os the sensor potentiometers hooked to the analog inputs of the Roborio
@@ -61,18 +66,22 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             new AnalogPotentiometer(3, -360, 198);
 
     // construction of arm motors
-    private final WPI_TalonSRX armMotorLower = new WPI_TalonSRX(RobotMap.arm1);
-    private final WPI_TalonSRX armMotorUpper = new WPI_TalonSRX(RobotMap.arm2);
+    private final WPI_TalonSRX 
+        armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
+        armMotorUpper = new WPI_TalonSRX(RobotMap.arm2),
+        bucketMotor = new WPI_TalonSRX(RobotMap.bucket);
+
+    private final Encoder bucketEncoder = new Encoder(8, 9);
 
     // Limit angles determined by manually moving the arms to the positions we would like to have as limits of motion.
-    private final double lowerArmMin = 29.0;    // hits frame
-    private final double lowerArmMax = 135.0;   // hits wires and stuff on frame, hits frame at 141.5
+    private final double lowerArmMin = 20.0;    // hits frame
+    private final double lowerArmMax = 130.0;   // hits wires and stuff on frame, hits frame at 141.5
     private final double upperArmMin = 40.0;
     private final double upperArmMax = 140.0;
 
-    private final double armStopBuffer = 3.0; // The degrees before the hard stop that you should
+    private final double armStopBuffer = 0.0; // The degrees before the hard stop that you should
     // cut power to 0.0
-    private final double armCreepBuffer = 3.0; // The distance before the hard stop that you
+    private final double armCreepBuffer = 0.0; // The distance before the hard stop that you
     // should cut power to creep power
     private final double armCreepPower = 0.5; // The maximum power in the creep zone
 
@@ -81,10 +90,14 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         // Initialize to a known configuration
         armMotorLower.configFactoryDefault();
         armMotorUpper.configFactoryDefault();
+        armMotorLower.set(0.0);
+        armMotorUpper.set(0.0);
         // configures both drive motors for the motors
-        armMotorLower.setNeutralMode(NeutralMode.Coast);
-        armMotorUpper.setNeutralMode(NeutralMode.Coast);
+        armMotorLower.setNeutralMode(NeutralMode.Brake);
+        armMotorUpper.setNeutralMode(NeutralMode.Brake);
+        bucketMotor.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setInverted(true);
+        bucketEncoder.reset();
     }
 
     /**
@@ -111,7 +124,10 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     }
     // default command for the subsystem, this one being tele-operation for the arm
     public void initDefaultCommand() {
-        //setDefaultCommand(new MoveArmToTarget());
+        // this turns on automatic positioning
+        setDefaultCommand(new MoveArmToTarget());
+        // this enables control stick control
+//        setDefaultCommand(new ArmTeleop());
     }
 
     @Override
@@ -166,9 +182,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     @Override
     public boolean isAtTargetPosition() {
         double angles[] = targetPositions[targetPositionIndx];
-        return (Math.abs(angles[LOWER] - getLowerArmAngle()) < TARGET_POSITION_TOLERANCE) &&
-                (Math.abs(angles[UPPER] - getUpperArmAngle()) < TARGET_POSITION_TOLERANCE) &&
-                (Math.abs(angles[BUCKET] - getBucketAngle()) < TARGET_POSITION_TOLERANCE);
+        return (Math.abs(angles[LOWER] - getLowerArmAngle()) < TARGET_POSITION_TOLERANCE)
+                && (Math.abs(angles[UPPER] - getUpperArmAngle()) < TARGET_POSITION_TOLERANCE)
+                /* && (Math.abs(angles[BUCKET] - getBucketAngle()) < TARGET_POSITION_TOLERANCE) */;
     }
 
     @Override
@@ -184,14 +200,21 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     public void moveToTarget() {
         double lowerCoefficient = 30;
         double upperCoefficient = 30;
-        armMotorLower.set(limit(.6, -.3, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
-        armMotorUpper.set(limit(.5, -.5, (targetPositions[targetPositionIndx][1]-upperArmAngle.get()/upperCoefficient)));
-        SmartDashboard.putString("DB/String 0", Double.toString(targetPositions[targetPositionIndx][0]));
-        SmartDashboard.putString("DB/String 1", Double.toString(targetPositions[targetPositionIndx][1]));
-        SmartDashboard.putString("DB/String 6", Double.toString(limit(.6, -.3, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient)));
-        SmartDashboard.putString("DB/String 7", Double.toString((targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
-        SmartDashboard.putString("DB/String 8", Double.toString(limit(.5, -.5, (targetPositions[targetPositionIndx][1]-upperArmAngle.get())/upperCoefficient)));
-        SmartDashboard.putString("DB/String 9", Double.toString((targetPositions[targetPositionIndx][1]-upperArmAngle.get())/upperCoefficient));
+        inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
+        inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient));
+        if(Robot.getOI().getStick().getRawButton(5)){
+            bucketMotor.set(.5);
+        }else if(Robot.getOI().getStick().getRawButton(6)){
+            bucketMotor.set(-.5);
+        }else{
+            bucketMotor.set(0);
+        }
+        SmartDashboard.putString("DB/String 0", Double.toString(targetPositions[targetPositionIndx][LOWER]));
+        SmartDashboard.putString("DB/String 1", Double.toString(targetPositions[targetPositionIndx][UPPER]));
+        //SmartDashboard.putString("DB/String 6", Integer.toString(bucketEncoder.get()));
+        SmartDashboard.putString("DB/String 7", Double.toString((targetPositions[targetPositionIndx][LOWER]-lowerArmAngle.get())/lowerCoefficient));
+        SmartDashboard.putString("DB/String 8", Double.toString(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient)));
+        SmartDashboard.putString("DB/String 9", Double.toString((targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient));
     }
 
     @Override
