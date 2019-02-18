@@ -25,16 +25,16 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
 
-    public final static DriveTrain driveTrain = new DriveTrain();
+    public final static DriveTrainOld driveTrain = new DriveTrainOld();
     public final static IUseArm armDriveTrain = new ArmDriveTrain();
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
     public final static ExampleSubsystem m_subsystem = new ExampleSubsystem();
     public final static GripDetection gripDetection = new GripDetection();
     private static OI oi;
-    public final static Bucket bucket = new Bucket();
+    //public final static Bucket bucket = new Bucket();
     public final static GripDetection grip = new GripDetection();
-    public final static BucketWheelz bucketWheelz = new BucketWheelz();
-    public final static Lift lift = new Lift();
+    //public final static BucketWheelz bucketWheelz = new BucketWheelz();
+    //public final static Lift lift = new Lift();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 

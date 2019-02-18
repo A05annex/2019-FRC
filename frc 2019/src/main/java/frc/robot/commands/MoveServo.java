@@ -13,7 +13,7 @@ public class MoveServo extends Command {
     public MoveServo(double value) {
         super();
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.bucket);
+        //requires(Robot.bucket);
         this.value = value;
     }
 
@@ -27,7 +27,7 @@ public class MoveServo extends Command {
     @Override
     protected void execute() {
         SmartDashboard.putString("DB/String 6", Double.toString(value));
-        Robot.bucket.servo.set(value);
+        //Robot.bucket.servo.set(value);
     }
 
     // Make this return true when this Command no longer needs to run execute()

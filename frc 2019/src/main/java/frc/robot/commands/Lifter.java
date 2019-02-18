@@ -26,7 +26,7 @@ public class Lifter extends Command {
     public Lifter(boolean lift_robot) {
         super();
         action = lift_robot;
-        requires(Robot.lift);
+        //requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -38,11 +38,12 @@ public class Lifter extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        /*
         if (LIFT_ROBOT == action) {
             Robot.lift.lift_robot();
         } else {
             Robot.lift.retract_lifters();
-        }
+        }*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -55,7 +56,7 @@ public class Lifter extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.lift.off();
+        //Robot.lift.off();
         time.stop();
         time.reset();
     }

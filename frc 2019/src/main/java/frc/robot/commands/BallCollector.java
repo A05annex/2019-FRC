@@ -8,20 +8,20 @@ public class BallCollector extends Command {
 
     public BallCollector() {
         super();
-        requires(Robot.bucketWheelz);
+        //requires(Robot.bucketWheelz);
 
     }
 
     @Override
     protected void execute() {
         Joystick stick = Robot.getOI().getStick();
-        if (stick.getRawButton(11)) {
+        /*if (stick.getRawButton(11)) {
             Robot.bucketWheelz.collect();
         } else if (stick.getRawButton(12)) {
             Robot.bucketWheelz.eject();
         } else {
             Robot.bucketWheelz.stop();
-        }
+        }*/
     }
 
     @Override

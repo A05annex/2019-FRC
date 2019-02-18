@@ -71,8 +71,8 @@ public class OI {
 //        button6.whenPressed(new TapeStraighten('R'));
 //        button7.whileHeld(new TapeStraighten('L'));
 //        button8.whileHeld(new TapeStraighten('R'));
-        button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
-        button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS));
+        //button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
+        //button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS));
 
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
@@ -81,7 +81,7 @@ public class OI {
         //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-        xboxA.whenPressed(new SetArmTarget(ArmPositions.LOW_CARGO));
+        /*xboxA.whenPressed(new SetArmTarget(ArmPositions.LOW_CARGO));
         xboxB.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
         xboxY.whenPressed(new SetArmTarget(ArmPositions.HIGH_CARGO));
         xboxX.whenPressed(new SetArmTarget(ArmPositions.HOME));
@@ -103,6 +103,6 @@ public class OI {
         final POVButton incBucketAngle = new POVButton(xbox,270);
         incBucketAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE,BumpTargetPosition.INCREMENT));
-    
+        */
             }
 }
