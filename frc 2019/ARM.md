@@ -1,6 +1,6 @@
 # Robot Arm Details
-The robot arm is a 2 part arm. In an ideal world, we would map the desired capture/deliver
-positions for the arm into buttons on the joystick.
+The robot arm is a 2 part arm with an articulated *bucket* which collects/dispatches hatches and cargo. In
+an ideal world, we would map the desired capture/deliver positions for the arm into buttons on the joystick.
 
 ## Immediate Tasks
 The first prototype of the arm has been constructed. These are the immediate tasks:
