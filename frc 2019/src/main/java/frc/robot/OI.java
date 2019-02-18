@@ -7,18 +7,17 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commands.*;
 import frc.robot.commands.BumpTargetPosition;
-import frc.robot.subsystems.ArmPositions;
+import frc.robot.commands.Lifter;
 import frc.robot.commands.MoveServo;
-import frc.robot.commands.SetArmHeight;
+import frc.robot.commands.SetArmTarget;
+import frc.robot.commands.SetRocketPosition;
 import frc.robot.commands.Shift;
-import frc.robot.commands.TapeFind;
+import frc.robot.subsystems.ArmPositions;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -79,9 +78,12 @@ public class OI {
         // A - low hatch      A+bumber - low ball
         // B - mid hatch      B+bumber - mid ball
         // Y - high hatch     Y+bumber - high ball
-        xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
-        xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
-        xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
+        //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
+        //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
+        //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
+        xboxA.whenPressed(new SetArmTarget(ArmPositions.LOW_CARGO));
+        xboxB.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
+        xboxY.whenPressed(new SetArmTarget(ArmPositions.HIGH_CARGO));
         xboxX.whenPressed(new SetArmTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.

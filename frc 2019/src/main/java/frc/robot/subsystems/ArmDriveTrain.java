@@ -1,12 +1,11 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -40,13 +39,13 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // bumpTargetPosition() method may be called to dynamically modify these.
     private double[][] targetPositions = {
             {110.0, 35.0, 0.0},                         // PREGAME
-            {96.0, 33.0, 5.0},                          // HOME
-            {96, 30, AUTO_POSITION_BUCKET},        // LOW_HATCH
-            {120, 36, AUTO_POSITION_BUCKET},         // LOW_CARGO
-            {116, 54, AUTO_POSITION_BUCKET},        // MID_HATCH
-            {120, 71, AUTO_POSITION_BUCKET},        // MID_CARGO
-            {105.5, 110.0, AUTO_POSITION_BUCKET},       // HIGH_HATCH
-            {98, 126, AUTO_POSITION_BUCKET},       // HIGH_CARGO
+            {96.0, 33.0, 30},                          // HOME
+            {96, 30, 30},        // LOW_HATCH
+            {106, 39, 200},         // LOW_CARGO
+            {116, 54, 30},        // MID_HATCH
+            {116, 71, 500},        // MID_CARGO
+            {105.5, 110.0, 30},       // HIGH_HATCH
+            {98, 126, 800},       // HIGH_CARGO
             {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
             {46.0, 72.5, 0.0},                          // PRE_ENDGAME_LIFT
             {29.5, 95.0, 0.0},                          // ENDGAME_LIFT
@@ -60,7 +59,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     // construction os the sensor potentiometers hooked to the analog inputs of the Roborio
     private final AnalogPotentiometer lowerArmAngle =
-            new AnalogPotentiometer(2, -360, 322);
+            new AnalogPotentiometer(2, -360, 326);
     private final AnalogPotentiometer upperArmAngle =
             new AnalogPotentiometer(3, -360, 198);
 
@@ -70,7 +69,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         armMotorUpper = new WPI_TalonSRX(RobotMap.arm2),
         bucketMotor = new WPI_TalonSRX(RobotMap.bucket);
 
-    private final Encoder bucketEncoder = new Encoder(8, 9);
+    private Timer time = new Timer();
+    double lastTime = 0;
 
     // Limit angles determined by manually moving the arms to the positions we would like to have as limits of motion.
     private final double lowerArmMin = 20.0;    // hits frame
@@ -95,8 +95,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         armMotorLower.setNeutralMode(NeutralMode.Brake);
         armMotorUpper.setNeutralMode(NeutralMode.Brake);
         bucketMotor.setNeutralMode(NeutralMode.Brake);
+        bucketMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        bucketMotor.setSelectedSensorPosition(0);
         armMotorUpper.setInverted(true);
-        bucketEncoder.reset();
+        time.start();
+        lastTime = time.get();
     }
 
     /**
@@ -164,7 +167,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void inputDriveBucket(double bucketPower) {
-
+        bucketMotor.set(bucketPower);
     }
 
     @Override
@@ -195,25 +198,48 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         }
     }
 
+    public double uP, uI, lP, lI, bP, bI;
+
+    @Override
+    public void resetIntegral(){
+        uI = 0;
+        lI = 0;
+        bI = 0;
+    }
+
     @Override
     public void moveToTarget() {
-        double lowerCoefficient = 30;
-        double upperCoefficient = 30;
-        inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
-        inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient));
+        double 
+            period = time.get()-lastTime,
+            lowerCoefficient = 30,
+            upperCoefficient = 30,
+            bucketCoefficient = 30,
+            lkI = 3;
+        lP = (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient;
+        lI += lP * period;
+        lI = limit(.3, -.3, lI);
+        uP = (targetPositions[targetPositionIndx][1]-upperArmAngle.get())/upperCoefficient;
+        uI += lkI * (uP * period);
+        uI = limit(.2, -.1, uI);
+        bP = (targetPositions[targetPositionIndx][2]-bucketMotor.getSelectedSensorPosition())/bucketCoefficient;
+        
+
+        lastTime = time.get();
+        //inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
+        //inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
+        inputDriveLowArm(limit(.6, -1, (lP + lI)));
+        inputDriveUppArm(limit(1, -.5, (uP + uI)));
+        inputDriveBucket(limit(.5, -.8, (bP)));
+
         if(Robot.getOI().getStick().getRawButton(5)){
-            bucketMotor.set(.5);
-        }else if(Robot.getOI().getStick().getRawButton(6)){
-            bucketMotor.set(-.5);
-        }else{
-            bucketMotor.set(0);
+            bucketMotor.setSelectedSensorPosition(0);
         }
         SmartDashboard.putString("DB/String 0", Double.toString(targetPositions[targetPositionIndx][LOWER]));
         SmartDashboard.putString("DB/String 1", Double.toString(targetPositions[targetPositionIndx][UPPER]));
-        //SmartDashboard.putString("DB/String 6", Integer.toString(bucketEncoder.get()));
+        SmartDashboard.putString("DB/String 4", Double.toString(bP));
+        SmartDashboard.putString("DB/String 5", Double.toString(lI));
+        SmartDashboard.putString("DB/String 6", Integer.toString(bucketMotor.getSelectedSensorPosition()));
         SmartDashboard.putString("DB/String 7", Double.toString((targetPositions[targetPositionIndx][LOWER]-lowerArmAngle.get())/lowerCoefficient));
-        SmartDashboard.putString("DB/String 8", Double.toString(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient)));
-        SmartDashboard.putString("DB/String 9", Double.toString((targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient));
     }
 
     @Override
