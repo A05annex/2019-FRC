@@ -90,6 +90,8 @@ public interface IUseArm {
      */
     void bumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta);
 
+    void resetIntegral();
+
     /**
      * Call this repeatedly to move the arm to target
      */

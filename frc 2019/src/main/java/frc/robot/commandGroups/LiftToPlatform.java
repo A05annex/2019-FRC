@@ -22,6 +22,8 @@ public class LiftToPlatform extends CommandGroup {
    */
   public LiftToPlatform() {
 
+    //one button command for lifting robot to third platform
+
     addParallel(new EndGameDrive());
     addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
     addParallel(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
