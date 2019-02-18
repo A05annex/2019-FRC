@@ -18,7 +18,6 @@ public class SetArmTarget extends Command {
     @Override
     protected void execute() {
         super.execute();
-        Robot.armDriveTrain.resetIntegral();
         Robot.armDriveTrain.setTargetPosition(targetPosition);
         finished = true;
     }

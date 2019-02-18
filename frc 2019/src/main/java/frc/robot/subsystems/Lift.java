@@ -10,10 +10,10 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.Lifter;
+//import frc.robot.commands.Lifter;
 
 /**
- * The robot lift pnematics
+ * The robot lift pneumatics
  */
 public class Lift extends Subsystem {
     private final DoubleSolenoid liftSolenoid = new DoubleSolenoid(RobotMap.lift1, RobotMap.lift2);
@@ -46,4 +46,6 @@ public class Lift extends Subsystem {
     public void off() {
         liftSolenoid.set(DoubleSolenoid.Value.kOff);
     }
+
+  
 }

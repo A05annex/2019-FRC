@@ -43,7 +43,7 @@ public class DriveTrain extends Subsystem {
         lm2.setInverted(InvertType.FollowMaster);
         lm3.setInverted(InvertType.FollowMaster);
         setNeutralMode(NeutralMode.Brake);
-        leftMaster.setInverted(InvertType.InvertMotorOutput);
+        rightMaster.setInverted(InvertType.InvertMotorOutput);
         rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         ahrs.reset();
