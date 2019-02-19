@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -60,58 +61,15 @@ public class GripDetection extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public GripDetection(){
+    //camera = CameraServer.getInstance().startAutomaticCapture(0);
   }
   public void startVision() {
     //dont know why this is deprecated. help? it works, but i really hate the green lines.
+    camera = CameraServer.getInstance().startAutomaticCapture(0);
+    camera.setBrightness(50);
+    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+    
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-      camera = CameraServer.getInstance().startAutomaticCapture();
-      camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-      camera.setBrightness(50);
-      pipeline.hslThresholdOutput();
-      if (!pipeline.findContoursOutput().isEmpty()) {
-        if(pipeline.findContoursOutput().size()>=2){
-          for(int index=0;index <= pipeline.findContoursOutput().size();index++){
-            Rect recttest = Imgproc.boundingRect(pipeline.convexHullsOutput().get(index));
-            if(recttest.y>IMG_HEIGHT/2){
-              if(!(tapearray[0]==recttest)){
-                if(!(tapearray[1]==recttest)){
-                  if(recttest.x<IMG_WIDTH){
-                      tapearray[0]=recttest;
-                  }
-                }
-              }
-              if(!(tapearray[1]==recttest)){
-                if(!(tapearray[0]==recttest)){
-                  if(recttest.x>IMG_WIDTH){
-                      tapearray[1]=recttest;
-                  }
-                }
-              }
-            }
-          }
-          Rect r1 = tapearray[0];
-          Rect r2 = tapearray[1];
-          synchronized (imgLockCX1) {centerX1 = r1.x + (r1.width / 2);}
-          synchronized (imgLockCX2) {centerX2 = r2.x + (r2.width / 2);}
-          synchronized (imgLockCY1) {centerY1 = r1.y + (r1.height / 2);}
-          synchronized (imgLockCY2) {centerY2 = r2.y + (r2.height / 2);}
-
-          synchronized (imgLockCW1) {Width1 = r1.width;}
-          synchronized (imgLockCW2) {Width2 = r2.width;}
-          synchronized (imgLockCH1) {Height1 = r1.height;}
-          synchronized (imgLockCH2) {Height2 = r2.height;}
-
-          synchronized (imgLockSEEN) {tapeSeen=(pipeline.findContoursOutput().size()>1);};
-          if(pipeline.findContoursOutput().size()>2){
-            System.out.print("seeing more than 2");
-          }
-          else{
-            System.out.print("seeing less than 2");
-          }
-          System.out.print(pipeline.findContoursOutput().size());
-          System.out.println();
-        }
-      }
       System.out.println(pipeline.filterContoursOutput().size());
     });
   visionThread.start();
