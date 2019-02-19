@@ -11,14 +11,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandgroups.DownerAndLand;
-import frc.robot.commandgroups.DriveAndLand;
-import frc.robot.commandgroups.DriveAndPullIn;
-import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commandgroups.LiftToPlatform;
+import frc.robot.commandgroups.PickUpBallFromGround;
 import frc.robot.commands.*;
 import frc.robot.commands.BumpTargetPosition;
-import frc.robot.commands.Lifter;
 import frc.robot.commands.MoveServo;
 import frc.robot.commands.SetArmTarget;
 import frc.robot.commands.SetRocketPosition;
@@ -80,11 +76,14 @@ public class OI {
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
         
-
+        //buttons for running endgame lift as well as other command groups
         button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftToPlatform());
-        button9.whenPressed(new TimedDrive(2.0, 0.2));
+        button9.whenPressed(new PickUpBallFromGround());
+
+
         //buttons for testing all end game lift code
+        //button9.whenPressed(new TimedDrive(2.0, 0.2));
         /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftAndDuringLift());
         button9.whenPressed(new DriveAndPullIn()); 

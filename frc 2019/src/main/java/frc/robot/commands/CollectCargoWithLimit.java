@@ -13,7 +13,8 @@ import frc.robot.Robot;
 
 public class CollectCargoWithLimit extends Command {
 
-  public int output;
+  //not runnable currently because no limit switch hooked up
+
   private final Timer time = new Timer();
 
   public CollectCargoWithLimit() {
