@@ -41,6 +41,8 @@ public class GripDetection extends Subsystem {
     coords2 = new double[]{0.0,0.0};
   UsbCamera camera;
   double[] motorPower = new double[]{0,0};
+  private Rect[]
+    tapearray = new Rect[2];
 	
   private final Object 
     imgLockCX1 = new Object(),
@@ -64,12 +66,31 @@ public class GripDetection extends Subsystem {
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
       camera = CameraServer.getInstance().startAutomaticCapture();
       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-      if (!pipeline.filterContoursOutput().isEmpty()) {
-        if(pipeline.filterContoursOutput().size()>=2){
-          camera.setBrightness(50);
-          pipeline.hslThresholdOutput();
-          Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-          Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+      camera.setBrightness(50);
+      pipeline.hslThresholdOutput();
+      if (!pipeline.findContoursOutput().isEmpty()) {
+        if(pipeline.findContoursOutput().size()>=2){
+          for(int index=0;index <= pipeline.findContoursOutput().size();index++){
+            Rect recttest = Imgproc.boundingRect(pipeline.convexHullsOutput().get(index));
+            if(recttest.y>IMG_HEIGHT/2){
+              if(!(tapearray[0]==recttest)){
+                if(!(tapearray[1]==recttest)){
+                  if(recttest.x<IMG_WIDTH){
+                      tapearray[0]=recttest;
+                  }
+                }
+              }
+              if(!(tapearray[1]==recttest)){
+                if(!(tapearray[0]==recttest)){
+                  if(recttest.x>IMG_WIDTH){
+                      tapearray[1]=recttest;
+                  }
+                }
+              }
+            }
+          }
+          Rect r1 = tapearray[0];
+          Rect r2 = tapearray[1];
           synchronized (imgLockCX1) {centerX1 = r1.x + (r1.width / 2);}
           synchronized (imgLockCX2) {centerX2 = r2.x + (r2.width / 2);}
           synchronized (imgLockCY1) {centerY1 = r1.y + (r1.height / 2);}
@@ -80,12 +101,12 @@ public class GripDetection extends Subsystem {
           synchronized (imgLockCH1) {Height1 = r1.height;}
           synchronized (imgLockCH2) {Height2 = r2.height;}
 
-          synchronized (imgLockSEEN) {tapeSeen=(pipeline.filterContoursOutput().size()>1);};
-          if(pipeline.filterContoursOutput().size()>2){
+          synchronized (imgLockSEEN) {tapeSeen=(pipeline.findContoursOutput().size()>1);};
+          if(pipeline.findContoursOutput().size()>2){
             System.out.print("seeing more than 2");
           }
           else{
-            System.out.print(pipeline.filterContoursOutput().size());
+            System.out.print(pipeline.findContoursOutput().size());
           }
           System.out.println();
         }
