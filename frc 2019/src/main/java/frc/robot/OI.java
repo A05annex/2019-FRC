@@ -11,18 +11,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandgroups.DownerAndLand;
-import frc.robot.commandgroups.DriveAndLand;
-import frc.robot.commandgroups.DriveAndPullIn;
-import frc.robot.commandgroups.LiftAndDuringLift;
-import frc.robot.commandgroups.LiftToPlatform;
-import frc.robot.commands.*;
 import frc.robot.commands.BumpTargetPosition;
-import frc.robot.commands.Lifter;
-import frc.robot.commands.MoveServo;
+import frc.robot.commands.CollectBall;
+import frc.robot.commands.FinishCollecting;
 import frc.robot.commands.SetArmTarget;
-import frc.robot.commands.SetRocketPosition;
-import frc.robot.commands.Shift;
 import frc.robot.subsystems.ArmPositions;
 
 /**
@@ -69,21 +61,28 @@ public class OI {
     }
 
     public OI() {
-        trigger.whenPressed(new Shift(true));
+
+        thumb.whenPressed(new CollectBall());
+        thumb.whenReleased(new FinishCollecting());
+
+        /*trigger.whenPressed(new Shift(true));
         thumb.whenPressed(new Shift(false));
         top.whenPressed(new MoveServo(0));
-        top2.whenPressed(new MoveServo(1));
+        top2.whenPressed(new MoveServo(1));*/
+
 //        button5.whenPressed(new TapeStraighten('L'));
 //        button6.whenPressed(new TapeStraighten('R'));
 //        button7.whileHeld(new TapeStraighten('L'));
 //        button8.whileHeld(new TapeStraighten('R'));
+
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
         
 
-        button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+        /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftToPlatform());
-        button9.whenPressed(new TimedDrive(2.0, 0.2));
+        button9.whenPressed(new TimedDrive(2.0, 0.2));*/
+
         //buttons for testing all end game lift code
         /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftAndDuringLift());

@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
     private static OI oi;
     public final static Bucket bucket = new Bucket();
     public final static GripDetection grip = new GripDetection();
-    public final static BucketWheelz bucketWheelz = new BucketWheelz();
+    //public final static BucketWheelz bucketWheelz = new BucketWheelz();
     public final static Lift lift = new Lift();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -73,6 +73,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        armDriveTrain.setTargetPosition(ArmPositions.HOME);
         Scheduler.getInstance().removeAll();
         for(int i = 0; i<10; i++){
             SmartDashboard.putString("DB/String " + Integer.toString(i), " ");
