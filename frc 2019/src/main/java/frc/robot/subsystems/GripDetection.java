@@ -106,8 +106,9 @@ public class GripDetection extends Subsystem {
             System.out.print("seeing more than 2");
           }
           else{
-            System.out.print(pipeline.findContoursOutput().size());
+            System.out.print("seeing less than 2");
           }
+          System.out.print(pipeline.findContoursOutput().size());
           System.out.println();
         }
       }
