@@ -28,7 +28,7 @@ public interface IUseArm {
      *
      * @return (double) The position angle of the bucket
      */
-    double getBucketAngle();
+    int getBucketAngle();
 
     /**
      * Set the arm motor power (or speed, depending on the implementation)for the lower arm.

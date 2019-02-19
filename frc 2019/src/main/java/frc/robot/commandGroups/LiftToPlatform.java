@@ -8,11 +8,7 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.EndGameDowner;
-import frc.robot.commands.EndGameLifter;
-import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.commands.TimedDrive;
-import frc.robot.subsystems.ArmPositions;
 
 
 public class LiftToPlatform extends CommandGroup {
@@ -33,6 +29,8 @@ public class LiftToPlatform extends CommandGroup {
     addSequential(new TimedDrive(1.0, 0.15));
 
 
+
+    //old version, pre testing and refining
     /*addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
     addParallel(new EndGameLifter());
     addSequential(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
@@ -49,6 +47,7 @@ public class LiftToPlatform extends CommandGroup {
     
 
     //rear lift
+    //no longer using
     /*addParallel(new EndGameDrive());
     addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
     addParallel(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));

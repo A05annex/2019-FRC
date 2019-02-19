@@ -10,51 +10,59 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.BucketWheelz;
 
-public class PickUpBall extends Command {
+public class CollectCargoWithLimit extends Command {
 
-  //prolly won't use bc now we have a limit switch plus this was a sorta bad idea lol
-  
-  Timer time = new Timer();
+  public int output;
+  private final Timer time = new Timer();
 
-  public PickUpBall() {
+  public CollectCargoWithLimit() {
+    requires(Robot.bucketLimitSwitch);
     requires(Robot.bucketWheelz);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    time.start();
+  
+  
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
 
-    Robot.bucketWheelz.collect();
-    //this should run the collect method from BucketWheelz
-    
+    if(Robot.bucketLimitSwitch.bucketSwitch.get()){
+      Robot.bucketWheelz.stop();
+      time.start();
+      //making time start here so then it returns true when 0.2 secs elapsed so wheels have time to stop
+      //may be uneccessary? idk lol
+    }
+    else{
+      Robot.bucketWheelz.collect();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(time.get()>1.5){
+
+    if(Robot.bucketLimitSwitch.bucketSwitch.get() && time.get()>0.2){
       return true;
     }
     else{
       return false;
     }
-    //guessing on the time here. will be however long it takes the wheels to intake a ball
+
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
   }
+
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
   }

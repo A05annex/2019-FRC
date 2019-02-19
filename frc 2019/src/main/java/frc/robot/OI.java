@@ -97,12 +97,12 @@ public class OI {
         // A - low hatch      A+bumber - low ball
         // B - mid hatch      B+bumber - mid ball
         // Y - high hatch     Y+bumber - high ball
-        //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
-        //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
-        //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-        xboxA.whenPressed(new SetArmTarget(ArmPositions.LOW_CARGO));
+        xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
+        xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
+        xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
+        /*xboxA.whenPressed(new SetArmTarget(ArmPositions.LOW_CARGO));
         xboxB.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
-        xboxY.whenPressed(new SetArmTarget(ArmPositions.HIGH_CARGO));
+        xboxY.whenPressed(new SetArmTarget(ArmPositions.HIGH_CARGO)); */
         xboxX.whenPressed(new SetArmTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.

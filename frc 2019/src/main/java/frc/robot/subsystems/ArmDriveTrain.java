@@ -46,7 +46,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {116, 71, 500},        // MID_CARGO
             {105.5, 110.0, 30},       // HIGH_HATCH
             {98, 126, 800},       // HIGH_CARGO
-            {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
+            {80.0, 49.0, 440.0},                         // PICKUP_FROM_FLOOR
 
             {75.4, 83.9, 0.0},                          // PRE_ENDGAME_LIFT
             {57.6, 78.2, 0.0},                          // DURING_LIFT
@@ -146,8 +146,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     }
 
     @Override
-    public double getBucketAngle() {
-        return 0;
+    public int getBucketAngle() {
+        return bucketMotor.getSelectedSensorPosition();
     }
 
     @Override
@@ -233,7 +233,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         //inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
         inputDriveLowArm(limit(.6, -1, (lP + lI)));
         inputDriveUppArm(limit(1, -.5, (uP + uI)));
-        //inputDriveBucket(limit(.5, -.8, (bP))); 
+        inputDriveBucket(limit(.5, -.8, (bP))); 
 
         if(Robot.getOI().getStick().getRawButton(5)){
             bucketMotor.setSelectedSensorPosition(0);

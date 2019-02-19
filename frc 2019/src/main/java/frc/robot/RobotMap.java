@@ -35,5 +35,7 @@ public class RobotMap {
             lift1 = 2,
             lift2 = 3,
             servo = 1,
-            cargoMotor = 0; //plugged into PWM port 0
+            cargoMotor = 0, //plugged into PWM port 0
+            limitSwitch = 1; //idk this port # this is a guess
+
 }

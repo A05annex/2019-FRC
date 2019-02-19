@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
     public final static GripDetection grip = new GripDetection();
     public final static BucketWheelz bucketWheelz = new BucketWheelz();
     public final static Lift lift = new Lift();
+    public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -79,6 +80,7 @@ public class Robot extends TimedRobot {
         }
         SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
         SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        SmartDashboard.putString("DB/String 4", Integer.toString(armDriveTrain.getBucketAngle()));
     }
 
     /**
