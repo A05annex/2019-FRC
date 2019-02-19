@@ -42,6 +42,9 @@ public class GripDetection extends Subsystem {
     coords2 = new double[]{0.0,0.0};
   UsbCamera camera;
   double[] motorPower = new double[]{0,0};
+  private Rect 
+    rect1,
+    rect2;
   private Rect[]
     tapearray = new Rect[2];
 	
@@ -61,16 +64,15 @@ public class GripDetection extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public GripDetection(){
-    //camera = CameraServer.getInstance().startAutomaticCapture(0);
   }
   public void startVision() {
     //dont know why this is deprecated. help? it works, but i really hate the green lines.
     camera = CameraServer.getInstance().startAutomaticCapture(0);
-    camera.setBrightness(50);
-    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-      System.out.println(pipeline.filterContoursOutput().size());
+      rect1=Imgproc.boundingRect(pipeline.convexHullsOutput().get(0));
+      System.out.print(rect1.x);
+      System.out.println();
     });
   visionThread.start();
   }
