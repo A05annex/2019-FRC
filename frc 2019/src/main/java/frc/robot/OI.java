@@ -62,6 +62,8 @@ public class OI {
         top.whenPressed(new MoveServo(0));
         top2.whenPressed(new MoveServo(1));
 
+        button7.whenPressed(new CollectCargoWithLimit());
+
 //        button5.whenPressed(new TapeStraighten('L'));
 //        button6.whenPressed(new TapeStraighten('R'));
 //        button7.whileHeld(new TapeStraighten('L'));
