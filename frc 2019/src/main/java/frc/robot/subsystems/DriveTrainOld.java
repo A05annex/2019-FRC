@@ -26,7 +26,10 @@ public class DriveTrainOld extends Subsystem {
     public WPI_TalonSRX rightMaster = new WPI_TalonSRX(RobotMapORG.rm1);
     public VictorSP
         rm2 = new VictorSP(RobotMapORG.rm2),
-        rm3 = new VictorSP(RobotMapORG.rm3);
+        rm3 = new VictorSP(RobotMapORG.rm3),
+
+        //hooked up to motor to test limit switch
+        rm1 = new VictorSP(RobotMapORG.rm1);
 
     public DriveTrainOld() {
         //constructs and configures all six drive motors

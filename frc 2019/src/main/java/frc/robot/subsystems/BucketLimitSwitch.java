@@ -8,7 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilib.command.Subsystems;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMapORG;
 
 /**
  * Add your docs here.

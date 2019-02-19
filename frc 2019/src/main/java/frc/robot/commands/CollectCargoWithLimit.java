@@ -8,15 +8,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
   
 public class CollectCargoWithLimit extends Command {
   
     private final Timer time = new Timer();
-    rm1 = new VictorSP(RobotMapORG.rm1);
+    
   
     public CollectCargoWithLimit() {
       requires(Robot.bucketLimitSwitch);
+      requires(Robot.driveTrain);
 
       //this will be used on actual robot, not during test on old robot
       //for test the victor above will be used
@@ -36,7 +39,7 @@ public class CollectCargoWithLimit extends Command {
   
       if(Robot.bucketLimitSwitch.bucketSwitch.get()){
 
-        this.rm1.set(0);
+        Robot.driveTrain.rm1.set(0);
 
         //used for actual robot, not for testing on old robot
         //Robot.bucketWheelz.stop();
@@ -48,7 +51,7 @@ public class CollectCargoWithLimit extends Command {
       }
       else{
 
-        this.rm1.set(0.5);
+        Robot.driveTrain.rm1.set(0.5);
 
         //used for actual robot
         //Robot.bucketWheelz.collect();
@@ -78,3 +81,4 @@ public class CollectCargoWithLimit extends Command {
     @Override
     protected void interrupted() {
     }
+  }
