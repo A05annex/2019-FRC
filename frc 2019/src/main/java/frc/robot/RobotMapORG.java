@@ -21,7 +21,7 @@ public class RobotMapORG {
     shifter 0 & 1 are the double solenoid ports for pneumatic shifting
     */
     public static int
-            rm1 = 4,
+            rm1 = 9,
             rm2 = 7,
             rm3 = 8,
             lm1 = 6,

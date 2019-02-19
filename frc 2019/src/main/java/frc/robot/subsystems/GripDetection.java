@@ -58,10 +58,12 @@ public class GripDetection extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public GripDetection(){
-    camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+  }
+  public void startVision() {
     //dont know why this is deprecated. help? it works, but i really hate the green lines.
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+      camera = CameraServer.getInstance().startAutomaticCapture();
+      camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
       if (!pipeline.filterContoursOutput().isEmpty()) {
         if(pipeline.filterContoursOutput().size()>=2){
           camera.setBrightness(50);
@@ -81,15 +83,16 @@ public class GripDetection extends Subsystem {
           synchronized (imgLockSEEN) {tapeSeen=(pipeline.filterContoursOutput().size()>1);};
           if(pipeline.filterContoursOutput().size()>2){
             System.out.print("seeing more than 2");
-            System.out.println();
           }
+          else{
+            System.out.print(pipeline.filterContoursOutput().size());
+          }
+          System.out.println();
         }
       }
+      System.out.println(pipeline.filterContoursOutput().size());
     });
-  }
-
-  public void startVision() {
-    visionThread.start();
+  visionThread.start();
   }
 
   public double[] findTape(char direction) {

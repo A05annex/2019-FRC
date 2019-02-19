@@ -20,10 +20,10 @@ public class DriveTrainOld extends Subsystem {
     public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
     public DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
     public WPI_TalonSRX
-            rightMaster = new WPI_TalonSRX(RobotMapORG.rm1),
             leftMaster = new WPI_TalonSRX(RobotMapORG.lm1),
             lm2 = new WPI_TalonSRX(RobotMapORG.lm2),
             lm3 = new WPI_TalonSRX(RobotMapORG.lm3);
+    public WPI_TalonSRX rightMaster = new WPI_TalonSRX(RobotMapORG.rm1);
     public VictorSP
         rm2 = new VictorSP(RobotMapORG.rm2),
         rm3 = new VictorSP(RobotMapORG.rm3);
@@ -38,15 +38,13 @@ public class DriveTrainOld extends Subsystem {
         // now configure them
         lm2.follow(leftMaster);
         lm3.follow(leftMaster);
-        rm2.setInverted(true);
-        rm3.setInverted(true);
         rm2.set(0);
         rm3.set(0);
         lm2.setInverted(InvertType.FollowMaster);
         lm3.setInverted(InvertType.FollowMaster);
         setNeutralMode(NeutralMode.Brake);
         leftMaster.setInverted(InvertType.InvertMotorOutput);
-        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        //rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         ahrs.reset();
     }
@@ -64,7 +62,9 @@ public class DriveTrainOld extends Subsystem {
      *                clockwise, positive is counter-clockwise).
      */
     private void setOldMotors(){
-        System.out.println(rightMaster.getMotorOutputPercent());
+        rm2.set(rightMaster.getMotorOutputPercent());
+        rm3.set(rightMaster.getMotorOutputPercent());
+
     }
     public void setArcadePower(double forward, double rotate) {
         double max = Math.abs(forward) + Math.abs(rotate);
@@ -107,7 +107,7 @@ public class DriveTrainOld extends Subsystem {
 
     public void stop() {
         //method to easily stop the motors
-        rightMaster.set(0);
+        //rightMaster.set(0);
         setOldMotors();
         leftMaster.set(0);
     }

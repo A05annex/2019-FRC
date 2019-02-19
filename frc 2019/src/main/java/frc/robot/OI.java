@@ -11,13 +11,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commands.BumpTargetPosition;
-import frc.robot.commands.Lifter;
-import frc.robot.commands.MoveServo;
-import frc.robot.commands.SetArmTarget;
-import frc.robot.commands.SetRocketPosition;
-import frc.robot.commands.Shift;
-import frc.robot.subsystems.ArmPositions;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -63,10 +58,10 @@ public class OI {
     }
 
     public OI() {
-        trigger.whenPressed(new Shift(true));
-        thumb.whenPressed(new Shift(false));
+        trigger.whileHeld(new TapeStraighten());
         top.whenPressed(new MoveServo(0));
         top2.whenPressed(new MoveServo(1));
+
 //        button5.whenPressed(new TapeStraighten('L'));
 //        button6.whenPressed(new TapeStraighten('R'));
 //        button7.whileHeld(new TapeStraighten('L'));
