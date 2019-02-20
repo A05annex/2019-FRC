@@ -69,6 +69,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
+        
     }
 
     @Override
@@ -80,6 +81,7 @@ public class Robot extends TimedRobot {
         }
         SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
         SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.getBucketAngle()));
     }
 
     /**
