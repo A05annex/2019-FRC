@@ -30,6 +30,7 @@ public class ArmInterpolateToTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    currentIncrement = 0;
     currentTarget = Robot.armDriveTrain.getCurrentTargetAngles();
     double deltaLower = newTarget[0] - currentTarget[0];
     double deltaUpper = newTarget[1] - currentTarget[1];
