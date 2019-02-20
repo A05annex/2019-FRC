@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
     public final static GripDetection grip = new GripDetection();
     public final static BucketWheelz bucketWheelz = new BucketWheelz();
     public final static Lift lift = new Lift();
+    public final static ArmInterpolate armInterpolate = new ArmInterpolate();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 

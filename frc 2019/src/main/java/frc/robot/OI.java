@@ -17,12 +17,6 @@ import frc.robot.commandgroups.DriveAndPullIn;
 import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.*;
-import frc.robot.commands.BumpTargetPosition;
-import frc.robot.commands.Lifter;
-import frc.robot.commands.MoveServo;
-import frc.robot.commands.SetArmTarget;
-import frc.robot.commands.SetRocketPosition;
-import frc.robot.commands.Shift;
 import frc.robot.subsystems.ArmPositions;
 
 /**
@@ -100,8 +94,8 @@ public class OI {
         //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-        xboxA.whenPressed(new SetArmTarget(ArmPositions.LOW_CARGO));
-        xboxB.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
+        xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+        xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
         xboxY.whenPressed(new SetArmTarget(ArmPositions.HIGH_CARGO));
         xboxX.whenPressed(new SetArmTarget(ArmPositions.HOME));
         //

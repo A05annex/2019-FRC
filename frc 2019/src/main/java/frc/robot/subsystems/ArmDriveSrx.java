@@ -108,4 +108,19 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
         armMotorLower.set(0.0);
         armMotorUpper.set(0.0);
     }
+
+    @Override
+    public double[] getTargetPositionAngles(ArmPositions armPosition) {
+        return null;
+    }
+
+    @Override
+    public double[] getCurrentTargetAngles() {
+        return null;
+    }
+
+    @Override
+    public void setTargetAngle(double[] targetAngles) {
+
+    }
 }
