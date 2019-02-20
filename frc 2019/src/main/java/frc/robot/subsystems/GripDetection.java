@@ -43,10 +43,10 @@ public class GripDetection extends Subsystem {
   UsbCamera camera;
   double[] motorPower = new double[]{0,0};
   private Rect 
-    rect1,
-    rect2;
+    rectleft,
+    rectright;
   private Rect[]
-    tapearray = new Rect[2];
+    tapearray = new Rect[30];
 	
   private final Object 
     imgLockCX1 = new Object(),
@@ -64,14 +64,29 @@ public class GripDetection extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public GripDetection(){
+    camera = CameraServer.getInstance().startAutomaticCapture();
   }
   public void startVision() {
     //dont know why this is deprecated. help? it works, but i really hate the green lines.
-    camera = CameraServer.getInstance().startAutomaticCapture(0);
     
     visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-      rect1=Imgproc.boundingRect(pipeline.convexHullsOutput().get(0));
-      System.out.print(rect1.x);
+      if(pipeline.convexHullsOutput().size()>0){
+        for(int index=1;index<=pipeline.convexHullsOutput().size();index++){
+          tapearray[index-1]=Imgproc.boundingRect(pipeline.convexHullsOutput().get(index-1));
+        }
+        for(Rect rects : tapearray){
+          if(rects.y>IMG_HEIGHT/2 && rects.x>IMG_WIDTH/2){rects=rectleft;}
+          else{rectleft=null;}
+          if(rects.y>IMG_HEIGHT/2 && rects.x<IMG_WIDTH/2){rects=rectright;}
+          else{rectright=null;}
+        }
+        if(rectleft!=null){
+          System.out.print(rectleft);
+        }
+        if(rectright!=null){
+          System.out.print(rectright);
+        }
+      }
       System.out.println();
     });
   visionThread.start();
