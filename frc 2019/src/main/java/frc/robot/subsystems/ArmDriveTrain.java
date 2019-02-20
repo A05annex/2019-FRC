@@ -63,7 +63,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         targetPositions[targetPositionIndx][UPPER],
         targetPositions[targetPositionIndx][BUCKET]};
 
-    // construction os the sensor potentiometers hooked to the analog inputs of the Roborio
+    // construction of the sensor potentiometers hooked to the analog inputs of the Roborio
     private final AnalogPotentiometer lowerArmAngle =
             new AnalogPotentiometer(2, -360, 352);
     private final AnalogPotentiometer upperArmAngle =
@@ -206,7 +206,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         if (AUTO_POSITION_BUCKET != targetPositions[targetPositionIndx][BUCKET]) {
             targetPositions[targetPositionIndx][BUCKET] += bucketAngleDelta;
         }
-        targetAngles = targetPositions[targetPositionIndx];
+        targetAngles[0] = targetPositions[targetPositionIndx][0];
+        targetAngles[1] = targetPositions[targetPositionIndx][1];
+        targetAngles[2] = targetPositions[targetPositionIndx][2];
     }
 
     public double uP, uI, lP, lI, bP, bI;

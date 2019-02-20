@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commandgroups.DownerAndLand;
 import frc.robot.commandgroups.DriveAndLand;
 import frc.robot.commandgroups.DriveAndPullIn;
+import frc.robot.commandgroups.InterpolateAndCheck;
 import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.*;
@@ -75,7 +76,7 @@ public class OI {
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
         
 
-        button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftToPlatform());
         button9.whenPressed(new TimedDrive(2.0, 0.2));
         //buttons for testing all end game lift code
@@ -96,8 +97,8 @@ public class OI {
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
         xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
         xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-        xboxY.whenPressed(new SetArmTarget(ArmPositions.HIGH_CARGO));
-        xboxX.whenPressed(new SetArmTarget(ArmPositions.HOME));
+        xboxY.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
+        xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.
         xbox = new XboxController(1);

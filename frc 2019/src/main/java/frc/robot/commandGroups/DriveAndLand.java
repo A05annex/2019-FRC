@@ -19,7 +19,7 @@ public class DriveAndLand extends CommandGroup {
   public DriveAndLand() {
 
     addParallel(new TimedDrive(2.0, 0.2));
-    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_LAND));
+    addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_LAND));
 
     // Add Commands here:
     // e.g. addSequential(new Command1());

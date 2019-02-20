@@ -9,20 +9,16 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.ArmInterpolateToTarget;
-import frc.robot.commands.EndGameLifter;
 import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.subsystems.ArmPositions;
 
-public class LiftAndDuringLift extends CommandGroup {
+public class InterpolateAndCheck extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public LiftAndDuringLift() {
+  public InterpolateAndCheck(ArmPositions target) {
 
-  
-    addParallel(new InterpolateAndCheck(ArmPositions.DURING_LIFT));
-    //still need to make DURING_LIFT
-    addSequential(new EndGameLifter());
-    
+    addSequential(new ArmInterpolateToTarget(target));
+    addSequential(new SetAndWaitForArmPosition(target));
   }
 }

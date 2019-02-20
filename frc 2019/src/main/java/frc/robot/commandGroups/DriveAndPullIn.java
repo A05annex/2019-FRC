@@ -19,7 +19,7 @@ public class DriveAndPullIn extends CommandGroup {
   public DriveAndPullIn() {
 
     addParallel(new TimedDrive(1.0, 0.2));
-    addSequential(new SetAndWaitForArmPosition(ArmPositions.PULL_IN));
+    addSequential(new InterpolateAndCheck(ArmPositions.PULL_IN));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

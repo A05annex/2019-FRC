@@ -20,7 +20,7 @@ public class DownerAndLand extends CommandGroup {
   public DownerAndLand() {
 
     addParallel(new TimedDrive(1.0, 0.2));
-    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_PARK));
+    addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_PARK));
     addSequential(new EndGameDowner());
   }
 }
