@@ -51,7 +51,7 @@ public class CollectCargoWithLimit extends Command {
       }
       else{
 
-        Robot.driveTrain.rm1.set(0.5);
+        Robot.driveTrain.rm1.set(0.25);
 
         //used for actual robot
         //Robot.bucketWheelz.collect();
