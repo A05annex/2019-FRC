@@ -16,7 +16,6 @@ public class BucketWheelz extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-        setDefaultCommand(new BallCollector());
 
     }
 

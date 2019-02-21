@@ -17,10 +17,9 @@ import frc.robot.RobotMapORG;
 public class BucketLimitSwitch extends Subsystem {
   
   public DigitalInput bucketSwitch = new DigitalInput(RobotMapORG.limitSwitch);
+  //configured to normally closed
 
   public void BucketLimitSwitch(){
-
-
   }
 
   @Override
