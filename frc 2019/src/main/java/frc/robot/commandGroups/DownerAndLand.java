@@ -9,7 +9,6 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.EndGameDowner;
-import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
@@ -19,6 +18,8 @@ public class DownerAndLand extends CommandGroup {
    */
   public DownerAndLand() {
 
+    //robot drives forward as arm retracts so it won't hit edge
+    //as cylanders get to the platform, they retract
     addParallel(new TimedDrive(1.0, 0.2));
     addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_PARK));
     addSequential(new EndGameDowner());

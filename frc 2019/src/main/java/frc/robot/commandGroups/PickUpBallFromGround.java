@@ -8,17 +8,17 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.PickUpBall;
-import frc.robot.commands.SetArmTarget;
+import frc.robot.commands.CollectCargoWithLimit;
 import frc.robot.subsystems.ArmPositions;
 
 public class PickUpBallFromGround extends CommandGroup {
   
   public PickUpBallFromGround() {
 
-    addSequential(new SetArmTarget(ArmPositions.PICKUP_FROM_FLOOR));
-    addSequential(new PickUpBall());
-    addSequential(new SetArmTarget(ArmPositions.HOME));
-    //is HOME the correct postition for travelling?
+    //one button command that gets the robot ready to collect the ball
+    //once ball is collected, collector wheels will stop and robot will go to travel position
+    addSequential(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
+    addSequential(new CollectCargoWithLimit());
+    addSequential(new InterpolateAndCheck(ArmPositions.HOME));
   }
 }

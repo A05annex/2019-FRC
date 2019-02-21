@@ -10,9 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.BucketWheelz;
 
 public class PickUpBall extends Command {
+
+  //prolly wont use this. will use CollectCargoWithLimit() instead
+  
   Timer time = new Timer();
 
   public PickUpBall() {
@@ -51,6 +53,7 @@ public class PickUpBall extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.bucketWheelz.stop();
   }
   @Override
   protected void interrupted() {

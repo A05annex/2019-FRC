@@ -8,11 +8,10 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.EndGameDowner;
-import frc.robot.commands.EndGameLifter;
-import frc.robot.commands.SetAndWaitForArmPosition;
+//import frc.robot.commands.EndGameDowner;
+//import frc.robot.commands.EndGameLifter;
 import frc.robot.commands.TimedDrive;
-import frc.robot.subsystems.ArmPositions;
+//import frc.robot.subsystems.ArmPositions;
 
 
 public class LiftToPlatform extends CommandGroup {

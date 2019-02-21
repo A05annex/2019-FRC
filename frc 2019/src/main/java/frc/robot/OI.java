@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import frc.robot.commandgroups.DepositBallHigh;
 import frc.robot.commandgroups.DownerAndLand;
 import frc.robot.commandgroups.DriveAndLand;
 import frc.robot.commandgroups.InterpolateAndCheck;
@@ -73,10 +74,15 @@ public class OI {
 //        button8.whileHeld(new TapeStraighten('R'));
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
-        
 
+        
+        //END GAME LIFT STUFF
+        
+        //gets robot in position to drive up to platform and lift
         button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
+        //robot lifts itself onto the platform
         button8.whenPressed(new LiftToPlatform());
+
         button9.whenPressed(new TimedDrive(2.0, 0.2));
         //buttons for testing all end game lift code
         /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
@@ -85,6 +91,9 @@ public class OI {
         button10.whenPressed(new DriveAndLand()); 
         button11.whenPressed(new DownerAndLand());
         button12.whenPressed(new TimedDrive(0.5, -0.2)); */
+
+        //More autonomous stuff
+        button10.whenPressed(new DepositBallHigh());
         
 
         // Controlling position selection

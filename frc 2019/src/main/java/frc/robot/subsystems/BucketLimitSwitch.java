@@ -5,21 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandgroups;
+package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.TimedDrive;
-import frc.robot.subsystems.ArmPositions;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
-public class DriveAndPullIn extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public DriveAndPullIn() {
+/**
+ * Add your docs here.
+ */
+public class BucketLimitSwitch extends Subsystem {
+ 
+  public DigitalInput bucketSwitch = new DigitalInput(RobotMap.limitSwitch);
 
-    //the arm pulls the robot up as the wheels begin to drive forward
-    addParallel(new TimedDrive(1.0, 0.2));
-    addSequential(new InterpolateAndCheck(ArmPositions.PULL_IN));
-  
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 }

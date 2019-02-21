@@ -7,49 +7,43 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DepositBall extends Command {
+public class CollectCargoWithLimit extends Command {
+  public CollectCargoWithLimit() {
 
-  Timer time = new Timer();
-
-  public DepositBall() {
-    requires(Robot.bucketWheelz);
     requires(Robot.bucketLimitSwitch);
+    requires(Robot.bucketWheelz);
   }
 
+  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    time.reset();
-    time.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
 
-    Robot.bucketWheelz.eject();
-    //this should run the collect method from BucketWheelz
-    
-  }
-  @Override
-  protected boolean isFinished() {
-    if(time.get()>2.0){
-      return true;
-    }
-    else{
-      return false;
-    }
-    //guessing on the time here. will be however long it takes the wheels to intake a ball
+    Robot.bucketWheelz.collect();
+    //runs wheels so robot is ready to collect ball
+
   }
 
+  @Override
+  protected boolean isFinished() {
+
+    return Robot.bucketLimitSwitch.bucketSwitch.get();
+    //returns true when switch is hit by ball
+  }
 
   @Override
   protected void end() {
+
     Robot.bucketWheelz.stop();
   }
+
   @Override
   protected void interrupted() {
   }
