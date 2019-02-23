@@ -14,9 +14,12 @@ public class DepositBallHigh extends CommandGroup {
   
   public DepositBallHigh() {
     
-    //will hook up to button if deemed useful
+    //goes to high position, runs ejecting cargo wheels until ball has left, then returns home
+    //can make for other cargo deposits as well
+    //wil lhook up to buttons if deemed useful
 
     addSequential(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
     addSequential(new DepositBallHigh());
+    addSequential(new InterpolateAndCheck(ArmPositions.HOME));
   }
 }

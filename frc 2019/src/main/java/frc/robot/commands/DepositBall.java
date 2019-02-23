@@ -22,8 +22,6 @@ public class DepositBall extends Command {
 
   @Override
   protected void initialize() {
-    time.reset();
-    time.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -36,13 +34,20 @@ public class DepositBall extends Command {
   }
   @Override
   protected boolean isFinished() {
-    if(time.get()>2.0){
-      return true;
+    if(Robot.bucketLimitSwitch.bucketSwitch.get()==true){
+      time.reset();
+      time.start();
+      if(time.get()>1.0){
+        return true;
+      }
+      else{
+        return false;
+      }
     }
     else{
       return false;
     }
-    //guessing on the time here. will be however long it takes the wheels to intake a ball
+    //ends command if the limit switch is not pressed anymore and one second has passed
   }
 
 

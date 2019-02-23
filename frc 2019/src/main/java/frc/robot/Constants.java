@@ -21,5 +21,6 @@ public class Constants {
     public static final double END_GAME_MOTOR_POWER = 0.7;
     public static final double END_GAME_DRIVE_DURATION = 4.0;
     public static final int INTERPOLATE_STEPS = 50;
+    public static final double SECS_FROM_NEUTRAL_TO_FULL = 2.0;
 
 }
