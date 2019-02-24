@@ -8,9 +8,9 @@ import frc.robot.subsystems.ArmPositions;
 
 public class SetRocketPosition extends Command {
 
-    public final static int  LOWER = 0;
-    public final static int  MIDDLE = 1;
-    public final static int  UPPER = 2;
+    public final static int LOWER = 0;
+    public final static int MIDDLE = 1;
+    public final static int UPPER = 2;
 
     private final ArmPositions hatchPosition;
     private final ArmPositions ballPosition;
@@ -28,7 +28,7 @@ public class SetRocketPosition extends Command {
             hatchPosition = ArmPositions.HIGH_HATCH;
             ballPosition = ArmPositions.HIGH_CARGO;
         }
-   }
+    }
 
 
     @Override

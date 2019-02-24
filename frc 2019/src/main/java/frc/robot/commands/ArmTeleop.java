@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
@@ -11,7 +11,7 @@ import frc.robot.Robot;
  * Is the default command for the arm that lets the driver control the arm position from the joysticks of the
  * arm-control gamepad. While manual control is good for testing. It sucks for competition. This command mode
  * is the default; but, is immediately interrupted be any commands to set the arm to any specific position.
- *
+ * <p>
  * A button/trigger/signal could be set to return control to the operator.
  */
 public class ArmTeleop extends Command {
@@ -24,7 +24,7 @@ public class ArmTeleop extends Command {
         super();
         // This command can only function if the robot arm is NOT being controlled by
         // something else.
-        requires((Subsystem)Robot.armDriveTrain);
+        requires((Subsystem) Robot.armDriveTrain);
     }
 
     @Override

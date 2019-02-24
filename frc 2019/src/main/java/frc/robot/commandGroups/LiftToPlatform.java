@@ -5,32 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandgroups;
+package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.EndGameDowner;
-import frc.robot.commands.EndGameLifter;
-import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.commands.TimedDrive;
-import frc.robot.subsystems.ArmPositions;
 
 
 public class LiftToPlatform extends CommandGroup {
-  /**
-   * Add your docs here.
- * @return 
-   */
-  public LiftToPlatform() {
+    /**
+     * Add your docs here.
+     *
+     * @return
+     */
+    public LiftToPlatform() {
 
-    //front lift
-    //lifts robot to platform with one button
-    //uses command groups that we have tested to make one button that does it all
+        //front lift
+        //lifts robot to platform with one button
+        //uses command groups that we have tested to make one button that does it all
 
-    addSequential(new LiftAndDuringLift());
-    addSequential(new DriveAndPullIn()); 
-    addSequential(new DriveAndLand()); 
-    addSequential(new DownerAndLand());
-    addSequential(new TimedDrive(1.0, 0.15));
+        addSequential(new LiftAndDuringLift());
+        addSequential(new DriveAndPullIn());
+        addSequential(new DriveAndLand());
+        addSequential(new DownerAndLand());
+        addSequential(new TimedDrive(1.0, 0.15));
 
 
     /*addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
@@ -45,10 +42,9 @@ public class LiftToPlatform extends CommandGroup {
     addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_PARK));
     addSequential(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK));
     addSequential(new TimedDrive(0.5, -0.2)); */
-    
-    
 
-    //rear lift
+
+        //rear lift
     /*addParallel(new EndGameDrive());
     addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
     addParallel(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
@@ -61,8 +57,7 @@ public class LiftToPlatform extends CommandGroup {
     addParallel(new EndGameDrive());
     addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_PARK));
     addSequential(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK)); */
-    
 
 
-  }
+    }
 }

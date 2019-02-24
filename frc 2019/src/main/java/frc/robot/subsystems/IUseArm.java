@@ -50,6 +50,7 @@ public interface IUseArm {
 
     /**
      * Set the bucket motor power (or speed, depending on the implementation) for the upper arm.
+     *
      * @param bucketPower (double) The power to the upper arm in the range -1 to
      *                    1; where a positive value is lift_robot and a negative value is
      *                    retract_lifters.
@@ -69,14 +70,16 @@ public interface IUseArm {
 
     /**
      * Get the currently set target position.
-     * @return ({@link ArmPositions}) The currently set target position.
+     *
+     * @return ({ @ link ArmPositions }) The currently set target position.
      */
     ArmPositions getTargetPosition();
 
     /**
      * Is the arm at the currently set target point
+     *
      * @return (boolean) Returns <tt>true</tt> if the arm is at the target point (within a reasonable tolerance),
-     *  <tt>false</tt> otherwise.
+     * <tt>false</tt> otherwise.
      */
     boolean isAtTargetPosition();
 
@@ -84,8 +87,8 @@ public interface IUseArm {
      * A calibration function used to bump the arm target by a small delta to aid in refining rough target
      * positions determined through hand positioning to the actual positions that will work in competition.
      *
-     * @param lowerAngleDelta (double) the delta angle to be added to the lower arm target angle.
-     * @param upperAngleDelta (double) the delta angle to be added to the upper arm target angle.
+     * @param lowerAngleDelta  (double) the delta angle to be added to the lower arm target angle.
+     * @param upperAngleDelta  (double) the delta angle to be added to the upper arm target angle.
      * @param bucketAngleDelta (double) the delta angle to be added to the bucket angle.
      */
     void bumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta);

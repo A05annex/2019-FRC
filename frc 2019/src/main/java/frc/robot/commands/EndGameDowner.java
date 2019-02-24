@@ -13,39 +13,39 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class EndGameDowner extends Command {
-  private final Timer time = new Timer();
-  public EndGameDowner() {
-    requires(Robot.lift);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  }
+    private final Timer time = new Timer();
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    time.start();
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    Robot.lift.retract_lifters();
-  }
-
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    if(time.get()>Constants.END_GAME_PNEUMATICS_RETRACT_DURATION){
-      return true;
+    public EndGameDowner() {
+        requires(Robot.lift);
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
-    else{
-      return false;
-    }
-  }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+        time.start();
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        Robot.lift.retract_lifters();
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        if (time.get() > Constants.END_GAME_PNEUMATICS_RETRACT_DURATION) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+    }
 
 }

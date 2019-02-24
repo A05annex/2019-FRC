@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandgroups;
+package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.SetAndWaitForArmPosition;
@@ -13,16 +13,16 @@ import frc.robot.commands.SetArmTarget;
 import frc.robot.subsystems.ArmPositions;
 
 public class DepositBallHigh extends CommandGroup {
-  
-  public DepositBallHigh() {
-    
-    //will hook up to button if deemed useful and button efficient
-    //addSequential(new Centering());
-    //no way to center yet
 
-    addSequential(new SetArmTarget(ArmPositions.HIGH_CARGO));
-    addSequential(new SetAndWaitForArmPosition(ArmPositions.HIGH_CARGO));
+    public DepositBallHigh() {
+
+        //will hook up to button if deemed useful and button efficient
+        //addSequential(new Centering());
+        //no way to center yet
+
+        addSequential(new SetArmTarget(ArmPositions.HIGH_CARGO));
+        addSequential(new SetAndWaitForArmPosition(ArmPositions.HIGH_CARGO));
 
 
-  }
+    }
 }

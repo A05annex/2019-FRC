@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandgroups;
+package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.PickUpBall;
@@ -13,12 +13,12 @@ import frc.robot.commands.SetArmTarget;
 import frc.robot.subsystems.ArmPositions;
 
 public class PickUpBallFromGround extends CommandGroup {
-  
-  public PickUpBallFromGround() {
 
-    addSequential(new SetArmTarget(ArmPositions.PICKUP_FROM_FLOOR));
-    addSequential(new PickUpBall());
-    addSequential(new SetArmTarget(ArmPositions.HOME));
-    //is HOME the correct postition for travelling?
-  }
+    public PickUpBallFromGround() {
+
+        addSequential(new SetArmTarget(ArmPositions.PICKUP_FROM_FLOOR));
+        addSequential(new PickUpBall());
+        addSequential(new SetArmTarget(ArmPositions.HOME));
+        //is HOME the correct postition for travelling?
+    }
 }

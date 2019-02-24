@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -67,10 +66,10 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             new AnalogPotentiometer(3, -360, 198);
 
     // construction of arm motors
-    private final WPI_TalonSRX 
-        armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
-        armMotorUpper = new WPI_TalonSRX(RobotMap.arm2),
-        bucketMotor = new WPI_TalonSRX(RobotMap.bucket);
+    private final WPI_TalonSRX
+            armMotorLower = new WPI_TalonSRX(RobotMap.arm1),
+            armMotorUpper = new WPI_TalonSRX(RobotMap.arm2),
+            bucketMotor = new WPI_TalonSRX(RobotMap.bucket);
 
     private Timer time = new Timer();
     double lastTime = 0;
@@ -107,10 +106,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     /**
      * This implements a soft limit switch for the power/angle combination.
-     * @param power (double) the requested power.
-     * @param angle (double) the current angle.
+     *
+     * @param power    (double) the requested power.
+     * @param angle    (double) the current angle.
      * @param minAngle (double) the maximum angle (something hits a physical limit like hitting the frame, crushing
-     *                  other parts of the robot, etc. Whatever is moving needs to stop before it reaches this limit.
+     *                 other parts of the robot, etc. Whatever is moving needs to stop before it reaches this limit.
      * @param maxAngle (double) the maximum angle (something hits a physical limit like hitting the frame, crushing
      *                 other parts of the robot, etc. Whatever is moving needs to stop before it reaches this limit.
      * @return (double) the power that should be used.
@@ -127,6 +127,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         }
         return power;
     }
+
     // default command for the subsystem, this one being tele-operation for the arm
     public void initDefaultCommand() {
         // this turns on automatic positioning
@@ -205,7 +206,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     public double uP, uI, lP, lI, bP, bI;
 
     @Override
-    public void resetIntegral(){
+    public void resetIntegral() {
         uI = 0;
         lI = 0;
         bI = 0;
@@ -213,20 +214,20 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void moveToTarget() {
-        double 
-            period = time.get()-lastTime,
-            lowerCoefficient = 20,
-            upperCoefficient = 20,
-            bucketCoefficient = 30,
-            lkI = 3;
-        lP = (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient;
+        double
+                period = time.get() - lastTime,
+                lowerCoefficient = 20,
+                upperCoefficient = 20,
+                bucketCoefficient = 30,
+                lkI = 3;
+        lP = (targetPositions[targetPositionIndx][0] - lowerArmAngle.get()) / lowerCoefficient;
         lI += lP * period;
         lI = limit(.3, -.3, lI);
-        uP = (targetPositions[targetPositionIndx][1]-upperArmAngle.get())/upperCoefficient;
+        uP = (targetPositions[targetPositionIndx][1] - upperArmAngle.get()) / upperCoefficient;
         uI += lkI * (uP * period);
         uI = limit(.2, -.1, uI);
-        bP = (targetPositions[targetPositionIndx][2]-bucketMotor.getSelectedSensorPosition())/bucketCoefficient;
-        
+        bP = (targetPositions[targetPositionIndx][2] - bucketMotor.getSelectedSensorPosition()) / bucketCoefficient;
+
 
         lastTime = time.get();
         //inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
@@ -235,7 +236,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         inputDriveUppArm(limit(1, -.5, (uP + uI)));
         //inputDriveBucket(limit(.5, -.8, (bP))); 
 
-        if(Robot.getOI().getStick().getRawButton(5)){
+        if (Robot.getOI().getStick().getRawButton(5)) {
             bucketMotor.setSelectedSensorPosition(0);
         }
         SmartDashboard.putString("DB/String 0", Double.toString(targetPositions[targetPositionIndx][LOWER]));
@@ -243,7 +244,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         SmartDashboard.putString("DB/String 4", Double.toString(bP));
         SmartDashboard.putString("DB/String 5", Double.toString(lI));
         SmartDashboard.putString("DB/String 6", Integer.toString(bucketMotor.getSelectedSensorPosition()));
-        SmartDashboard.putString("DB/String 7", Double.toString((targetPositions[targetPositionIndx][LOWER]-lowerArmAngle.get())/lowerCoefficient));
+        SmartDashboard.putString("DB/String 7", Double.toString((targetPositions[targetPositionIndx][LOWER] - lowerArmAngle.get()) / lowerCoefficient));
         SmartDashboard.putString("DB/String 8", Boolean.toString(isAtTargetPosition()));
     }
 
@@ -254,9 +255,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         armMotorUpper.set(0.0);
     }
 
-    public double limit(double upper, double lower, double input){
-        if(input>upper)input = upper;
-        if(input<lower)input = lower;
+    public double limit(double upper, double lower, double input) {
+        if (input > upper) input = upper;
+        if (input < lower) input = lower;
         return input;
     }
- }
+}

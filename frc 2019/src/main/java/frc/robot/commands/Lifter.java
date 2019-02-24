@@ -20,7 +20,6 @@ public class Lifter extends Command {
     private static final Timer time = new Timer();
 
     /**
-     *
      * @param lift_robot (boolean) Either {@link #LIFT_ROBOT} or {@link #RETRACT_LIFTERS}.
      */
     public Lifter(boolean lift_robot) {
