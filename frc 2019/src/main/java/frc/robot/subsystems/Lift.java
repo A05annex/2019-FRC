@@ -47,5 +47,5 @@ public class Lift extends Subsystem {
         liftSolenoid.set(DoubleSolenoid.Value.kOff);
     }
 
-  
+
 }

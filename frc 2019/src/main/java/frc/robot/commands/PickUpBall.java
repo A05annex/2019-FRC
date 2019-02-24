@@ -12,50 +12,46 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class PickUpBall extends Command {
+    Timer time = new Timer();
 
-  //prolly wont use this. will use CollectCargoWithLimit() instead
-  
-  Timer time = new Timer();
-
-  public PickUpBall() {
-    requires(Robot.bucketWheelz);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  }
-
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    time.start();
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-
-    Robot.bucketWheelz.collect();
-    //this should run the collect method from BucketWheelz
-    
-  }
-
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    if(time.get()>1.5){
-      return true;
+    public PickUpBall() {
+        requires(Robot.bucketWheelz);
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
-    else{
-      return false;
-    }
-    //guessing on the time here. will be however long it takes the wheels to intake a ball
-  }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    Robot.bucketWheelz.stop();
-  }
-  @Override
-  protected void interrupted() {
-  }
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+        time.start();
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+
+        Robot.bucketWheelz.collect();
+        //this should run the collect method from BucketWheelz
+
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        if (time.get() > 1.5) {
+            return true;
+        } else {
+            return false;
+        }
+        //guessing on the time here. will be however long it takes the wheels to intake a ball
+    }
+
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+    }
+
+    @Override
+    protected void interrupted() {
+    }
 }

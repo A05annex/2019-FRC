@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandgroups;
+package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
 public class DriveAndLand extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public DriveAndLand() {
+    /**
+     * Add your docs here.
+     */
+    public DriveAndLand() {
 
     //robot drives forward as arm moves into landing position
     addParallel(new TimedDrive(2.0, 0.2));

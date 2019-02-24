@@ -13,41 +13,41 @@ import frc.robot.subsystems.ArmPositions;
 
 public class SetAndWaitForArmPosition extends Command {
 
-  ArmPositions targetPosition;
-  
-  public SetAndWaitForArmPosition(ArmPositions targetPosition){
-    super();
+    ArmPositions targetPosition;
+
+    public SetAndWaitForArmPosition(ArmPositions targetPosition) {
+        super();
         this.targetPosition = targetPosition;
 
-  }
-  
+    }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    super.execute();
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        super.execute();
         Robot.armDriveTrain.setTargetPosition(targetPosition);
-  }
+    }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
- 
-    return Robot.armDriveTrain.isAtTargetPosition();
-    //returns true if is at target position
-  }
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-  
-  @Override
-  protected void interrupted() {
-  }
+        return Robot.armDriveTrain.isAtTargetPosition();
+        //returns true if is at target position
+    }
+
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+    }
+
+    @Override
+    protected void interrupted() {
+    }
 }

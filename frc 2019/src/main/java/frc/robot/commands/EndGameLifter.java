@@ -13,39 +13,39 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class EndGameLifter extends Command {
-  
-  private final Timer time = new Timer();
 
-  public EndGameLifter() {
-    requires(Robot.lift);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  }
+    private final Timer time = new Timer();
 
-  @Override
-  protected void initialize() {
-    time.start();
-  }
-  @Override
-  protected void execute() {
-    Robot.lift.lift_robot();
+    public EndGameLifter() {
+        requires(Robot.lift);
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
-    
-  @Override
-  protected boolean isFinished() {
-    if(time.get()>Constants.END_GAME_PNEUMATICS_LIFT_DURATION){
-      return true;
-      }
-      else{
-      return false;
-      }
 
-  }
+    @Override
+    protected void initialize() {
+        time.start();
+    }
 
-  @Override
-  protected void end(){
-    
-  }
+    @Override
+    protected void execute() {
+        Robot.lift.lift_robot();
+    }
+
+    @Override
+    protected boolean isFinished() {
+        if (time.get() > Constants.END_GAME_PNEUMATICS_LIFT_DURATION) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    @Override
+    protected void end() {
+
+    }
 
 }
 

@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -80,18 +79,19 @@ public class DriveTrain extends Subsystem {
         rightMaster.set(motorInput[1]);
     }
 
-
-    public void inputDriveDB(double motorleft,double motorright){
+    public void inputDriveDB(double motorleft, double motorright) {
         leftMaster.set(motorleft);
-        rightMaster.set(limitTo(motorright,-.1,.1));
+        rightMaster.set(limitTo(motorright, -.1, .1));
     }
-    public void inputDriveSG(double motorpow){
+
+    public void inputDriveSG(double motorpow) {
         leftMaster.set(motorpow);
         rightMaster.set(motorpow);
     }
-    public void inputPDrive(double motorleft,double motorright,double threshold){
-        leftMaster.set((motorright-threshold)/threshold);
-        rightMaster.set((motorleft-threshold)/threshold);
+
+    public void inputPDrive(double motorleft, double motorright, double threshold) {
+        leftMaster.set((motorright - threshold) / threshold);
+        rightMaster.set((motorleft - threshold) / threshold);
     }
 
     public void setNeutralMode(NeutralMode mode) {
@@ -109,14 +109,15 @@ public class DriveTrain extends Subsystem {
         rightMaster.set(0);
         leftMaster.set(0);
     }
-    public double limitTo(double value,double lowerlim,double upperlim){
-        if(value > upperlim){
-            value=upperlim;
+
+    public double limitTo(double value, double lowerlim, double upperlim) {
+        if (value > upperlim) {
+            value = upperlim;
         }
-        if(value < lowerlim){
-            value=lowerlim;
+        if (value < lowerlim) {
+            value = lowerlim;
         }
-        return(value);
+        return (value);
     }
 
 }

@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandgroups;
+package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.EndGameLifter;
 import frc.robot.subsystems.ArmPositions;
 
 public class LiftAndDuringLift extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public LiftAndDuringLift() {
+    /**
+     * Add your docs here.
+     */
+    public LiftAndDuringLift() {
 
     //activates pneumatics as arm helps pull robot onto platform
     addParallel(new InterpolateAndCheck(ArmPositions.DURING_LIFT));

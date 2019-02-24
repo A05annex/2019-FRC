@@ -13,57 +13,56 @@ import frc.robot.Robot;
 
 public class TimedDrive extends Command {
 
-  private final Timer time = new Timer();
-  private final double driveTime;
-  private final double power;
+    private final Timer time = new Timer();
+    private final double driveTime;
+    private final double power;
 
-  public TimedDrive(double driveTime, double power) {
-    super();
-    requires(Robot.driveTrain);
-    this.driveTime = driveTime;
-    this.power = power;
+    public TimedDrive(double driveTime, double power) {
+        super();
+        requires(Robot.driveTrain);
+        this.driveTime = driveTime;
+        this.power = power;
 
-  }
-
-  @Override
-  protected void initialize() {
-    time.reset();
-    time.start();
-  
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    //how make motors go backwards? 
-    //negative double?
-    Robot.driveTrain.leftMaster.set(power);
-    Robot.driveTrain.rightMaster.set(power);
-  }
-
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    if(time.get()>driveTime){
-
-      Robot.driveTrain.leftMaster.set(0);
-      Robot.driveTrain.rightMaster.set(0);
-    
-      return true;
     }
-    else{
-    
-      return false;
+
+    @Override
+    protected void initialize() {
+        time.reset();
+        time.start();
+
     }
-  
-  }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        //how make motors go backwards?
+        //negative double?
+        Robot.driveTrain.leftMaster.set(power);
+        Robot.driveTrain.rightMaster.set(power);
+    }
 
-  @Override
-  protected void interrupted() {
-  }
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        if (time.get() > driveTime) {
+
+            Robot.driveTrain.leftMaster.set(0);
+            Robot.driveTrain.rightMaster.set(0);
+
+            return true;
+        } else {
+
+            return false;
+        }
+
+    }
+
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+    }
+
+    @Override
+    protected void interrupted() {
+    }
 }

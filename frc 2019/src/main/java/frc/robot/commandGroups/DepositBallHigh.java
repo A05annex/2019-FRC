@@ -5,15 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandgroups;
+package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.subsystems.ArmPositions;
 
+
 public class DepositBallHigh extends CommandGroup {
-  
+
   public DepositBallHigh() {
-    
+
     //goes to high position, runs ejecting cargo wheels until ball has left, then returns home
     //can make for other cargo deposits as well
     //wil lhook up to buttons if deemed useful

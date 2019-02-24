@@ -95,7 +95,7 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
 
     @Override
     public void resetIntegral() {
-        
+
     }
 
     @Override

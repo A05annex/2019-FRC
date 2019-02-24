@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandgroups;
+package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
 public class DriveAndPullIn extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public DriveAndPullIn() {
+    /**
+     * Add your docs here.
+     */
+    public DriveAndPullIn() {
 
     //the arm pulls the robot up as the wheels begin to drive forward
     addParallel(new TimedDrive(1.0, 0.2));

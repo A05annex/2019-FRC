@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandgroups.DepositBallHigh;
-import frc.robot.commandgroups.DownerAndLand;
-import frc.robot.commandgroups.DriveAndLand;
-import frc.robot.commandgroups.InterpolateAndCheck;
-import frc.robot.commandgroups.LiftAndDuringLift;
-import frc.robot.commandgroups.LiftToPlatform;
+import frc.robot.commandGroups.DepositBallHigh;
+import frc.robot.commandGroups.DownerAndLand;
+import frc.robot.commandGroups.DriveAndLand;
+import frc.robot.commandGroups.InterpolateAndCheck;
+import frc.robot.commandGroups.LiftAndDuringLift;
+import frc.robot.commandGroups.LiftToPlatform;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ArmPositions;
 
@@ -48,7 +48,7 @@ public class OI {
     private final JoystickButton xboxA = new JoystickButton(xbox, 1);
     private final JoystickButton xboxB = new JoystickButton(xbox, 2);
     private final JoystickButton xboxX = new JoystickButton(xbox, 3);
-    private final JoystickButton xboxY= new JoystickButton(xbox, 4);
+    private final JoystickButton xboxY = new JoystickButton(xbox, 4);
 
     public Joystick getStick() {
         //method to be called by other commands or subsystems to use the joystick
@@ -57,6 +57,7 @@ public class OI {
 
     /**
      * Get the gamepad
+     *
      * @return (XboxController) The gamepad if calibration is enabled, <tt>null</tt> otherwise.
      */
     public XboxController getXbox() {
@@ -74,7 +75,6 @@ public class OI {
 //        button8.whileHeld(new TapeStraighten('R'));
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
-
         
         //END GAME LIFT STUFF
         
@@ -95,7 +95,6 @@ public class OI {
         //More autonomous stuff
         button10.whenPressed(new DepositBallHigh());
         
-
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
         // B - mid hatch      B+bumber - mid ball
@@ -112,19 +111,19 @@ public class OI {
         xbox = new XboxController(1);
         final POVButton decArmAngle = new POVButton(xbox, 0);
         decArmAngle.whileHeld(
-                new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE,BumpTargetPosition.DECREMENT));
+                new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.DECREMENT));
 
-        final POVButton incArmAngle = new POVButton(xbox,180);
+        final POVButton incArmAngle = new POVButton(xbox, 180);
         incArmAngle.whileHeld(
-                new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE,BumpTargetPosition.INCREMENT));
+                new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.INCREMENT));
 
         final POVButton decBucketAngle = new POVButton(xbox, 90);
         decBucketAngle.whileHeld(
-                new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE,BumpTargetPosition.DECREMENT));
+                new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.DECREMENT));
 
-        final POVButton incBucketAngle = new POVButton(xbox,270);
+        final POVButton incBucketAngle = new POVButton(xbox, 270);
         incBucketAngle.whileHeld(
-                new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE,BumpTargetPosition.INCREMENT));
-    
-            }
+                new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
+
+    }
 }

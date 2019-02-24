@@ -3,8 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class TapeStraighten extends Command{
-    
+public class TapeStraighten extends Command {
+
     public TapeStraighten() {
 
         //only functions if the drive train is not in use by another command
@@ -25,10 +25,9 @@ public class TapeStraighten extends Command{
     @Override
     protected boolean isFinished() {
         //only returns false because the command cannot end without being interrupted
-        if(Robot.gripDetection.slowToRect()==0){
+        if (Robot.gripDetection.slowToRect() == 0) {
             return true;
-        }
-        else{
+        } else {
             return false;
 
         }

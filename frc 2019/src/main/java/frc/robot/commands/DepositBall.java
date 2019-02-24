@@ -13,49 +13,43 @@ import frc.robot.Robot;
 
 public class DepositBall extends Command {
 
-  Timer time = new Timer();
+    Timer time = new Timer();
 
-  public DepositBall() {
-    requires(Robot.bucketWheelz);
-    requires(Robot.bucketLimitSwitch);
-  }
-
-  @Override
-  protected void initialize() {
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-
-    Robot.bucketWheelz.eject();
-    //this should run the collect method from BucketWheelz
-    
-  }
-  @Override
-  protected boolean isFinished() {
-    if(Robot.bucketLimitSwitch.bucketSwitch.get()==true){
-      time.reset();
-      time.start();
-      if(time.get()>1.0){
-        return true;
-      }
-      else{
-        return false;
-      }
+    public DepositBall() {
+        requires(Robot.bucketWheelz);
     }
-    else{
-      return false;
+
+    @Override
+    protected void initialize() {
+        time.start();
     }
-    //ends command if the limit switch is not pressed anymore and one second has passed
-  }
 
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
 
-  @Override
-  protected void end() {
-    Robot.bucketWheelz.stop();
-  }
-  @Override
-  protected void interrupted() {
-  }
+        Robot.bucketWheelz.collect();
+        //this should run the collect method from BucketWheelz
+
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        if (time.get() > 1.5) {
+            return true;
+        } else {
+            return false;
+        }
+        //guessing on the time here. will be however long it takes the wheels to intake a ball
+    }
+
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+    }
+
+    @Override
+    protected void interrupted() {
+    }
 }
