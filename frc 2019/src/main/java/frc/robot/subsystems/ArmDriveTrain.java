@@ -33,27 +33,26 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // picked this because it is unambiguously represented and way outside any reasonable angle range.
     private static final double AUTO_POSITION_BUCKET = 1024.0;
 
-
     // The target positions. these are not final because we may be tuning/calibrating positions and the
     // bumpTargetPosition() method may be called to dynamically modify these.
     private double[][] targetPositions = {
-            {110.0, 35.0, 0.0},                         // PREGAME
-            {96.0, 33.0, 30},                          // HOME
-            {96, 30, 30},        // LOW_HATCH
+            {110.0, 35.0, 0.0},     // PREGAME
+            {96.0, 33.0, 30},       // HOME
+            {96, 30, 30},           // LOW_HATCH
             {106, 39, 200},         // LOW_CARGO
-            {116, 54, 30},        // MID_HATCH
-            {116, 71, 500},        // MID_CARGO
-            {105.5, 110.0, 30},       // HIGH_HATCH
-            {98, 126, 750},       // HIGH_CARGO
-            {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
+            {116, 54, 30},          // MID_HATCH
+            {116, 71, 500},         // MID_CARGO
+            {105.5, 110.0, 30},     // HIGH_HATCH
+            {98, 126, 750},         // HIGH_CARGO
+            {85.0, 40.0, 90.0},     // PICKUP_FROM_FLOOR
 
-            {75.4, 83.9, 0.0},                          // PRE_ENDGAME_LIFT
-            {57.6, 78.2, 0.0},                          // DURING_LIFT
-            {62.5, 62.4, 0.0},                          // PULL_IN (front lift only)
-            {29.5, 95.0, 0.0},                          // ENDGAME_LIFT (rear lift only)
-            {71.25, 55.05, 0.0},                          // ENDGAME_LAND
-            {80.25, 55.05, 0.0},                          // ENDGAME_PARK
-            {76.9, 49.8, 0.0}                           // POST_ENDGAME_PARK (not using)
+            {75.4, 83.9, 0.0},      // PRE_ENDGAME_LIFT
+            {57.6, 78.2, 0.0},      // DURING_LIFT
+            {62.5, 62.4, 0.0},      // PULL_IN (front lift only)
+            {29.5, 95.0, 0.0},      // ENDGAME_LIFT (rear lift only)
+            {71.25, 55.05, 0.0},    // ENDGAME_LAND
+            {80.25, 55.05, 0.0},    // ENDGAME_PARK
+            {76.9, 49.8, 0.0}       // POST_ENDGAME_PARK (not using)
     };
 
     private ArmPositions targetPosition = ArmPositions.HOME;
@@ -271,9 +270,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public double[] getTargetPositionAngles(ArmPositions armPosition) {
-        double[] angles = {targetPositions[armPosition.value][0],
-            targetPositions[armPosition.value][1],
-            targetPositions[armPosition.value][2]};
+        double[] angles = {targetPositions[armPosition.value][LOWER],
+            targetPositions[armPosition.value][UPPER],
+            targetPositions[armPosition.value][BUCKET]};
         return angles;
     }
 

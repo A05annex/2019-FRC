@@ -36,6 +36,8 @@ public class Constants {
     // {@link ./commands/ArmInterpolateToTarget} command for arm movement.
     public static final int INTERPOLATE_STEPS = 50;
 
+    public static final double ARM_INCHES_PER_CYCLE = 0.5;
+
     public static final double SECS_FROM_NEUTRAL_TO_FULL = 2.0;
 
 

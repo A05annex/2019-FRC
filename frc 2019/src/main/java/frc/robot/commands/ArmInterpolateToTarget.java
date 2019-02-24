@@ -27,7 +27,7 @@ public class ArmInterpolateToTarget extends Command {
     finalTarget = newTarget;
   }
 
-  // Called just before this Command runs the first time
+  // called whenever this command is restarted
   @Override
   protected void initialize() {
     currentIncrement = 0;
