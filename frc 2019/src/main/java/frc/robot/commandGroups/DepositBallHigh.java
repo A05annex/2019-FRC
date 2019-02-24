@@ -8,21 +8,19 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.SetAndWaitForArmPosition;
-import frc.robot.commands.SetArmTarget;
 import frc.robot.subsystems.ArmPositions;
+
 
 public class DepositBallHigh extends CommandGroup {
 
-    public DepositBallHigh() {
+  public DepositBallHigh() {
 
-        //will hook up to button if deemed useful and button efficient
-        //addSequential(new Centering());
-        //no way to center yet
+    //goes to high position, runs ejecting cargo wheels until ball has left, then returns home
+    //can make for other cargo deposits as well
+    //wil lhook up to buttons if deemed useful
 
-        addSequential(new SetArmTarget(ArmPositions.HIGH_CARGO));
-        addSequential(new SetAndWaitForArmPosition(ArmPositions.HIGH_CARGO));
-
-
-    }
+    addSequential(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
+    addSequential(new DepositBallHigh());
+    addSequential(new InterpolateAndCheck(ArmPositions.HOME));
+  }
 }

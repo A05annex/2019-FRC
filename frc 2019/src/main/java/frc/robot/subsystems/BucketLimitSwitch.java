@@ -5,21 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.TimedDrive;
-import frc.robot.subsystems.ArmPositions;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
-public class DriveAndLand extends CommandGroup {
-    /**
-     * Add your docs here.
-     */
-    public DriveAndLand() {
+/**
+ * Add your docs here.
+ */
+public class BucketLimitSwitch extends Subsystem {
+ 
+  public DigitalInput bucketSwitch = new DigitalInput(RobotMap.limitSwitch);
 
-    //robot drives forward as arm moves into landing position
-    addParallel(new TimedDrive(2.0, 0.2));
-    addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_LAND));
-
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 }

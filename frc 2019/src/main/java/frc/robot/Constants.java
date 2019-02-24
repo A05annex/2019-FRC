@@ -31,4 +31,12 @@ public class Constants {
     public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 3.0;
     public static final double END_GAME_MOTOR_POWER = 0.7;
     public static final double END_GAME_DRIVE_DURATION = 4.0;
+
+    // This is the number of interpolation steps from the current position to the target position using the
+    // {@link ./commands/ArmInterpolateToTarget} command for arm movement.
+    public static final int INTERPOLATE_STEPS = 50;
+
+    public static final double SECS_FROM_NEUTRAL_TO_FULL = 2.0;
+
+
 }

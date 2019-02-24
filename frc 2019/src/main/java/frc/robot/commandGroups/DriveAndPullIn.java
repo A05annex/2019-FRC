@@ -8,7 +8,6 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
@@ -18,23 +17,9 @@ public class DriveAndPullIn extends CommandGroup {
      */
     public DriveAndPullIn() {
 
-        addParallel(new TimedDrive(1.0, 0.2));
-        addSequential(new SetAndWaitForArmPosition(ArmPositions.PULL_IN));
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        // addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        // addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
-    }
+    //the arm pulls the robot up as the wheels begin to drive forward
+    addParallel(new TimedDrive(1.0, 0.2));
+    addSequential(new InterpolateAndCheck(ArmPositions.PULL_IN));
+  
+  }
 }

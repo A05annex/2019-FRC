@@ -9,7 +9,6 @@ package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.EndGameLifter;
-import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.subsystems.ArmPositions;
 
 public class LiftAndDuringLift extends CommandGroup {
@@ -18,10 +17,9 @@ public class LiftAndDuringLift extends CommandGroup {
      */
     public LiftAndDuringLift() {
 
-
-        addParallel(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
-        //still need to make DURING_LIFT
-        addSequential(new EndGameLifter());
-
-    }
+    //activates pneumatics as arm helps pull robot onto platform
+    addParallel(new InterpolateAndCheck(ArmPositions.DURING_LIFT));
+    addSequential(new EndGameLifter());
+    
+  }
 }
