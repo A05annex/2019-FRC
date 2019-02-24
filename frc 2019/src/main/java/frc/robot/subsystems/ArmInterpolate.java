@@ -5,21 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.TimedDrive;
-import frc.robot.subsystems.ArmPositions;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DriveAndLand extends CommandGroup {
-    /**
-     * Add your docs here.
-     */
-    public DriveAndLand() {
+/**
+ * Add your docs here.
+ */
+public class ArmInterpolate extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
 
-    //robot drives forward as arm moves into landing position
-    addParallel(new TimedDrive(2.0, 0.2));
-    addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_LAND));
-
+  
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 }

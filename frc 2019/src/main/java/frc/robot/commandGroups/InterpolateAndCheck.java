@@ -8,17 +8,17 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.CollectCargoWithLimit;
+import frc.robot.commands.ArmInterpolateToTarget;
+import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.subsystems.ArmPositions;
 
-public class PickUpBallFromGround extends CommandGroup {
-  
-  public PickUpBallFromGround() {
+public class InterpolateAndCheck extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public InterpolateAndCheck(ArmPositions target) {
 
-    //one button command that gets the robot ready to collect the ball
-    //once ball is collected, collector wheels will stop and robot will go to travel position
-    addSequential(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
-    addSequential(new CollectCargoWithLimit());
-    addSequential(new InterpolateAndCheck(ArmPositions.HOME));
+    addSequential(new ArmInterpolateToTarget(target));
+    addSequential(new SetAndWaitForArmPosition(target));
   }
 }

@@ -8,6 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.Teleop;
 
@@ -46,6 +47,11 @@ public class DriveTrain extends Subsystem {
         rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         ahrs.reset();
+
+        //setting ramp rate for smoother acceleration
+        //not tested as of 2/22/19
+        rightMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
+        leftMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
     }
 
     public void initDefaultCommand() {
@@ -113,4 +119,5 @@ public class DriveTrain extends Subsystem {
         }
         return (value);
     }
+
 }

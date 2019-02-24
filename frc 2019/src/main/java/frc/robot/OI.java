@@ -11,6 +11,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import frc.robot.commandGroups.DepositBallHigh;
+import frc.robot.commandGroups.DownerAndLand;
+import frc.robot.commandGroups.DriveAndLand;
+import frc.robot.commandGroups.InterpolateAndCheck;
+import frc.robot.commandGroups.LiftAndDuringLift;
 import frc.robot.commandGroups.LiftToPlatform;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ArmPositions;
@@ -70,10 +75,14 @@ public class OI {
 //        button8.whileHeld(new TapeStraighten('R'));
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
-
-
-        button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+        
+        //END GAME LIFT STUFF
+        
+        //gets robot in position to drive up to platform and lift
+        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
+        //robot lifts itself onto the platform
         button8.whenPressed(new LiftToPlatform());
+
         button9.whenPressed(new TimedDrive(2.0, 0.2));
         //buttons for testing all end game lift code
         /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
@@ -83,7 +92,9 @@ public class OI {
         button11.whenPressed(new DownerAndLand());
         button12.whenPressed(new TimedDrive(0.5, -0.2)); */
 
-
+        //More autonomous stuff
+        button10.whenPressed(new DepositBallHigh());
+        
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
         // B - mid hatch      B+bumber - mid ball
@@ -91,10 +102,10 @@ public class OI {
         //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-        xboxA.whenPressed(new SetArmTarget(ArmPositions.LOW_CARGO));
-        xboxB.whenPressed(new SetArmTarget(ArmPositions.MID_CARGO));
-        xboxY.whenPressed(new SetArmTarget(ArmPositions.HIGH_CARGO));
-        xboxX.whenPressed(new SetArmTarget(ArmPositions.HOME));
+        xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+        xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
+        xboxY.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
+        xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.
         xbox = new XboxController(1);

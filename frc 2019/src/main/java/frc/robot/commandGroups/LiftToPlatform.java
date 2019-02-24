@@ -30,6 +30,9 @@ public class LiftToPlatform extends CommandGroup {
         addSequential(new TimedDrive(1.0, 0.15));
 
 
+
+    //front lift not in command groups. timed drive numbers are probably off
+
     /*addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
     addParallel(new EndGameLifter());
     addSequential(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
@@ -43,8 +46,9 @@ public class LiftToPlatform extends CommandGroup {
     addSequential(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK));
     addSequential(new TimedDrive(0.5, -0.2)); */
 
+    //rear lift
+    //no longer using
 
-        //rear lift
     /*addParallel(new EndGameDrive());
     addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
     addParallel(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
