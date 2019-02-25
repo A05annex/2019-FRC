@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
 public class TimedDrive extends Command {
@@ -19,7 +20,7 @@ public class TimedDrive extends Command {
 
     public TimedDrive(double driveTime, double power) {
         super();
-        requires(Robot.driveTrain);
+        requires((Subsystem)Robot.driveTrain);
         this.driveTime = driveTime;
         this.power = power;
 
@@ -37,8 +38,7 @@ public class TimedDrive extends Command {
     protected void execute() {
         //how make motors go backwards?
         //negative double?
-        Robot.driveTrain.leftMaster.set(power);
-        Robot.driveTrain.rightMaster.set(power);
+        Robot.driveTrain.setArcadePower(power, 0.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,8 +46,7 @@ public class TimedDrive extends Command {
     protected boolean isFinished() {
         if (time.get() > driveTime) {
 
-            Robot.driveTrain.leftMaster.set(0);
-            Robot.driveTrain.rightMaster.set(0);
+            Robot.driveTrain.setArcadePower(0.0, 0.0);
 
             return true;
         } else {

@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
 public class Shift extends Command {
@@ -15,7 +16,7 @@ public class Shift extends Command {
         super();
         this.up = up;
         //only functions if the drive train is not in use by another command
-        requires(Robot.driveTrain);
+        requires((Subsystem) Robot.driveTrain);
     }
 
     @Override
@@ -33,9 +34,9 @@ public class Shift extends Command {
         //shifts the motors based on the value of boolean "lift_robot"
         Robot.driveTrain.stop();
         if (up) {
-            Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kForward);
+            Robot.driveTrain.getshifter().set(DoubleSolenoid.Value.kForward);
         } else {
-            Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kReverse);
+            Robot.driveTrain.getshifter().set(DoubleSolenoid.Value.kReverse);
         }
     }
 
@@ -48,7 +49,7 @@ public class Shift extends Command {
     @Override
     protected void end() {
         //calls function to stop the shifter when finished
-        Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kOff);
+        Robot.driveTrain.getshifter().set(DoubleSolenoid.Value.kOff);
         time.stop();
         time.reset();
     }
