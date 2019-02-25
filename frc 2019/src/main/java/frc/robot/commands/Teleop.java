@@ -3,6 +3,7 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
 public class Teleop extends Command {
@@ -10,7 +11,7 @@ public class Teleop extends Command {
     public Teleop() {
 
         //only functions if the drive train is not in use by another command
-        requires(Robot.driveTrain);
+        requires((Subsystem)Robot.driveTrain);
     }
 
     @Override
@@ -21,9 +22,9 @@ public class Teleop extends Command {
 
     @Override
     protected void execute() {
-        Joystick stick = Robot.oi.getStick();
-        double forward = stick.getRawAxis(1) / 3.0;
-        double rotate = stick.getRawAxis(2) / 6.0;
+        Joystick stick = Robot.getOI().getStick();
+        double forward = -stick.getRawAxis(1) / 1.5;
+        double rotate = -stick.getRawAxis(2) / 2.0;
         Robot.driveTrain.setArcadePower(forward, rotate);
     }
 

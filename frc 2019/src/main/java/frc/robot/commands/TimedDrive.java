@@ -9,60 +9,59 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
-public class Lifter extends Command {
+public class TimedDrive extends Command {
 
-    public static final boolean LIFT_ROBOT = true;
-    public static final boolean RETRACT_LIFTERS = false;
+    private final Timer time = new Timer();
+    private final double driveTime;
+    private final double power;
 
-    private final boolean action;
-    private static final Timer time = new Timer();
-
-    /**
-     * @param lift_robot (boolean) Either {@link #LIFT_ROBOT} or {@link #RETRACT_LIFTERS}.
-     */
-    public Lifter(boolean lift_robot) {
+    public TimedDrive(double driveTime, double power) {
         super();
-        action = lift_robot;
-        requires(Robot.lift);
+        requires((Subsystem)Robot.driveTrain);
+        this.driveTime = driveTime;
+        this.power = power;
+
     }
 
-    // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+        time.reset();
         time.start();
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if (LIFT_ROBOT == action) {
-            Robot.lift.lift_robot();
-        } else {
-            Robot.lift.retract_lifters();
-        }
+        //how make motors go backwards?
+        //negative double?
+        Robot.driveTrain.setArcadePower(power, 0.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        //returns true after .3 seconds (should be long enough to reset the valve piston).
-        return time.get() > .3;
+        if (time.get() > driveTime) {
+
+            Robot.driveTrain.setArcadePower(0.0, 0.0);
+
+            return true;
+        } else {
+
+            return false;
+        }
+
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.lift.off();
-        time.stop();
-        time.reset();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     @Override
     protected void interrupted() {
-        end();
     }
 }

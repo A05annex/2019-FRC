@@ -1,38 +1,36 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
 /**
- * This command runs the arm from the driver station using buttons on the
- * joystick for testing.
+ * Is the default command for the arm that lets the driver control the arm position from the joysticks of the
+ * arm-control gamepad. While manual control is good for testing. It sucks for competition. This command mode
+ * is the default; but, is immediately interrupted be any commands to set the arm to any specific position.
+ * <p>
+ * A button/trigger/signal could be set to return control to the operator.
  */
 public class ArmTeleop extends Command {
 
     static final double s_maxSpeed = 0.75;
 
+    Joystick stick;
+
     public ArmTeleop() {
         super();
         // This command can only function if the robot arm is NOT being controlled by
         // something else.
-        requires(Robot.armDriveTrain);
-    }
-
-    @Override
-    protected void initialize() {
-        // Sets the arms to brake when assigned a power of 0.0 - note, this does not
-        // keep the motors from
-        // dirfing when a heavy load is applied.
-        Robot.armDriveTrain.setNeutralMode(NeutralMode.Brake);
+        requires((Subsystem) Robot.armDriveTrain);
     }
 
     @Override
     protected void execute() {
-        XboxController xbox = Robot.oi.getXbox();
-        // left stick is lower arm up-down, right stick is upper arm up-down
+        XboxController xbox = Robot.getOI().getXbox();
+        // left stick is lower arm lift_robot-retract_lifters, right stick is upper arm lift_robot-retract_lifters
         Robot.armDriveTrain.inputDriveLowArm(xbox.getY(GenericHID.Hand.kLeft) * s_maxSpeed);
         Robot.armDriveTrain.inputDriveUppArm(xbox.getY(GenericHID.Hand.kRight) * s_maxSpeed);
     }

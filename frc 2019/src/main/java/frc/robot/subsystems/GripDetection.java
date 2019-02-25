@@ -25,30 +25,35 @@ public class GripDetection extends Subsystem {
 
     private VisionThread visionThread;
     private boolean tapeSeen = false;
-    private double centerX1 = 0.0;
-    private double centerX2 = 0.0;
-    private double centerY1 = 0.0;
-    private double centerY2 = 0.0;
-    private double Height1;
-    private double Height2;
-    private double Width1;
-    private double Width2;
-    private double[] coords1 = new double[]{0.0, 0.0};
-    private double[] coords2 = new double[]{0.0, 0.0};
+
+    private double
+            centerX1 = 0.0,
+            centerX2 = 0.0,
+            centerY1 = 0.0,
+            centerY2 = 0.0,
+            Height1,
+            Height2,
+            Width1,
+            Width2;
+
+    private double[]
+            coords1 = new double[]{0.0, 0.0},
+            coords2 = new double[]{0.0, 0.0};
     UsbCamera camera;
     double[] motorPower = new double[]{0, 0};
 
-    private final Object imgLockCX1 = new Object();
-    private final Object imgLockCX2 = new Object();
-    private final Object imgLockCY1 = new Object();
-    private final Object imgLockCY2 = new Object();
+    private final Object
+            imgLockCX1 = new Object(),
+            imgLockCX2 = new Object(),
+            imgLockCY1 = new Object(),
+            imgLockCY2 = new Object(),
 
-    private final Object imgLockCW1 = new Object();
-    private final Object imgLockCW2 = new Object();
-    private final Object imgLockCH1 = new Object();
-    private final Object imgLockCH2 = new Object();
+    imgLockCW1 = new Object(),
+            imgLockCW2 = new Object(),
+            imgLockCH1 = new Object(),
+            imgLockCH2 = new Object(),
 
-    private final Object imgLockSEEN = new Object();
+    imgLockSEEN = new Object();
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -59,6 +64,8 @@ public class GripDetection extends Subsystem {
         visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
             if (!pipeline.filterContoursOutput().isEmpty()) {
                 if (pipeline.filterContoursOutput().size() >= 2) {
+                    camera.setBrightness(50);
+                    pipeline.hslThresholdOutput();
                     Rect r1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                     Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
                     synchronized (imgLockCX1) {
@@ -92,20 +99,16 @@ public class GripDetection extends Subsystem {
                     }
                     ;
                     if (pipeline.filterContoursOutput().size() > 2) {
-                        System.out.println("More than two oh god something is bad please jesus help me");
+                        System.out.print("seeing more than 2");
+                        System.out.println();
                     }
                 }
             }
         });
-
     }
 
     public void startVision() {
         visionThread.start();
-    }
-
-    public void endVision() {
-        visionThread.stop();
     }
 
     public double[] findTape(char direction) {
@@ -116,7 +119,7 @@ public class GripDetection extends Subsystem {
             tapeSeen = this.tapeSeen;
         }
         ;
-        if (tapeSeen) {
+        if (!tapeSeen) {
             if (direction == 'L') {
                 mlPower = -.2;
                 mrPower = .2;
@@ -135,17 +138,8 @@ public class GripDetection extends Subsystem {
 
     }
 
-    private double[] sendWidthHeight1() {
-        double Width1;
-        double Height1;
-        synchronized (imgLockCW1) {
-            Width1 = this.Width1;
-        }
-        synchronized (imgLockCH1) {
-            Height1 = this.Height1;
-        }
-        double[] WidthHeight1 = new double[]{Width1, Height1};
-        return WidthHeight1;
+    public void stopVision() {
+        visionThread.stop();
     }
 
     private double[] sendWidthHeight2() {
@@ -187,6 +181,54 @@ public class GripDetection extends Subsystem {
         coords2[0] = centerX2;
         coords2[1] = centerY2;
         return (coords2);
+    }
+
+    private double[] sendWidthHeight1() {
+        double Width1;
+        double Height1;
+        synchronized (imgLockCW1) {
+            Width1 = this.Width1;
+        }
+        synchronized (imgLockCH1) {
+            Height1 = this.Height1;
+        }
+        double[] WidthHeight1 = new double[]{Width1, Height1};
+        return WidthHeight1;
+    }
+
+    public double slowToRect() {
+        double width1;
+        double height1;
+        double width2;
+        double height2;
+        double powerRectH;
+        double powerRectW;
+        double powerRectM;
+        double rectWT = IMG_WIDTH / 3;
+        double rectHT = IMG_HEIGHT / 3;
+        synchronized (imgLockCH1) {
+            height1 = this.Height1;
+        }
+        ;
+        synchronized (imgLockCW1) {
+            width1 = this.Width1;
+        }
+        ;
+        synchronized (imgLockCH2) {
+            height2 = this.Height2;
+        }
+        ;
+        synchronized (imgLockCW2) {
+            width2 = this.Width2;
+        }
+        ;
+        powerRectH = ((((height1 + height2) / 2) - rectHT) / 100);
+        powerRectW = ((((width1 + width2) / 2) - rectWT) / 100);
+        powerRectM = ((powerRectH + powerRectW) / 2);
+        if (powerRectM < .1) {
+            powerRectM = 0;
+        }
+        return (powerRectM);
     }
 
     @Override
