@@ -16,16 +16,14 @@ public class BucketWheelz extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-        setDefaultCommand(new BallCollector());
-
     }
 
     public void collect() {
-        cargoMotor.set(1.0);
+        cargoMotor.set(-1.0);
     }
 
     public void eject() {
-        cargoMotor.set(-1.0);
+        cargoMotor.set(1.0);
     }
 
     public void stop() {

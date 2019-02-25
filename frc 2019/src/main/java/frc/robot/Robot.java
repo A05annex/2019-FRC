@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
     public final static Bucket bucket = Constants.COMPETITION_ROBOT ? new Bucket() : null;
     public final static GripDetection grip = new GripDetection();
     public final static BucketWheelz bucketWheelz = new BucketWheelz();
+    public final static Grabber grabber = new Grabber();
     public final static Lift lift = Constants.COMPETITION_ROBOT ? new Lift() : null;
     public final static ArmInterpolate armInterpolate = new ArmInterpolate();
     public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();

@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
@@ -16,7 +16,7 @@ import frc.robot.commands.Teleop;
 public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
 
     public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-    public DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
+    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
     public WPI_TalonSRX rightMaster = new WPI_TalonSRX(RobotMap.rm1);
     public WPI_VictorSPX rm2 = new WPI_VictorSPX(RobotMap.rm2);
     public WPI_VictorSPX rm3 = new WPI_VictorSPX(RobotMap.rm3);
@@ -28,7 +28,10 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
         //constructs and configures all six drive motors
         // restore everything to known factory default state
         rightMaster.configFactoryDefault();
-        rm2.configFactoryDefault();        lm2.configFactoryDefault();
+        rm2.configFactoryDefault();
+        rm3.configFactoryDefault();
+        leftMaster.configFactoryDefault();
+        lm2.configFactoryDefault();
         lm3.configFactoryDefault();
         // now configure them
         rm2.follow(rightMaster);
@@ -73,9 +76,18 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
     }
 
     @Override
-    public DoubleSolenoid getshifter() {
-        return shifter;
+    public void upShift() {
+        if (null != shifter) {
+            shifter.set(true);
+        }
     }
+    @Override
+    public void downShift() {
+        if (null != shifter) {
+            shifter.set(false);
+        }
+    }
+
     //theos thingy
     @Override
     public void inputDrive(double[] motorInput) {
