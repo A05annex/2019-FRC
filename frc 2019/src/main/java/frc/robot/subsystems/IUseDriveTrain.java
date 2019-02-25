@@ -17,7 +17,9 @@ public interface IUseDriveTrain {
      */
     public void setArcadePower(double forward, double rotate);
 
-    public DoubleSolenoid getshifter();
+    public void upShift();
+
+    public void downShift();
 
     //theos thingy
     public void inputDrive(double[] motorInput);

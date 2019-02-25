@@ -6,27 +6,34 @@ import frc.robot.Robot;
 
 public class BallCollector extends Command {
 
-    public BallCollector() {
+    public static final boolean GRAB_BALL = true;
+    public static final boolean EJECT_BALL = false;
+
+    private final boolean collect;
+
+    public BallCollector(boolean collect) {
         super();
         requires(Robot.bucketWheelz);
-
+        this.collect = collect;
     }
 
     @Override
     protected void execute() {
-        Joystick stick = Robot.getOI().getStick();
-        if (stick.getRawButton(11)) {
+        if (collect) {
             Robot.bucketWheelz.collect();
-        } else if (stick.getRawButton(12)) {
-            Robot.bucketWheelz.eject();
         } else {
-            Robot.bucketWheelz.stop();
+            Robot.bucketWheelz.eject();
         }
     }
 
     @Override
     protected boolean isFinished() {
         return false;
+    }
+
+    @Override
+    protected void end() {
+        Robot.bucketWheelz.stop();
     }
 
 }

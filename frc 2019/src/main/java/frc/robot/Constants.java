@@ -5,9 +5,14 @@ package frc.robot;
  */
 public class Constants {
     // The practice robot has a different hardware configuration:
-    // <tt>true</tt> - This is the competition configuration
-    // <tt>false</tt> - This is the practice robot configuration
+    // * true - This is the competition configuration
+    // * false - This is the practice robot configuration
     public static final boolean COMPETITION_ROBOT = false;
+
+    // Enable shifter control on the 2 speed gearbox
+    // * true - Drive shifter is enabled
+    // * false - Drive shifter is diabled
+    public static final boolean ENABLE_DRIVE_SHIFT = false;
 
     // Enable calibration functions controlled by a gamepad. This let's us use the gamepad to make adjustments to
     // some of the configuration values to tune dynamically tune the robot without needing to change code, rebuild,
