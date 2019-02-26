@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.commands.drivingauto.Drive4Enc;
 import frc.robot.commands.drivingauto.Turn4Enc;
 /**
@@ -19,16 +21,16 @@ import frc.robot.commands.drivingauto.Turn4Enc;
 public class getDrivin extends CommandGroup {
   public getDrivin() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.driveTrain);
-    //requires(robot.commands.RobotMap);
-    //requires(drivingauto.Drive4Enc);
-    //requires(drivingauto.Turn4Enc);
+    requires(Robot.DriveTrain);
+    // requires(robot.commands.RobotMap);
+    // requires(drivingauto.Drive4Enc);
+    // requires(drivingauto.Turn4Enc);
   }
 
-// Called just before this Command runs the first time
+  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveTrain.ahrs.getActualUpdateRate(); 
+    Robot.DriveTrain.AHRS.getActualUpdateRate();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -48,8 +50,8 @@ public class getDrivin extends CommandGroup {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveTrain.rightMaster.set(0);
-    Robot.driveTrain.leftMaster.set(0);
+    Robot.DriveTrain.rightMaster.set(0);
+    Robot.DriveTrain.leftMaster.set(0);
   }
 
   // Called when another command which requires one or more of the same
