@@ -172,6 +172,8 @@ public class GripPipeline implements VisionPipeline {
             final double ratio = bb.width / (double) bb.height;
             if (ratio < minRatio || ratio > maxRatio) continue;
             output.add(contour);
+
+        
         }
     }
 

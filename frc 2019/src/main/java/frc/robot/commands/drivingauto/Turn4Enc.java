@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 import frc.robot.subsystems.DriveTrain;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.subsystems.IUseDriveTrain;
 
 
 public class Turn4Enc extends Command {
@@ -18,7 +19,7 @@ public class Turn4Enc extends Command {
     
     public Turn4Enc(int desiredDeg, double motorPower) {
         this.desiredDeg = desiredDeg;
-        requires(Robot.DriveTrain);
+        requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
@@ -30,22 +31,22 @@ public class Turn4Enc extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     //CorrectEnc();
-    if (Robot.DriveTrain.AHRS.getAngle() < desiredDeg) {
-        Robot.DriveTrain.rightMaster.set((-motorPower*0.1*(desiredDeg - Robot.DriveTrain.AHRS.getAngle())));
-        Robot.DriveTrain.leftMaster.set((motorPower*0.1*(desiredDeg - Robot.DriveTrain.AHRS.getAngle())));
+    if (Robot.driveTrain.AHRS.getAngle() < desiredDeg) {
+        Robot.driveTrain.rightMaster.set((-motorPower*0.1*(desiredDeg - Robot.driveTrain.AHRS.getAngle())));
+        Robot.driveTrain.leftMaster.set((motorPower*0.1*(desiredDeg - Robot.driveTrain.AHRS.getAngle())));
     }
-    else if (Robot.DriveTrain.ahrs.getAngle() > desiredDeg) {
-        Robot.DriveTrain.rightMaster.set((motorPower*0.1*(Robot.driveTrain.AHRS.getAngle() - desiredDeg)));
-        Robot.DriveTrain.leftMaster.set((-motorPower*0.1*(Robot.driveTrain.AHRS.getAngle() - desiredDeg)));
+    else if (Robot.driveTrain.AHRS.getAngle() > desiredDeg) {
+        Robot.driveTrain.rightMaster.set((motorPower*0.1*(Robot.driveTrain.AHRS.getAngle() - desiredDeg)));
+        Robot.driveTrain.leftMaster.set((-motorPower*0.1*(Robot.driveTrain.AHRS.getAngle() - desiredDeg)));
     }
 
    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (Math.abs(Robot.DriveTrain.AHRS.getAngle() - desiredDeg) < 5) {
-            Robot.DriveTrain.rightMaster.set(0);
-            Robot.DriveTrain.leftMaster.set(0);
+        if (Math.abs(Robot.driveTrain.AHRS.getAngle() - desiredDeg) < 5) {
+            Robot.driveTrain.rightMaster.set(0);
+            Robot.driveTrain.leftMaster.set(0);
             return true;
         }
         return false;
