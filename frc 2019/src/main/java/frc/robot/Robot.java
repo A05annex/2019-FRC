@@ -135,7 +135,9 @@ public class Robot extends TimedRobot {
         // Make sure the lifters are retracted before we start moving around.
         //not necessary anymore I dont think
         //new Lifter(Lifter.RETRACT_LIFTERS).start();
-    }
+        //oh wait this'll prolly do it
+        new Lifter(Lifter.RETRACT_LIFTERS, 0.5).start();
+        }
 
     /**
      * This function is called periodically during operator control.

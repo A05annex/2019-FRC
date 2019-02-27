@@ -23,7 +23,7 @@ public class DriveAndLand extends CommandGroup {
 
     //this lift bit is untested. for new pneumatics bc need to be constantly applying pressure.
     //time will need to be how long it takes this lil group to complete
-    addParallel(new Lifter(true, 1.0));
+    addParallel(new Lifter(Lifter.LIFT_ROBOT, 1.0));
     addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_LAND));
 
   }

@@ -52,6 +52,9 @@ public class Lifter extends Command {
         
 
         } 
+        else if(RETRACT_LIFTERS == action){
+            Robot.lift.ventPressure();
+        }
         else {
             //Robot.lift.retract_lifters();
 
