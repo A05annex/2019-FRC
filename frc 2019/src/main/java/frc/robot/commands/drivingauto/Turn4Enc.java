@@ -22,10 +22,12 @@ public class Turn4Enc extends Command {
         requires(Robot.driveTrain);
     }
 
-    // Called just before this Command runs the first time
+
     protected void initialize() {
         //SetTargetDeg(); 
-        //Robot.driveTrain.ahrs.isCalibrating();  
+        //Robot.driveTrain.ahrs.isCalibrating();
+        Robot.driveTrain.AHRS.getActualUpdateRate();
+  }  
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -45,8 +47,8 @@ public class Turn4Enc extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         if (Math.abs(Robot.driveTrain.AHRS.getAngle() - desiredDeg) < 5) {
-            Robot.driveTrain.rightMaster.set(0);
-            Robot.driveTrain.leftMaster.set(0);
+            /*Robot.driveTrain.rightMaster.set(0);
+            Robot.driveTrain.leftMaster.set(0);*/
             return true;
         }
         return false;
@@ -55,6 +57,8 @@ public class Turn4Enc extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.driveTrain.rightMaster.set(0);
+        Robot.driveTrain.leftMaster.set(0);
     }
 
     // Called when another command which requires one or more of the same

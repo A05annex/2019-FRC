@@ -43,17 +43,18 @@ public class Drive4Enc extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         if (Math.abs(Robot.driveTrain.rightMaster.getSelectedSensorPosition() - desiredEnc) < 5) {
-            Robot.driveTrain.rightMaster.set(0);
-            Robot.driveTrain.leftMaster.set(0);
+            /*Robot.driveTrain.rightMaster.set(0);
+            Robot.driveTrain.leftMaster.set(0);*/
             return true;
         }
 
             return false;
-    
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.driveTrain.rightMaster.set(0);
+        Robot.driveTrain.leftMaster.set(0);
     }
 
     // Called when another command which requires one or more of the same

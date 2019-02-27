@@ -20,18 +20,23 @@ import frc.robot.commands.drivingauto.Turn4Enc;
  */
 public class getDrivin extends CommandGroup {
   public getDrivin() {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.driveTrain);
-    // requires(robot.commands.RobotMap);
-    // requires(drivingauto.Drive4Enc);
-    // requires(drivingauto.Turn4Enc);
+    
+    /* Use requires() here to declare subsystem dependencies
+      requires(Robot.driveTrain);
+      requires(robot.commands.RobotMap);
+      requires(drivingauto.Drive4Enc);
+      requires(drivingauto.Turn4Enc); */
+
+    addSequential(new Drive4Enc(300, 0.7));
+    addSequential(new Turn4Enc(180, 0.5));
+    addSequential(new Drive4Enc(0, -0.7));
   }
 
   // Called just before this Command runs the first time
-  @Override
+  /*@Override
   protected void initialize() {
-    Robot.driveTrain.AHRS.getActualUpdateRate();
-  }
+  Robot.driveTrain.AHRS.getActualUpdateRate();
+  } 
 
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -58,5 +63,5 @@ public class getDrivin extends CommandGroup {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
+  } */
 }
