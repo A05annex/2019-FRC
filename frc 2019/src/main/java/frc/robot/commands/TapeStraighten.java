@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
 public class TapeStraighten extends Command {
@@ -8,7 +9,7 @@ public class TapeStraighten extends Command {
     public TapeStraighten() {
 
         //only functions if the drive train is not in use by another command
-        requires(Robot.driveTrain);
+        requires((Subsystem)Robot.driveTrain);
         requires(Robot.gripDetection);
     }
 

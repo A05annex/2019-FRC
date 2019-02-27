@@ -1,4 +1,4 @@
-# 6831 - AO5 Annex - FRC 2019
+# 6831 - A05 Annex - FRC 2019
 
 Entirely new robot. The big electronics and control system change is that we are using
 [Talon SRX motor controllers](#TALON-SRX-Motor-Controllers) and wiring
@@ -9,78 +9,94 @@ means). The big software change is that we are using the
 for programming the robot.
 
 ## Current Controls
-The current control mappings - we want to move towards 2 peron control - driver, arm operator:
+Control mappings change as drivers suggest changes that would make the robot more controllable. The current
+control configuration uses a fancy joystick for the primary driving, and hatch capture/release and cargo
+capture/release operations; and an auxiliary gamepad for arm and hatch-cargo bucket positioning.
+
+The current control mappings:
 * joystick (driver)
   * driving:  
     - joystick Y to forward-backward speed
     - joystick twist to turn speed
-  * shifting:  
-    - thumb button - downshift
-    - trigger - upshift
-  * button 3 & 4 - hatch grabber servo (needs to move to gamepad)
-  * button 9 & 10 - lift cylinder up/down
-  * button 11 & 12 - bucket wheels to collect/expel cargo (needs to move to gamepad)
+  * shifting: - has been disabled. We see no gain in this competition to having a high gear.  
+  * button 3 & 5 - cargo (ball) collect and expel respectively - right now they just run the wheels. In
+    competition, button 3, could initiate the pickup cargo sequence that positions the arm/bucket for
+    pickup, turns on
+    the pickup wheels, ends when the pickup limit switch is activated and moves the bucket to the lower
+    cargo (ball) score position.
+  * button 4 & 6 - hatch cover grab and release respectively.
+  * button 7 & 8 - endgame, 7 lifts arm/bucket to position to drive the robot against the pedestal for endgame
+    lift, and 8 initiates the lift sequence.
+  * button 9 & 10 - unused
+  * button 11 & 12 - unused
 
-* Gamepad (arm operator)
-  * left stick - lower are
-  * right stick - upper arm
+* Gamepad (arm operator) - the driver or game coach knows what needs to happen. The arm operator reduces the
+  cognitive load on the driver so the driver can focus on driving. The arm operator does these:
+  * button A: move arm/bucket to lower position
+    * without right trigger - move to lower hatch (more hatches than balls)
+    * with right trigger - move to lower cargo (ball)
+  * button B: move arm/bucket to middle position
+    * without right trigger - move to middle hatch (more hatches than balls)
+    * with right trigger - move to middle cargo (ball)
+  * button Y: move arm/bucket to top position
+    * without right trigger - move to upper hatch (more hatches than balls)
+    * with right trigger - move to upper cargo (ball)
+  * button X: move arm/bucket to the home (inside the robot perimeter) position. This is most stable for driving.
+  * Position Tuning - this is fine tuning the position of the arm/bucket once it has been sent to a lower,
+    middle, upper position. Fine tuning updates the reference position so it will return to the tuned position
+    next time the position is requested. 
+    * dpad forward:
+      * without left trigger - lower arm down
+      * with left trigger - upper arm down
+    * dpad back:
+      * without left trigger - lower arm up
+      * with left trigger - upper arm up
+    * dpad right: bucket up/back
+    * dpad left: bucket down/forward  
+  
+**Issues:**
+* **premature endgame lift** - initiating endgame lift anytime before we are at endgame lift position completely
+  compromises the robot. We need a failsafe. Some possibilities:
+  * test that arm/bucket is in pre-endgame lift position
+  * require simultaneous driver and arm operator button presses to initiate endgame lift sequence.
+* **non-intuitive arm/bucket tuning** - tuning arm angles is not intuitive, remap this to moving the bucket
+  up/down (the forward, backward axis), in/out (the right/left axis), and rotating the bucket (left trigger
+  with forward/backward).
+* **setting arm positioning for ball/hatch** If ball and hatch require different positions we can sense
+  that we have a ball (ball limit switch is thrown), hatch grabber is activated, or
+  that we are empty (returning to depot pickup position). That would eliminate any need for
+  driver to control ball/hatch choice.
+* **drive tuning** tuning speeds and sensitivity for best driver experience and controllability.
+
+## Semi-Autonomous Operations
+These are operations that require driver action to initiate, but complete autonomously once initiated. The driver
+handles the logistical problem of getting the robot to the right places on field the without getting entangled with
+other robots; and/or decides the operation that needs to be performed next, then hands details of performing the
+operation to the robot.
+
+These are the semi-autonomous activities performed by the robot:
+* **Arm Positioning** - (done, needs testing and tuning) automatic arm positioning based on a table of target
+  arm positions.
+  * **Getting to a position** - these are the methods of controlling positioning the arm to a specific location that
+    we have tried. All implementations co-exist, and we select the implementation to be used a startup configuration.
+    * **set target position** (done, tested) While this works, changes in arm are a bit violent.
+    * **set a series of target positions by arm angle interpolation** (done, needs more testing) This seems to work
+      pretty well, though we were only able to test this after the bucket was removed and before bagging. Need to
+      complete testing.
+    * **set a series of target positions by path interpolation** - (in progress)
+  * **Tuning the position**
+* **Cargo Pickup** - (prototypes, not tested, need new bucket installed)
+* **Endgame Lift** - (done, needs tuning for new arm) Automatic endgame lift is programmed and has been tested. The
+  most serious issue we have is getting the cylinders to deploy at the same rate so the robot does not fall over.
+* **Auto-center for depot or rocket/cargo target** - (in progress) image recognition for position control is being
+  worked on  but is not currently operational.
 
 ## Subsystems
-These are our subsystems and programmer responsibilities:
-* **Drive Train**: (Eva)
-  * **methods**:
-    * **arcade drive** - forward, rotation power
-    * **tank drive** - right, left power
-    * **shifting** - *figure this out*: manual (shift up, shift down), or automatic - it just happens.
-  * **commands**:
-    * **default command** - joystick drive, arcade mode. Work with the driver to get the best driver control operation.
-    * **depot to rocket** -
-    * **rocket to depot** -
-    * **pickup cargo from floor** -
-* **Arm**: (Jason) See [Arm Details](./ARM.md)
-  * **methods**:
-    * **power lower arm**
-    * **power upper arm**
-    * **get lower arm position**
-    * **get upper arm position**
-    * **move arm on path** - input is a list of (lower,upper) position values.
-    * **move to position** - from positions HOME, LOW_HATCH, LOW_CARGO, MID_HATCH, MID_CARGO, HIGH_HATCH, HIGH_CARGO,
-      PICKUP_FROM_FLOOR.
-    * **move arm to** - inputs lower and upper positions
-  * **commands**:
-    * **default test command** - drive the arms, lower and upper, by buttons on the or using the joystick. Adjusting
-      PID loop coefficients with the joystick (we could have 2 joysticks, right?, one just for the arm?)
-    * **default competition command** - positioning buttons for HOME (the start position of the arm), and
-      LOW_HATCH, LOW_CARGO, MID_HATCH, MID_CARGO, HIGH_HATCH, HIGH_CARGO, PICKUP_FROM_FLOOR.
-* **Bucket**: (Allison)
-  * **methods**
-  * **commands**
-    * **default command**
-* **Pneumatics - compressor and tanks initialized**: seems like this is just part of the robot being on, and should
-  not be a subsystem
-* **Pneumatics-shift**: (Eva) seems like this is really part of the drive train subsystem.
-* **Pneumatics-lift**: (??) this is it's own subsystem ued only by the lift command.
-  * **methods**
-    * **extend**
-    * **retract**
-  * **commands**
-    * **default test command** - attach extend and retract to joystick buttons for testing.
-    * **default command** - make sure the lifters don't drop - hit them every 30 seconds with full retract.
-* **Vision**: (theo)
+All subsystems now exist and are connected to the driver station in some fashion.
 
 ## Commands
-Most :
-* **Driver Control**: We need the ability to driver control most everything, though ultimately we want most everything
-  to be autonomous to some degree. Full driver control is that each subsystem has a default command that lets the
-  driver control it.
-* **Autonomous Pickup - Depot to/from Rocket**:
-  * Autonomously jump off the start platform and attach a hatch cover to the rocket.
-  * Autonomously return and pickup a hatch cover from the depot.
-  * Autonomously go from the depot to the rocket and attach the hatch cover.
-* **Arm Positioning**:
-* **Bucket Operation**:
-* **Endgame Lift**: (??)
-  * **Requires** - (Allison) Drive, Arm, Pneumatics-lift
+All of the basic commands are there. Command groups for more complex semi-autonomous actions can be created
+which would require less driver action to achieve the game goals.
 
 ## Talon SRX Motor Controllers
 To find out everything about these, start at

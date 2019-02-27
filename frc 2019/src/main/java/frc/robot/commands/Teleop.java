@@ -3,6 +3,7 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 
 public class Teleop extends Command {
@@ -10,7 +11,7 @@ public class Teleop extends Command {
     public Teleop() {
 
         //only functions if the drive train is not in use by another command
-        requires(Robot.driveTrain);
+        requires((Subsystem)Robot.driveTrain);
     }
 
     @Override

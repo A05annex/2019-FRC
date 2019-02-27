@@ -24,15 +24,17 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
 
-    public final static DriveTrain driveTrain = new DriveTrain();
-    public final static IUseArm armDriveTrain = new ArmDriveTrain();
+    public final static IUseDriveTrain driveTrain = Constants.COMPETITION_ROBOT ?
+            new DriveTrain() : new DriveTrainPractice();
+    public final static IUseArm armDriveTrain =  Constants.COMPETITION_ROBOT ? new ArmDriveTrain() : null;
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
     public final static GripDetection gripDetection = new GripDetection();
     private static OI oi;
-    public final static Bucket bucket = new Bucket();
+    public final static Bucket bucket = Constants.COMPETITION_ROBOT ? new Bucket() : null;
     public final static GripDetection grip = new GripDetection();
     public final static BucketWheelz bucketWheelz = new BucketWheelz();
-    public final static Lift lift = new Lift();
+    public final static Grabber grabber = new Grabber();
+    public final static Lift lift = Constants.COMPETITION_ROBOT ? new Lift() : null;
     public final static ArmInterpolate armInterpolate = new ArmInterpolate();
     public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
     private Command m_autonomousCommand;
@@ -75,8 +77,10 @@ public class Robot extends TimedRobot {
         for (int i = 0; i < 10; i++) {
             SmartDashboard.putString("DB/String " + Integer.toString(i), " ");
         }
-        SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
-        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        if (null != armDriveTrain) {
+            SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
+            SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        }
     }
 
     /**
@@ -126,7 +130,9 @@ public class Robot extends TimedRobot {
             m_autonomousCommand.cancel();
         }
         // Make sure the lifters are retracted before we start moving around.
-        new Lifter(Lifter.RETRACT_LIFTERS).start();
+        if (Constants.COMPETITION_ROBOT) {
+            new Lifter(Lifter.RETRACT_LIFTERS).start();
+        }
     }
 
     /**
@@ -135,8 +141,10 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
-        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        if (null != armDriveTrain) {
+            SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
+            SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        }
         //SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.getBucketAngle()));
         //SmartDashboard.putString("DB/String 5", Boolean.toString(armDriveTrain.isAtTargetPosition()));
 

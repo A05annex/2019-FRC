@@ -31,10 +31,10 @@ public class OI {
 
     private final JoystickButton trigger = new JoystickButton(this.stick, 1);
     private final JoystickButton thumb = new JoystickButton(this.stick, 2);
-    private final JoystickButton top = new JoystickButton(this.stick, 3);
-    private final JoystickButton top2 = new JoystickButton(this.stick, 4);
-    private final JoystickButton button5 = new JoystickButton(this.stick, 5);
-    private final JoystickButton button6 = new JoystickButton(this.stick, 6);
+    private final JoystickButton topLL = new JoystickButton(this.stick, 3);
+    private final JoystickButton topLR = new JoystickButton(this.stick, 4);
+    private final JoystickButton topUL = new JoystickButton(this.stick, 5);
+    private final JoystickButton topUR = new JoystickButton(this.stick, 6);
     private final JoystickButton button7 = new JoystickButton(this.stick, 7);
     private final JoystickButton button8 = new JoystickButton(this.stick, 8);
     private final JoystickButton button9 = new JoystickButton(this.stick, 9);
@@ -67,21 +67,26 @@ public class OI {
     public OI() {
         trigger.whenPressed(new Shift(true));
         thumb.whenPressed(new Shift(false));
-        top.whenPressed(new MoveServo(0));
-        top2.whenPressed(new MoveServo(1));
-//        button5.whenPressed(new TapeStraighten('L'));
-//        button6.whenPressed(new TapeStraighten('R'));
+        topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
+        topLL.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
+        topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
+        topLR.whenPressed(new Grab(Grab.RELEASE_HATCH));
+
+//        topUL.whenPressed(new TapeStraighten('L'));
+//        topUR.whenPressed(new TapeStraighten('R'));
 //        button7.whileHeld(new TapeStraighten('L'));
 //        button8.whileHeld(new TapeStraighten('R'));
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
         
         //END GAME LIFT STUFF
-        
-        //gets robot in position to drive up to platform and lift
-        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
-        //robot lifts itself onto the platform
-        button8.whenPressed(new LiftToPlatform());
+
+        if (Constants.COMPETITION_ROBOT) {
+            //gets robot in position to drive up to platform and lift
+            button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
+            //robot lifts itself onto the platform
+            button8.whenPressed(new LiftToPlatform());
+        }
 
         button9.whenPressed(new TimedDrive(2.0, 0.2));
         //buttons for testing all end game lift code
@@ -93,7 +98,10 @@ public class OI {
         button12.whenPressed(new TimedDrive(0.5, -0.2)); */
 
         //More autonomous stuff
-        button10.whenPressed(new DepositBallHigh());
+        if (Constants.COMPETITION_ROBOT) {
+            button10.whenPressed(new DepositBallHigh());
+        }
+
         
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
@@ -102,28 +110,32 @@ public class OI {
         //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-        xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
-        xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-        xboxY.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-        xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+        if (Constants.COMPETITION_ROBOT) {
+            xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+            xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
+            xboxY.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
+            xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+        }
         //
         // These are test and calibration initializations - they are NOT required for competition.
         xbox = new XboxController(1);
-        final POVButton decArmAngle = new POVButton(xbox, 0);
-        decArmAngle.whileHeld(
-                new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.DECREMENT));
+        if (Constants.COMPETITION_ROBOT) {
+            final POVButton decArmAngle = new POVButton(xbox, 0);
+            decArmAngle.whileHeld(
+                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.DECREMENT));
 
-        final POVButton incArmAngle = new POVButton(xbox, 180);
-        incArmAngle.whileHeld(
-                new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.INCREMENT));
+            final POVButton incArmAngle = new POVButton(xbox, 180);
+            incArmAngle.whileHeld(
+                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.INCREMENT));
 
-        final POVButton decBucketAngle = new POVButton(xbox, 90);
-        decBucketAngle.whileHeld(
-                new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.DECREMENT));
+            final POVButton decBucketAngle = new POVButton(xbox, 90);
+            decBucketAngle.whileHeld(
+                    new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.DECREMENT));
 
-        final POVButton incBucketAngle = new POVButton(xbox, 270);
-        incBucketAngle.whileHeld(
-                new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
+            final POVButton incBucketAngle = new POVButton(xbox, 270);
+            incBucketAngle.whileHeld(
+                    new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
+        }
 
     }
 }
