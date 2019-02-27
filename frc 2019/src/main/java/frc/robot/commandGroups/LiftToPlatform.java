@@ -23,6 +23,8 @@ public class LiftToPlatform extends CommandGroup {
         //lifts robot to platform with one button
         //uses command groups that we have tested to make one button that does it all
 
+        //need to retest with new pneumatics!!!!!
+
         addSequential(new LiftAndDuringLift());
         addSequential(new DriveAndPullIn());
         addSequential(new DriveAndLand());

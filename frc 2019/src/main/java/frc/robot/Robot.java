@@ -34,9 +34,11 @@ public class Robot extends TimedRobot {
     public final static Bucket bucket = new Bucket();
     public final static GripDetection grip = new GripDetection();
     public final static BucketWheelz bucketWheelz = new BucketWheelz();
-    public final static Lift lift = new Lift();
+    //public final static Lift lift = new Lift();
+    public final static NewLift lift = new NewLift();
     public final static ArmInterpolate armInterpolate = new ArmInterpolate();
     public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
+   
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -129,8 +131,10 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
         // Make sure the lifters are retracted before we start moving around.
-        new Lifter(Lifter.RETRACT_LIFTERS).start();
+        //not necessary anymore I dont think
+        //new Lifter(Lifter.RETRACT_LIFTERS).start();
     }
 
     /**

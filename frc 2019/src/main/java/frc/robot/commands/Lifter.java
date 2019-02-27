@@ -17,20 +17,26 @@ public class Lifter extends Command {
     public static final boolean RETRACT_LIFTERS = false;
 
     private final boolean action;
+    private final double duration;
     private static final Timer time = new Timer();
 
     /**
      * @param lift_robot (boolean) Either {@link #LIFT_ROBOT} or {@link #RETRACT_LIFTERS}.
      */
-    public Lifter(boolean lift_robot) {
+    public Lifter(boolean lift_robot, double lift_duration) {
         super();
         action = lift_robot;
+        duration = lift_duration;
+
         requires(Robot.lift);
+
     }
+
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+        time.reset();
         time.start();
     }
 
@@ -38,23 +44,48 @@ public class Lifter extends Command {
     @Override
     protected void execute() {
         if (LIFT_ROBOT == action) {
-            Robot.lift.lift_robot();
-        } else {
-            Robot.lift.retract_lifters();
+            //Robot.lift.lift_robot();
+
+            //for new pneumatics
+            Robot.lift.addPressure();
+
+        
+
+        } 
+        else {
+            //Robot.lift.retract_lifters();
+
+            //for new pneumatics
+            //no pressure now, pneumatics will go down
+            Robot.lift.ventPressure();
         }
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
         //returns true after .3 seconds (should be long enough to reset the valve piston).
-        return time.get() > .3;
+        //return time.get() > .3;
+        
+        //new isFinnished for new pneumatics
+        if (time.get() > duration) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.lift.off();
+        //not a thing anymore with the new pneumatics
+        //Robot.lift.off();
+
+        //slightly redundant but whatevs
+        Robot.lift.ventPressure();
+
         time.stop();
         time.reset();
     }
