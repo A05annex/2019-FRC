@@ -21,7 +21,7 @@ public class TapeFind extends Command{
     
       @Override
       protected void execute() {
-        Robot.driveTrain.inputDrive(Robot.gripDetection.findTape(direction));
+        
       }
     
       @Override
