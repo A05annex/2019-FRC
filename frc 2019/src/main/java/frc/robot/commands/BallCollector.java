@@ -1,9 +1,12 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
+/**
+ * This subsystem controls the cargo (ball) collection wheels to either grab the ball into the bucket,
+ * {@link #GRAB_BALL}; or eject the ball onto the rocket or cargo ship, {@link #EJECT_BALL}.
+ */
 public class BallCollector extends Command {
 
     public static final boolean GRAB_BALL = true;

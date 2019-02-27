@@ -1,4 +1,4 @@
-# 6831 - AO5 Annex - FRC 2019
+# 6831 - A05 Annex - FRC 2019
 
 Entirely new robot. The big electronics and control system change is that we are using
 [Talon SRX motor controllers](#TALON-SRX-Motor-Controllers) and wiring
@@ -13,7 +13,7 @@ Control mappings change as drivers suggest changes that would make the robot mor
 control configuration uses a fancy joystick for the primary driving, and hatch capture/release and cargo
 capture/release operations; and an auxiliary gamepad for arm and hatch-cargo bucket positioning.
 
-The current control mappings - we want to move towards 2 peron control - driver, arm operator:
+The current control mappings:
 * joystick (driver)
   * driving:  
     - joystick Y to forward-backward speed
@@ -77,7 +77,8 @@ operation to the robot.
 These are the semi-autonomous activities performed by the robot:
 * **Arm Positioning** - (done, needs testing and tuning) automatic arm positioning based on a table of target
   arm positions.
-  * **Getting to a position**
+  * **Getting to a position** - these are the methods of controlling positioning the arm to a specific location that
+    we have tried. All implementations co-exist, and we select the implementation to be used a startup configuration.
     * **set target position** (done, tested) While this works, changes in arm are a bit violent.
     * **set a series of target positions by arm angle interpolation** (done, needs more testing) This seems to work
       pretty well, though we were only able to test this after the bucket was removed and before bagging. Need to
@@ -94,7 +95,8 @@ These are the semi-autonomous activities performed by the robot:
 All subsystems now exist and are connected to the driver station in some fashion.
 
 ## Commands
-
+All of the basic commands are there. Command groups for more complex semi-autonomous actions can be created
+which would require less driver action to achieve the game goals.
 
 ## Talon SRX Motor Controllers
 To find out everything about these, start at
