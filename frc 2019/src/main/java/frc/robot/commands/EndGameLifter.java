@@ -29,7 +29,8 @@ public class EndGameLifter extends Command {
 
     @Override
     protected void execute() {
-        Robot.lift.lift_robot();
+        //Robot.lift.lift_robot();
+        Robot.lift.addPressure();
     }
 
     @Override

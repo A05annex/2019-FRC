@@ -33,6 +33,6 @@ public class DownerAndLand extends CommandGroup {
     //this lift bit is untested. for new pneumatics bc need to be constantly applying pressure.
     //time will need to be how long it takes this lil group to complete
     addSequential(new Lifter(false, 2.0));
-    addSequential(new EndGameDowner());
+    //addSequential(new EndGameDowner());
   }
 }
