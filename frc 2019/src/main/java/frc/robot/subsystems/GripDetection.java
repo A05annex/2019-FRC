@@ -11,10 +11,12 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.vision.VisionThread;
-import frc.robot.GripPipeline;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.core.Mat;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.HttpCamera.HttpCameraKind;
 
 /**
  * Add your docs here.
@@ -23,44 +25,7 @@ public class GripDetection extends Subsystem {
   
 	public static final int IMG_WIDTH = 320;
 	public static final int IMG_HEIGHT = 240;
-	
-  private VisionThread visionThread;
-  private boolean tapeSeen = false;
-
-  private double 
-    centerX1 = 0.0,
-    centerX2 = 0.0,
-    centerY1 = 0.0,
-    centerY2 = 0.0,
-    Height1,
-    Height2,
-    Width1,
-    Width2;
-  
-  private double[] 
-    coords1 = new double[]{0.0,0.0},
-    coords2 = new double[]{0.0,0.0};
-  UsbCamera camera;
-  double[] motorPower = new double[]{0,0};
-  private Rect 
-    rectleft,
-    rectright;
-  private Rect[]
-    tapearray = new Rect[30];
-	
-  private final Object 
-    imgLockCX1 = new Object(),
-    imgLockCX2 = new Object(),
-    imgLockCY1 = new Object(),
-    imgLockCY2 = new Object(),
-    
-    imgLockCW1 = new Object(),
-    imgLockCW2 = new Object(),
-    imgLockCH1 = new Object(),
-    imgLockCH2 = new Object(),
-    
-    imgLockSEEN = new Object();
-    
+	UsbCamera camera;
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public GripDetection(){
@@ -68,113 +33,17 @@ public class GripDetection extends Subsystem {
   }
   public void startVision() {
     //dont know why this is deprecated. help? it works, but i really hate the green lines.
+    HttpCamera piCam = new HttpCamera("piCam", "http://10.23.170.203:1180/?action=stream", HttpCameraKind.kMJPGStreamer);
     
-    visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-      if(pipeline.convexHullsOutput().size()>0){
-        for(int index=1;index<=pipeline.convexHullsOutput().size();index++){
-          tapearray[index-1]=Imgproc.boundingRect(pipeline.convexHullsOutput().get(index-1));
-        }
-        for(Rect rects : tapearray){
-          if(rects.y>IMG_HEIGHT/2 && rects.x>IMG_WIDTH/2){rects=rectleft;}
-          else{rectleft=null;}
-          if(rects.y>IMG_HEIGHT/2 && rects.x<IMG_WIDTH/2){rects=rectright;}
-          else{rectright=null;}
-        }
-        if(rectleft!=null){
-          System.out.print(rectleft);
-        }
-        if(rectright!=null){
-          System.out.print(rectright);
-        }
-      }
-      System.out.println();
-    });
-  visionThread.start();
-  }
+    CvSink cvSink1 = CameraServer.getInstance().getVideo(piCam);
+    
+    CvSource outputStream = CameraServer.getInstance().putVideo("Camera Stream", 640, 480);
+    
+    Mat image = new Mat();
 
-  public double[] findTape(char direction) {
-    double mlPower = 0;
-    double mrPower = 0;
-    boolean tapeSeen;
-    synchronized (imgLockSEEN) {tapeSeen = this.tapeSeen;};
-    if (!tapeSeen) {
-      if (direction == 'L') {
-        mlPower = -.2;
-        mrPower = .2;
-      }
-      if (direction == 'R') {
-        mlPower = .2;
-        mrPower = -.2;
-      }
-    } else {
-      mlPower = 0;
-      mrPower = 0;
-    }
-    motorPower[0] = mlPower;
-    motorPower[1] = mrPower;
-    return (motorPower);
+    cvSink1.grabFrame(image);
 
-  }
-  public void stopVision(){
-    visionThread.stop();
-  }
-
-  private double[] sendWidthHeight2() {
-    double Width2;
-    double Height2;
-    synchronized (imgLockCW2) {Width2 = this.Width2;}
-    synchronized (imgLockCH2) {Height2 = this.Height2;}
-    double[] WidthHeight1 = new double[]{Width2, Height2};
-    return WidthHeight1;
-  }
-
-  public double[] sendXY1() {
-    double centerX1;
-    double centerY1;
-    synchronized (imgLockCX1) {centerX1 = this.centerX1;}
-    synchronized (imgLockCY1) {centerY1 = this.centerY1;}
-    coords1[0] = centerX1;
-    coords1[1] = centerY1;
-    return (coords1);
-  }
-
-  public double[] sendXY2() {
-    double centerX2;
-    double centerY2;
-    synchronized (imgLockCX2) {centerX2 = this.centerX2;}
-    synchronized (imgLockCY2) {centerY2 = this.centerY2;}
-    coords2[0] = centerX2;
-    coords2[1] = centerY2;
-    return (coords2);
-  }
-
-  private double[] sendWidthHeight1(){
-    double Width1;
-    double Height1;
-    synchronized (imgLockCW1) {Width1=this.Width1;}
-    synchronized (imgLockCH1) {Height1=this.Height1;}
-    double[] WidthHeight1 = new double[]{Width1,Height1};
-    return WidthHeight1;
-  }
-  public double slowToRect(){
-    double width1;
-    double height1;
-    double width2;
-    double height2;
-    double powerRectH;
-    double powerRectW;
-    double powerRectM;
-    double rectWT=IMG_WIDTH/3;
-    double rectHT=IMG_HEIGHT/3;
-    synchronized(imgLockCH1){height1=this.Height1;};
-    synchronized(imgLockCW1){width1=this.Width1;};
-    synchronized(imgLockCH2){height2=this.Height2;};
-    synchronized(imgLockCW2){width2=this.Width2;};
-    powerRectH=((((height1+height2)/2)-rectHT)/100);
-    powerRectW=((((width1+width2)/2)-rectWT)/100);
-    powerRectM=((powerRectH+powerRectW)/2);
-    if(powerRectM<.1){powerRectM=0;}
-    return(powerRectM);
+    outputStream.putFrame(image);
   }
   @Override
   public void initDefaultCommand() {
