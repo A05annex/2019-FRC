@@ -22,6 +22,7 @@ public class LiftAndDuringLift extends CommandGroup {
     addParallel(new InterpolateAndCheck(ArmPositions.DURING_LIFT));
     addSequential(new Lifter(Lifter.LIFT_ROBOT, 3.0));
     //addSequential(new EndGameLifter());
+    //eh either should work
 
     //will need to retest with new pneumatics. timing may be off.
     

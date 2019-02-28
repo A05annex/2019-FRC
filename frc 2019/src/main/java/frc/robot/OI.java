@@ -17,6 +17,7 @@ import frc.robot.commandGroups.DriveAndLand;
 import frc.robot.commandGroups.InterpolateAndCheck;
 import frc.robot.commandGroups.LiftAndDuringLift;
 import frc.robot.commandGroups.LiftToPlatform;
+import frc.robot.commandGroups.PickUpBallFromGround;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ArmPositions;
 
@@ -94,6 +95,7 @@ public class OI {
 
         //More autonomous stuff
         button10.whenPressed(new DepositBallHigh());
+        button11.whenPressed(new PickUpBallFromGround());
         
         // Controlling position selection
         // A - low hatch      A+bumber - low ball

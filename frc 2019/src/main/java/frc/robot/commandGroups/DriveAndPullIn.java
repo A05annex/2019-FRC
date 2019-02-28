@@ -8,7 +8,6 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.Lifter;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
@@ -20,11 +19,6 @@ public class DriveAndPullIn extends CommandGroup {
 
     //the arm pulls the robot up as the wheels begin to drive forward
     addParallel(new TimedDrive(1.0, 0.2));
-
-    //this lift bit is untested. for new pneumatics bc need to be constantly applying pressure.
-    //time will need to be how long it takes this lil group to complete
-    addParallel(new Lifter(Lifter.LIFT_ROBOT, 1.0));
-
     addSequential(new InterpolateAndCheck(ArmPositions.PULL_IN));
   
   }

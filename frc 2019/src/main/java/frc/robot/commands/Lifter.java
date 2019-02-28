@@ -18,6 +18,7 @@ public class Lifter extends Command {
 
     private final boolean action;
     private final double duration;
+    //now duration is just however long switchy boi takes
     private static final Timer time = new Timer();
 
     /**
@@ -48,18 +49,8 @@ public class Lifter extends Command {
 
             //for new pneumatics
             Robot.lift.addPressure();
-
-        
-
         } 
         else if(RETRACT_LIFTERS == action){
-            Robot.lift.ventPressure();
-        }
-        else {
-            //Robot.lift.retract_lifters();
-
-            //for new pneumatics
-            //no pressure now, pneumatics will go down
             Robot.lift.ventPressure();
         }
 
@@ -87,8 +78,9 @@ public class Lifter extends Command {
         //Robot.lift.off();
 
         //slightly redundant but whatevs
-        Robot.lift.ventPressure();
-
+        //jk we don't need to have this going for a duration bc it just stays wow cool
+        //Robot.lift.ventPressure();
+        
         time.stop();
         time.reset();
     }

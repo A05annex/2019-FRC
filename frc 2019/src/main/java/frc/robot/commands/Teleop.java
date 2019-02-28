@@ -25,6 +25,14 @@ public class Teleop extends Command {
         double forward = -stick.getRawAxis(1) / 1.5;
         double rotate = -stick.getRawAxis(2) / 2.0;
         Robot.driveTrain.setArcadePower(forward, rotate);
+
+        //make the joystick do a cubed graph thingy so more control when slow
+        //talked to aarm bout it
+        //not tested yet
+        /*Joystick stick = Robot.getOI().getStick();
+        double forward = -stick.getRawAxis(1) * -stick.getRawAxis(1) * -stick.getRawAxis(1);
+        double rotate = -stick.getRawAxis(2) * -stick.getRawAxis(2) * -stick.getRawAxis(2);
+        Robot.driveTrain.setArcadePower(forward, rotate); */
     }
 
     @Override
