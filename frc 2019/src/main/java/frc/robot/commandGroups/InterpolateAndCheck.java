@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.ArmInterpolateToTarget;
