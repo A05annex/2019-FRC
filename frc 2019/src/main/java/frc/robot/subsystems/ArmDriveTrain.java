@@ -34,7 +34,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     private static final double AUTO_POSITION_BUCKET = 1024.0;
 
     // The target positions. these are not final because we may be tuning/calibrating positions and the
-    // bumpTargetPosition() method may be called to dynamically modify these.
+    // bumpTargetAngles() method may be called to dynamically modify these.
     private double[][] targetPositions = {
             {110.0, 35.0, 0.0},     // PREGAME
             {96.0, 33.0, 30},       // HOME
@@ -200,7 +200,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     }
 
     @Override
-    public void bumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta) {
+    public void bumpTargetAngles(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta) {
         targetPositions[targetPositionIndx][LOWER] += lowerAngleDelta;
         targetPositions[targetPositionIndx][UPPER] += upperAngleDelta;
         if (AUTO_POSITION_BUCKET != targetPositions[targetPositionIndx][BUCKET]) {

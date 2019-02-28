@@ -89,7 +89,7 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
     }
 
     @Override
-    public void bumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta) {
+    public void bumpTargetAngles(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta) {
 
     }
 

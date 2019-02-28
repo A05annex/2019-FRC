@@ -101,7 +101,7 @@ public interface IUseArm {
      * @param upperAngleDelta  (double) the delta angle to be added to the upper arm target angle.
      * @param bucketAngleDelta (double) the delta angle to be added to the bucket angle.
      */
-    void bumpTargetPosition(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta);
+    void bumpTargetAngles(double lowerAngleDelta, double upperAngleDelta, double bucketAngleDelta);
 
     void resetIntegral();
 

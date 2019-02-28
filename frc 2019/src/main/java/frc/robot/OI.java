@@ -12,10 +12,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commandGroups.DepositBallHigh;
-import frc.robot.commandGroups.DownerAndLand;
-import frc.robot.commandGroups.DriveAndLand;
-import frc.robot.commandGroups.InterpolateAndCheck;
-import frc.robot.commandGroups.LiftAndDuringLift;
 import frc.robot.commandGroups.LiftToPlatform;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ArmPositions;
@@ -111,10 +107,10 @@ public class OI {
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
         if (Constants.COMPETITION_ROBOT) {
-            xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
-            xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-            xboxY.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-            xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+            xboxA.whenPressed(new ArmPathInterpToTarget(ArmPositions.LOW_CARGO));
+            xboxB.whenPressed(new ArmPathInterpToTarget(ArmPositions.MID_CARGO));
+            xboxY.whenPressed(new ArmPathInterpToTarget(ArmPositions.HIGH_CARGO));
+            xboxX.whenPressed(new ArmPathInterpToTarget(ArmPositions.HOME));
         }
         //
         // These are test and calibration initializations - they are NOT required for competition.
@@ -122,19 +118,19 @@ public class OI {
         if (Constants.COMPETITION_ROBOT) {
             final POVButton decArmAngle = new POVButton(xbox, 0);
             decArmAngle.whileHeld(
-                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.DECREMENT));
+                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_DOWN));
 
             final POVButton incArmAngle = new POVButton(xbox, 180);
             incArmAngle.whileHeld(
-                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.INCREMENT));
+                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_UP));
 
             final POVButton decBucketAngle = new POVButton(xbox, 90);
             decBucketAngle.whileHeld(
-                    new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.DECREMENT));
+                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_OUT));
 
             final POVButton incBucketAngle = new POVButton(xbox, 270);
             incBucketAngle.whileHeld(
-                    new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
+                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_IN));
         }
 
     }

@@ -23,13 +23,15 @@ public class Constants {
 
     // The physical distance, in inches, from the CL of the lower arm pivot axel to the CL of the upper arm pivot
     // axel.
-    public static final double LOWER_ARM_LENGTH = 40.0;
+    public static final double LOWER_ARM_LENGTH = 41.25;
     // The physical distance, in inches, from the CL of the upper arm pivot to the CL of the bucket pivot.
-    public static final double UPPER_ARM_LENGTH = 42.0;
+    public static final double UPPER_ARM_LENGTH = 39.5;
 
     // This the calibration bump - the change in angle (degrees) that the POV calibration control adds to the
     // arm/bucket
-    public static final double BUMP_INCREMENT = 0.25;
+    public static final double BUMP_INC_ANGLE = 0.25;
+    public static final double BUMP_INC_POSITION = 0.25;
+    public static final double BUMP_INC_BUCKET = 0.25;
 
     // The tolerance for lower arm, upper arm, and bucket angle positions before we deem the arm and bucket to be
     // in the target position.
