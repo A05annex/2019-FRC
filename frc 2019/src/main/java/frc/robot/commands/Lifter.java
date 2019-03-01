@@ -54,7 +54,6 @@ public class Lifter extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.lift.off();
         time.stop();
         time.reset();
     }
