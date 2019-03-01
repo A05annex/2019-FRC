@@ -7,13 +7,11 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class DepositCargoWithLimit extends Command {
 
-    Timer time = new Timer();
 
     public DepositCargoWithLimit() {
         requires(Robot.bucketWheelz);
@@ -22,7 +20,6 @@ public class DepositCargoWithLimit extends Command {
 
     @Override
     protected void initialize() {
-        time.start();
     }
 
     // Called repeatedly when this Command is scheduled to run

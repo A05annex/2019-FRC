@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandgroups.DepositBallHigh;
+import frc.robot.commandgroups.DepositBallAtTarget;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
@@ -84,8 +84,9 @@ public class OI {
         button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
         button8.whenPressed(new LiftToPlatform());
+        //button9.whenPressed(new TimedDrive(2.0, 0.2));
 
-        button9.whenPressed(new TimedDrive(2.0, 0.2));
+
         //buttons for testing all end game lift code
         /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftAndDuringLift());
@@ -94,9 +95,12 @@ public class OI {
         button11.whenPressed(new DownerAndLand());
         button12.whenPressed(new TimedDrive(0.5, -0.2)); */
 
-        //More autonomous stuff
-        button10.whenPressed(new DepositBallHigh());
-        button11.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround());
+        //MORE AUTONOMOUS-ISH STFF
+        //uses limit switches to deposit balls and pick them up
+        button9.whenPressed(new DepositBallAtTarget(ArmPositions.LOW_CARGO));
+        button10.whenPressed(new DepositBallAtTarget(ArmPositions.MID_CARGO));
+        button11.whenPressed(new DepositBallAtTarget(ArmPositions.HIGH_CARGO));
+        button10.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround());
         
         // Controlling position selection
         // A - low hatch      A+bumber - low ball

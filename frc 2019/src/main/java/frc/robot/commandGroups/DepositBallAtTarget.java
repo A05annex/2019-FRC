@@ -12,16 +12,16 @@ import frc.robot.commands.DepositCargoWithLimit;
 import frc.robot.subsystems.ArmPositions;
 
 
-public class DepositBallHigh extends CommandGroup {
+public class DepositBallAtTarget extends CommandGroup {
+  
+  ArmPositions target;
 
-  public DepositBallHigh() {
+  public DepositBallAtTarget(ArmPositions target) {
 
-    //goes to high position, runs ejecting cargo wheels until ball has left, then returns home
-    //can make for other cargo deposits as well
-    //wil lhook up to buttons if deemed useful
+    //goes to target position, runs ejecting cargo wheels until ball has left, then returns home
 
-    /*addSequential(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
+    addSequential(new InterpolateAndCheck(target));
     addSequential(new DepositCargoWithLimit());
-    addSequential(new InterpolateAndCheck(ArmPositions.HOME)); */
+    addSequential(new InterpolateAndCheck(ArmPositions.HOME)); 
   }
 }
