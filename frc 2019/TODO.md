@@ -4,7 +4,7 @@
 ## 2-mar-2019: 2<sup>nd</sup> 2hr Un-Bag
 
 ### Pre Un-Bag ###
-- [ ] Install drive tuning code on the practice robot - make it ready for driver testing.
+- [ ] (roy) Install drive tuning code on the practice robot - make it ready for driver testing.
 - [ ] Build team:
   - [ ] Battery hold-down fixed so it wont catch and tear off arm pneumatics and wiring.
   - [ ] Lift cylinders fixed so we can drive the robot.
