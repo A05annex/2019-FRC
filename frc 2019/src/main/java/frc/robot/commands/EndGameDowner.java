@@ -31,7 +31,7 @@ public class EndGameDowner extends Command {
     @Override
     protected void execute() {
         //Robot.lift.retract_lifters();
-        Robot.lift.ventPressure();
+        Robot.lift.retract_lifters();
     }
 
     // Make this return true when this Command no longer needs to run execute()

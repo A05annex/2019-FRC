@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DepositBall extends Command {
+public class DepositCargoWithLimit extends Command {
 
     Timer time = new Timer();
 
-    public DepositBall() {
+    public DepositCargoWithLimit() {
         requires(Robot.bucketWheelz);
+        requires(Robot.bucketLimitSwitch);
     }
 
     @Override
@@ -36,12 +37,12 @@ public class DepositBall extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        if (time.get() > 1.5) {
+        if((Robot.bucketLimitSwitch.bucketSwitch.get() == false) && (Robot.bucketLimitSwitch.bucketSwitch2.get() == false)){
             return true;
-        } else {
+          }
+          else{
             return false;
-        }
-        //guessing on the time here. will be however long it takes the wheels to intake a ball
+          }
     }
 
     // Called once after isFinished returns true

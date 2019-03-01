@@ -11,31 +11,29 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandGroups.DepositBallHigh;
-import frc.robot.commandGroups.DownerAndLand;
-import frc.robot.commandGroups.DriveAndLand;
-import frc.robot.commandGroups.InterpolateAndCheck;
-import frc.robot.commandGroups.LiftAndDuringLift;
-import frc.robot.commandGroups.LiftToPlatform;
-import frc.robot.commandGroups.PickUpBallFromGround;
-import frc.robot.commands.*;
+import frc.robot.commandgroups.DepositBallHigh;
+import frc.robot.commandgroups.LiftToPlatform;
+import frc.robot.commands.ArmInterpolateToTarget;
+import frc.robot.commands.BallCollector;
+import frc.robot.commands.BumpTargetPosition;
+import frc.robot.commands.Grab;
+import frc.robot.commands.Shift;
+import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
-
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
 
-    //creation of the joystick and xbox Controller object
     private final Joystick stick = new Joystick(0);
 
     private final JoystickButton trigger = new JoystickButton(this.stick, 1);
     private final JoystickButton thumb = new JoystickButton(this.stick, 2);
-    private final JoystickButton top = new JoystickButton(this.stick, 3);
-    private final JoystickButton top2 = new JoystickButton(this.stick, 4);
-    private final JoystickButton button5 = new JoystickButton(this.stick, 5);
-    private final JoystickButton button6 = new JoystickButton(this.stick, 6);
+    private final JoystickButton topLL = new JoystickButton(this.stick, 3);
+    private final JoystickButton topLR = new JoystickButton(this.stick, 4);
+    private final JoystickButton topUL = new JoystickButton(this.stick, 5);
+    private final JoystickButton topUR = new JoystickButton(this.stick, 6);
     private final JoystickButton button7 = new JoystickButton(this.stick, 7);
     private final JoystickButton button8 = new JoystickButton(this.stick, 8);
     private final JoystickButton button9 = new JoystickButton(this.stick, 9);
@@ -68,10 +66,13 @@ public class OI {
     public OI() {
         trigger.whenPressed(new Shift(true));
         thumb.whenPressed(new Shift(false));
-        top.whenPressed(new MoveServo(0));
-        top2.whenPressed(new MoveServo(1));
-//        button5.whenPressed(new TapeStraighten('L'));
-//        button6.whenPressed(new TapeStraighten('R'));
+        topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
+        topLL.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
+        topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
+        topLR.whenPressed(new Grab(Grab.RELEASE_HATCH));
+
+//        topUL.whenPressed(new TapeStraighten('L'));
+//        topUR.whenPressed(new TapeStraighten('R'));
 //        button7.whileHeld(new TapeStraighten('L'));
 //        button8.whileHeld(new TapeStraighten('R'));
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
@@ -95,7 +96,7 @@ public class OI {
 
         //More autonomous stuff
         button10.whenPressed(new DepositBallHigh());
-        button11.whenPressed(new PickUpBallFromGround());
+        button11.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround());
         
         // Controlling position selection
         // A - low hatch      A+bumber - low ball

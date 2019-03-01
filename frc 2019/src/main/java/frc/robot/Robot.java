@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Lifter;
 import frc.robot.subsystems.*;
 
@@ -28,14 +27,13 @@ public class Robot extends TimedRobot {
     public final static DriveTrain driveTrain = new DriveTrain();
     public final static IUseArm armDriveTrain = new ArmDriveTrain();
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
-    public final static ExampleSubsystem m_subsystem = new ExampleSubsystem();
     public final static GripDetection gripDetection = new GripDetection();
     private static OI oi;
     public final static Bucket bucket = new Bucket();
     public final static GripDetection grip = new GripDetection();
     public final static BucketWheelz bucketWheelz = new BucketWheelz();
-    //public final static Lift lift = new Lift();
-    public final static NewLift lift = new NewLift();
+    public final static Grabber grabber = new Grabber();
+    public final static Lift lift = new Lift();
     public final static ArmInterpolate armInterpolate = new ArmInterpolate();
     public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
    
@@ -49,7 +47,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
     }

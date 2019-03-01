@@ -48,10 +48,10 @@ public class Lifter extends Command {
             //Robot.lift.lift_robot();
 
             //for new pneumatics
-            Robot.lift.addPressure();
+            Robot.lift.lift_robot();
         } 
         else if(RETRACT_LIFTERS == action){
-            Robot.lift.ventPressure();
+            Robot.lift.retract_lifters();
         }
 
     }
@@ -74,13 +74,6 @@ public class Lifter extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        //not a thing anymore with the new pneumatics
-        //Robot.lift.off();
-
-        //slightly redundant but whatevs
-        //jk we don't need to have this going for a duration bc it just stays wow cool
-        //Robot.lift.ventPressure();
-        
         time.stop();
         time.reset();
     }
