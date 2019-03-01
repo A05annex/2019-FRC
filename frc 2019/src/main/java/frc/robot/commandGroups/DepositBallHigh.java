@@ -8,6 +8,7 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.DepositBall;
 import frc.robot.subsystems.ArmPositions;
 
 
@@ -19,8 +20,8 @@ public class DepositBallHigh extends CommandGroup {
     //can make for other cargo deposits as well
     //wil lhook up to buttons if deemed useful
 
-    addSequential(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
-    addSequential(new DepositBallHigh());
-    addSequential(new InterpolateAndCheck(ArmPositions.HOME));
+    /*addSequential(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
+    addSequential(new DepositBall());
+    addSequential(new InterpolateAndCheck(ArmPositions.HOME)); */
   }
 }
