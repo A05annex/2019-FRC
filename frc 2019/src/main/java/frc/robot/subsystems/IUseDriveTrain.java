@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public interface IUseDriveTrain {
 

@@ -12,8 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Lifter;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.DriveTrainPractice;
+import frc.robot.subsystems.IUseDriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,19 +27,17 @@ public class Robot extends TimedRobot {
 
     public final static IUseDriveTrain driveTrain = Constants.COMPETITION_ROBOT ?
             new DriveTrain() : new DriveTrainPractice();
-    public final static IUseArm armDriveTrain =  Constants.COMPETITION_ROBOT ? new ArmDriveTrain() : null;
-    //public static IUseArm armDriveTrain = new ArmDriveSrx();
-    public final static GripDetection gripDetection = new GripDetection();
     private static OI oi;
-    public final static Bucket bucket = Constants.COMPETITION_ROBOT ? new Bucket() : null;
-    public final static GripDetection grip = new GripDetection();
-    public final static BucketWheelz bucketWheelz = new BucketWheelz();
-    public final static Grabber grabber = new Grabber();
-    public final static Lift lift = Constants.COMPETITION_ROBOT ? new Lift() : null;
-    public final static ArmInterpolate armInterpolate = new ArmInterpolate();
-    public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+    void displayDriveParameters() {
+        SmartDashboard.putString("DB/String 0", String.format("sg:  %0.3f", Constants.DRIVE_FORWARD_GAIN));
+        SmartDashboard.putString("DB/String 1", String.format("tg:  %0.3f", Constants.DRIVE_TURN_GAIN));
+        SmartDashboard.putString("DB/String 2", String.format("tgs: %0.3f", Constants.DRIVE_AT_SPPED_GAIN));
+        SmartDashboard.putString("DB/String 3", String.format("sac: %0.3f", Constants.DRIVE_SENSITIVITY));
+        SmartDashboard.putString("DB/String 4", String.format("db:  %0.3f", Constants.DRIVE_DEADBAND));
+    }
 
     /**
      * This function is run when the robot is first started up and should be
@@ -49,6 +48,9 @@ public class Robot extends TimedRobot {
         oi = new OI();
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
+        for (int i = 0; i < 10; i++) {
+            SmartDashboard.putString("DB/String " + Integer.toString(i), " ");
+        }
     }
 
     /**
@@ -74,14 +76,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().removeAll();
-        for (int i = 0; i < 10; i++) {
-            SmartDashboard.putString("DB/String " + Integer.toString(i), " ");
-        }
-        if (null != armDriveTrain) {
-            SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
-            SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
-        }
+        displayDriveParameters();
     }
 
     /**
@@ -118,6 +113,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        displayDriveParameters();
     }
 
     @Override
@@ -130,10 +126,6 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
-        // Make sure the lifters are retracted before we start moving around.
-        if (Constants.COMPETITION_ROBOT) {
-            new Lifter(Lifter.RETRACT_LIFTERS).start();
-        }
     }
 
     /**
@@ -142,13 +134,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        if (null != armDriveTrain) {
-            SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
-            SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
-        }
-        //SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.getBucketAngle()));
-        //SmartDashboard.putString("DB/String 5", Boolean.toString(armDriveTrain.isAtTargetPosition()));
-
+        displayDriveParameters();
     }
 
     /**

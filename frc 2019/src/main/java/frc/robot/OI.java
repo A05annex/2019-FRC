@@ -11,14 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandGroups.DepositBallHigh;
-import frc.robot.commandGroups.DownerAndLand;
-import frc.robot.commandGroups.DriveAndLand;
-import frc.robot.commandGroups.InterpolateAndCheck;
-import frc.robot.commandGroups.LiftAndDuringLift;
-import frc.robot.commandGroups.LiftToPlatform;
 import frc.robot.commands.*;
-import frc.robot.subsystems.ArmPositions;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -49,6 +42,13 @@ public class OI {
     private final JoystickButton xboxB = new JoystickButton(xbox, 2);
     private final JoystickButton xboxX = new JoystickButton(xbox, 3);
     private final JoystickButton xboxY = new JoystickButton(xbox, 4);
+    private final JoystickButton bumperLeft = new JoystickButton(xbox, 5);
+    private final JoystickButton bumperRight = new JoystickButton(xbox, 6);
+    private final POVButton povUp = new POVButton(xbox, 0);
+    private final POVButton povDown = new POVButton(xbox, 180);
+    private final POVButton povRight = new POVButton(xbox, 90);
+    private final POVButton povLeft = new POVButton(xbox, 270);
+
 
     public Joystick getStick() {
         //method to be called by other commands or subsystems to use the joystick
@@ -65,77 +65,28 @@ public class OI {
     }
 
     public OI() {
-        trigger.whenPressed(new Shift(true));
-        thumb.whenPressed(new Shift(false));
-        topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
-        topLL.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
-        topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
-        topLR.whenPressed(new Grab(Grab.RELEASE_HATCH));
+        topUL.whileHeld(new BumpDriveGain(0.01));
+        topLL.whileHeld(new BumpDriveGain(-0.01));
+        topUR.whileHeld(new BumpTurnGain(0.01));
+        topLR.whileHeld(new BumpTurnGain(-0.01));
 
-//        topUL.whenPressed(new TapeStraighten('L'));
-//        topUR.whenPressed(new TapeStraighten('R'));
-//        button7.whileHeld(new TapeStraighten('L'));
-//        button8.whileHeld(new TapeStraighten('R'));
-        /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
-        button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
-        
-        //END GAME LIFT STUFF
+        button7.whileHeld(new BumpTurnAtSpeedGain(-0.01));
+        button8.whileHeld(new BumpTurnAtSpeedGain(0.01));
+        button9.whileHeld(new BumpSensitivity(-0.05));
+        button10.whileHeld(new BumpSensitivity(0.05));
+        button11.whileHeld(new BumpDeadband(-0.005));
+        button12.whileHeld(new BumpDeadband(0.005));
 
-        if (Constants.COMPETITION_ROBOT) {
-            //gets robot in position to drive up to platform and lift
-            button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
-            //robot lifts itself onto the platform
-            button8.whenPressed(new LiftToPlatform());
-        }
-
-        button9.whenPressed(new TimedDrive(2.0, 0.2));
-        //buttons for testing all end game lift code
-        /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
-        button8.whenPressed(new LiftAndDuringLift());
-        button9.whenPressed(new DriveAndPullIn()); 
-        button10.whenPressed(new DriveAndLand()); 
-        button11.whenPressed(new DownerAndLand());
-        button12.whenPressed(new TimedDrive(0.5, -0.2)); */
-
-        //More autonomous stuff
-        if (Constants.COMPETITION_ROBOT) {
-            button10.whenPressed(new DepositBallHigh());
-        }
-
-        
-        // Controlling position selection
-        // A - low hatch      A+bumber - low ball
-        // B - mid hatch      B+bumber - mid ball
-        // Y - high hatch     Y+bumber - high ball
-        //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
-        //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
-        //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-        if (Constants.COMPETITION_ROBOT) {
-            xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
-            xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-            xboxY.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-            xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
-        }
-        //
-        // These are test and calibration initializations - they are NOT required for competition.
-        xbox = new XboxController(1);
-        if (Constants.COMPETITION_ROBOT) {
-            final POVButton decArmAngle = new POVButton(xbox, 0);
-            decArmAngle.whileHeld(
-                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.DECREMENT));
-
-            final POVButton incArmAngle = new POVButton(xbox, 180);
-            incArmAngle.whileHeld(
-                    new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.INCREMENT));
-
-            final POVButton decBucketAngle = new POVButton(xbox, 90);
-            decBucketAngle.whileHeld(
-                    new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.DECREMENT));
-
-            final POVButton incBucketAngle = new POVButton(xbox, 270);
-            incBucketAngle.whileHeld(
-                    new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
-        }
-
+        // on the gamepad
+        xboxY.whileHeld(new BumpDriveGain(0.01));
+        xboxA.whileHeld(new BumpDriveGain(-0.01));
+        xboxX.whileHeld(new BumpTurnGain(-0.01));
+        xboxB.whileHeld(new BumpTurnGain(0.01));
+        povUp.whileHeld(new BumpTurnAtSpeedGain(0.01));
+        povDown.whileHeld(new BumpTurnAtSpeedGain(-0.01));
+        povRight.whileHeld(new BumpSensitivity(0.05));
+        povLeft.whileHeld(new BumpSensitivity(-0.05));
+        bumperLeft.whileHeld(new BumpDeadband(-0.005));
+        bumperRight.whileHeld(new BumpDeadband(0.005));
     }
 }

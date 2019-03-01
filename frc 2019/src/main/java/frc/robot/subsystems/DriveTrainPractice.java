@@ -6,8 +6,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -81,6 +81,7 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
             shifter.set(true);
         }
     }
+
     @Override
     public void downShift() {
         if (null != shifter) {

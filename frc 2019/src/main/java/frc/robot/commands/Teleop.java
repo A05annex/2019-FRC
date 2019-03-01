@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class Teleop extends Command {
@@ -11,7 +12,7 @@ public class Teleop extends Command {
     public Teleop() {
 
         //only functions if the drive train is not in use by another command
-        requires((Subsystem)Robot.driveTrain);
+        requires((Subsystem) Robot.driveTrain);
     }
 
     @Override
@@ -23,8 +24,24 @@ public class Teleop extends Command {
     @Override
     protected void execute() {
         Joystick stick = Robot.getOI().getStick();
-        double forward = -stick.getRawAxis(1) / 1.5;
-        double rotate = -stick.getRawAxis(2) / 2.0;
+        // get stick values and set the signs to match the arcade drive forward,rotate conventions
+        double stickY = -stick.getRawAxis(1);
+        double twist = -stick.getRawAxis(2);
+        // subtract the dead band and scale what is left outside the dead band
+        double ySignMult = (stickY > 0.0) ? 1.0 : -1.0;
+        double twistSignMult = (twist > 0.0) ? 1.0 : -1.0;
+        double useY = (Math.abs(stickY) <= Constants.DRIVE_DEADBAND) ? 0.0 :
+                (Math.abs(stickY) - Constants.DRIVE_DEADBAND) / (1.0 - Constants.DRIVE_DEADBAND);
+        double useTwist = (Math.abs(twist) <= Constants.DRIVE_DEADBAND) ? 0.0 :
+                (Math.abs(twist) - Constants.DRIVE_DEADBAND) / (1.0 - Constants.DRIVE_DEADBAND);
+        // do the sensitivity power function
+        useY = Math.pow(useY, Constants.DRIVE_SENSITIVITY);
+        useTwist = Math.pow(useTwist, Constants.DRIVE_SENSITIVITY);
+        // apply the gains
+        double forward = useY * Constants.DRIVE_FORWARD_GAIN * ySignMult;
+        double rotate = ((useTwist * Constants.DRIVE_TURN_GAIN) -
+                (useY * (Constants.DRIVE_TURN_GAIN - Constants.DRIVE_AT_SPPED_GAIN))) * twistSignMult;
+        // Now set the speeds
         Robot.driveTrain.setArcadePower(forward, rotate);
     }
 
