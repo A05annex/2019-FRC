@@ -44,7 +44,14 @@
   - [ ] Full drive onto platform:
     - [ ] final arm position
     - [ ] Drive dime/distance
-    
+- [ ] Tune cargo/hatch collection methods
+  - [ ] Test limit switch(es?)
+  - [ ] Decide how autonomous it should be
+  - [ ] Get controlls figured out
+- [ ] Test code that may improve driving
+  - [ ] Ramp
+  - [ ] The thing that cubes input and gives greater control at slower speed
+- [ ] Have joysticks set up how we want them for competitions
 ### Post Un-Bag ###
 - [ ] Review:
   - [ ] mechanical issues that need resolution
