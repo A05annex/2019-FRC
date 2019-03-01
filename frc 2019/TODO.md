@@ -8,8 +8,8 @@
 - [ ] Build team:
   - [ ] Battery hold-down fixed so it wont catch and tear off arm pneumatics and wiring.
   - [ ] Lift cylinders fixed so we can drive the robot.
-- [ ] Resolve github issue with ```commandGroup``` and ```commandgroup``` - if you clone from
-      github it is ```commandGroup```
+- [ ] Resolve github issue with `commandGroup` and `commandgroup` - if you clone from
+      github it is `commandGroup`
 - [ ] Review the **During Un-Bag** list and agree on order.
 
 ### During Un-Bag ###
@@ -53,7 +53,7 @@
 
 
 ## 8-feb-2019: Corvallis scrimmage 1 week away
-- [x] Have a drive program running so the robot can be driven - *the `master` branch will always be
+- [x] Have a drive program running so the robot can be driven - the `master` branch will always be
   drivable. Things don't get checked into `master` unless they are drivable
 - [x] Have 3 arm positions available on buttons:
   - [x] hatch pickup
