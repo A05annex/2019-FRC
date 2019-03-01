@@ -27,6 +27,7 @@
   - [ ] Middle position
   - [ ] Upper position
   - [ ] Ball pickup
+- [ ] Tune robot start sequence starting with the arm holding a hatch cover.
 - [ ] Endgame Lift Tuning - uncomment the step-wise execution of lift:
   - [ ] Pre-Lift position - where is the bucket when you get on the lift.
   - [ ] Ready for lift position - arm down on platform, almost ready to lift - completely
