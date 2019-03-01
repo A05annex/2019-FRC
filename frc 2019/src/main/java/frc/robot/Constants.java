@@ -33,4 +33,17 @@ public class Constants {
     public static final int INTERPOLATE_STEPS = 50;
     public static final double SECS_FROM_NEUTRAL_TO_FULL = 2.0;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Drive tuning constants                                                                                         //
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static double DRIVE_FORWARD_GAIN = 0.66;
+    public static double DRIVE_TURN_GAIN = 0.5;
+    public static double DRIVE_AT_SPPED_GAIN = 0.1;
+    public static double DRIVE_FORWARD_SENSITIVITY = 1.0;
+    public static double DRIVE_TURN_SENSITIVITY = 1.0;
+    public static double DRIVE_DEADBAND= 0.05;
+
+    public static double FINE_CONTROL_MAX = 0.2;
+
+
 }
