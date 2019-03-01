@@ -47,7 +47,7 @@
 ### Post Un-Bag ###
 - [ ] Review:
   - [ ] mechanical issues that need resolution
-  - [ ] programming issues that need resolution
+  - [ ] programming issues that need resolution, plan for who does those
   
   
 
