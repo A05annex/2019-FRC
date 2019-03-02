@@ -26,8 +26,8 @@ public class DepositCargoWithLimit extends Command {
     @Override
     protected void execute() {
 
-        Robot.bucketWheelz.collect();
-        //this should run the collect method from BucketWheelz
+        Robot.bucketWheelz.eject();
+        //this should run the eject method from BucketWheelz
 
     }
 
