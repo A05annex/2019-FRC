@@ -33,9 +33,9 @@ public class Shift extends Command {
         //shifts the motors based on the value of boolean "lift_robot"
         Robot.driveTrain.stop();
         if (up) {
-            Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kForward);
+            Robot.driveTrain.upShift();
         } else {
-            Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kReverse);
+            Robot.driveTrain.downShift();
         }
     }
 
@@ -48,7 +48,6 @@ public class Shift extends Command {
     @Override
     protected void end() {
         //calls function to stop the shifter when finished
-        Robot.driveTrain.shifter.set(DoubleSolenoid.Value.kOff);
         time.stop();
         time.reset();
     }
