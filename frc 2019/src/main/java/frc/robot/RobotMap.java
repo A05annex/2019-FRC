@@ -32,6 +32,7 @@ public class RobotMap {
             bucket = 8,
             lift = 0,
             grabber = 1,
+            grabber = 1,
             shifter = 2,
             shifter = 3,
             grabber = 2,
