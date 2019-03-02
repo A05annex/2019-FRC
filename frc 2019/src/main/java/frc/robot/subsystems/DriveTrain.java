@@ -75,17 +75,12 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
         leftMaster.set(scale * (forward - rotate));
     }
 
-<<<<<<< HEAD
     @Override
     public void upShift() {
         shifter.set(true);
     }
-    @Override
-=======
-    public void upShift() {
-        shifter.set(true);
-    }
->>>>>>> 89f7ea97443543b8065fa5e2ac2d41c5da5b436e
+   
+
     public void downShift() {
         shifter.set(false);
     }

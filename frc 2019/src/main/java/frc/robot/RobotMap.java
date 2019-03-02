@@ -31,13 +31,10 @@ public class RobotMap {
             arm2 = 1,
             bucket = 8,
             lift = 0,
-<<<<<<< HEAD
             grabber = 1,
             shifter = 2,
-=======
             shifter = 3,
             grabber = 2,
->>>>>>> 89f7ea97443543b8065fa5e2ac2d41c5da5b436e
             servo = 1,
             cargoMotor = 0, //plugged into PWM port 0
             limitSwitch = 0; //not on robot yet. will go in DIO port 0 probably
