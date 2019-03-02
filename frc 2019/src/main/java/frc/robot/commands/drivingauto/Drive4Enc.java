@@ -5,6 +5,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.SerialPort;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.IUseDriveTrain;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -18,7 +19,7 @@ public class Drive4Enc extends Command {
     
     public Drive4Enc(int desiredEnc, double motorPower) {
         this.desiredEnc = desiredEnc;
-    	requires(Robot.driveTrain);
+    	requires((Subsystem)Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time

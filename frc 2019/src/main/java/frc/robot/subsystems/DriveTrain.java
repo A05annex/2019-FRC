@@ -15,7 +15,7 @@ import frc.robot.commands.Teleop;
 public class DriveTrain extends Subsystem implements IUseDriveTrain {
 
     public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
+    //public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
     public WPI_TalonSRX
             rightMaster = new WPI_TalonSRX(RobotMap.rm1),
             rm2 = new WPI_TalonSRX(RobotMap.rm2),
@@ -75,7 +75,7 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
         leftMaster.set(scale * (forward - rotate));
     }
 
-    @Override
+    /*@Override
     public void upShift() {
         shifter.set(true);
     }
@@ -83,7 +83,7 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
 
     public void downShift() {
         shifter.set(false);
-    }
+    }*/
 
     //theos thingy
     @Override
@@ -137,3 +137,5 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
         }
         return (value);
     }
+}
+

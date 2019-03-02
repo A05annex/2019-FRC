@@ -19,7 +19,7 @@ public class Turn4Enc extends Command {
     
     public Turn4Enc(int desiredDeg, double motorPower) {
         this.desiredDeg = desiredDeg;
-        requires(Robot.driveTrain);
+        requires((Subsystem)Robot.driveTrain);
     }
 
 
