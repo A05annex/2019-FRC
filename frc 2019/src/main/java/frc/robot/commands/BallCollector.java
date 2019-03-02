@@ -16,16 +16,16 @@ public class BallCollector extends Command {
 
     public BallCollector(boolean collect) {
         super();
-        requires(Robot.bucketWheelz);
+        requires(Robot.bucket);
         this.collect = collect;
     }
 
     @Override
     protected void execute() {
         if (collect) {
-            Robot.bucketWheelz.collect();
+            Robot.bucket.collectBall();
         } else {
-            Robot.bucketWheelz.eject();
+            Robot.bucket.ejectBall();
         }
     }
 
@@ -36,7 +36,7 @@ public class BallCollector extends Command {
 
     @Override
     protected void end() {
-        Robot.bucketWheelz.stop();
+        Robot.bucket.stopWheels();
     }
 
 }

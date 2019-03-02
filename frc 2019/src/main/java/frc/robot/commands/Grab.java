@@ -15,7 +15,7 @@ public class Grab extends Command {
     public Grab(boolean grabHatch) {
         super();
         action = grabHatch;
-        requires(Robot.grabber);
+        requires(Robot.bucket);
     }
 
     @Override
@@ -26,9 +26,9 @@ public class Grab extends Command {
     @Override
     protected void execute() {
         if (GRAB_HATCH == action) {
-            Robot.grabber.grabHatch();
+            Robot.bucket.grabHatch();
         } else {
-            Robot.grabber.releaseHatch();
+            Robot.bucket.releaseHatch();
         }
         isFinished = true;
     }

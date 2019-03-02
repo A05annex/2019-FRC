@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -8,8 +8,8 @@ import frc.robot.RobotMap;
 
 public class Bucket extends Subsystem {
     private final Solenoid grabberSolenoid = new Solenoid(RobotMap.grabber);
-    public Servo servo = new Servo(RobotMap.servo);
     VictorSP cargoMotor = new VictorSP(RobotMap.cargoMotor);
+    public DigitalInput bucketSwitch = new DigitalInput(RobotMap.limitSwitch);
     
 
     @Override
@@ -18,7 +18,7 @@ public class Bucket extends Subsystem {
     }
 
     public Bucket() {
-        servo.set(0);
+        grabberSolenoid.set(true);
     }
 
     public void grabHatch() {
@@ -37,7 +37,7 @@ public class Bucket extends Subsystem {
         cargoMotor.set(1.0);
     }
 
-    public void stop() {
+    public void stopWheels() {
         cargoMotor.set(0.0);
     }
 }

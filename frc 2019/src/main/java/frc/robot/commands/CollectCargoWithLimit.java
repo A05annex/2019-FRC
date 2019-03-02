@@ -13,8 +13,7 @@ import frc.robot.Robot;
 public class CollectCargoWithLimit extends Command {
   public CollectCargoWithLimit() {
 
-    requires(Robot.bucketLimitSwitch);
-    requires(Robot.bucketWheelz);
+    requires(Robot.bucket);
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +25,7 @@ public class CollectCargoWithLimit extends Command {
   @Override
   protected void execute() {
 
-    Robot.bucketWheelz.collect();
+    Robot.bucket.collectBall();
     //runs wheels so robot is ready to collect ball
 
   }
@@ -34,14 +33,14 @@ public class CollectCargoWithLimit extends Command {
   @Override
   protected boolean isFinished() {
 
-    return Robot.bucketLimitSwitch.bucketSwitch.get();
+    return Robot.bucket.bucketSwitch.get();
     //returns true when switch is hit by ball
   }
 
   @Override
   protected void end() {
 
-    Robot.bucketWheelz.stop();
+    Robot.bucket.stopWheels();
   }
 
   @Override

@@ -15,7 +15,7 @@ public class PickUpBall extends Command {
     Timer time = new Timer();
 
     public PickUpBall() {
-        requires(Robot.bucketWheelz);
+        requires(Robot.bucket);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -30,7 +30,7 @@ public class PickUpBall extends Command {
     @Override
     protected void execute() {
 
-        Robot.bucketWheelz.collect();
+        Robot.bucket.collectBall();
         //this should run the collect method from BucketWheelz
 
     }

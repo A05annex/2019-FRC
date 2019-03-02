@@ -16,7 +16,7 @@ public class DepositBall extends Command {
     Timer time = new Timer();
 
     public DepositBall() {
-        requires(Robot.bucketWheelz);
+        requires(Robot.bucket);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class DepositBall extends Command {
     @Override
     protected void execute() {
 
-        Robot.bucketWheelz.collect();
+        Robot.bucket.collectBall();
         //this should run the collect method from BucketWheelz
 
     }

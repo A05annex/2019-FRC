@@ -31,11 +31,11 @@ public class Robot extends TimedRobot {
     private static OI oi;
     public final static Bucket bucket = new Bucket();
     public final static GripDetection grip = new GripDetection();
-    public final static BucketWheelz bucketWheelz = new BucketWheelz();
-    public final static Grabber grabber = new Grabber();
+    //public final static BucketWheelz bucketWheelz = new BucketWheelz();
+    //public final static Grabber grabber = new Grabber();
     public final static Lift lift = new Lift();
     public final static ArmInterpolate armInterpolate = new ArmInterpolate();
-    public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
+    //public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
