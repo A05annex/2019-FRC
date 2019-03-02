@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -76,11 +75,17 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
         leftMaster.set(scale * (forward - rotate));
     }
 
+<<<<<<< HEAD
     @Override
     public void upShift() {
         shifter.set(true);
     }
     @Override
+=======
+    public void upShift() {
+        shifter.set(true);
+    }
+>>>>>>> 89f7ea97443543b8065fa5e2ac2d41c5da5b436e
     public void downShift() {
         shifter.set(false);
     }

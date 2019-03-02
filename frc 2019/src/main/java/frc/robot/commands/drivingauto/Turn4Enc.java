@@ -27,8 +27,8 @@ public class Turn4Enc extends Command {
         //SetTargetDeg(); 
         //Robot.driveTrain.ahrs.isCalibrating();
         Robot.driveTrain.AHRS.getActualUpdateRate();
-  }  
-    }
+        }  
+    
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {

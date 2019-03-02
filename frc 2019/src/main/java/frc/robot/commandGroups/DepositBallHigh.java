@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.subsystems.ArmPositions;
@@ -20,7 +20,7 @@ public class DepositBallHigh extends CommandGroup {
     //wil lhook up to buttons if deemed useful
 
     addSequential(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
-    addSequential(new DepositBallHigh());
+    //addSequential(new DepositBallHigh());
     addSequential(new InterpolateAndCheck(ArmPositions.HOME));
   }
 }

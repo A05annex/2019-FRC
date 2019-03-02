@@ -35,7 +35,11 @@ public class Robot extends TimedRobot {
     public final static GripDetection grip = new GripDetection();
     public final static BucketWheelz bucketWheelz = new BucketWheelz();
     public final static Grabber grabber = new Grabber();
+<<<<<<< HEAD
     public final static Lift lift = Constants.COMPETITION_ROBOT ? new Lift() : null;
+=======
+    public final static Lift lift = new Lift();
+>>>>>>> 89f7ea97443543b8065fa5e2ac2d41c5da5b436e
     public final static ArmInterpolate armInterpolate = new ArmInterpolate();
     public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
     private Command m_autonomousCommand;
