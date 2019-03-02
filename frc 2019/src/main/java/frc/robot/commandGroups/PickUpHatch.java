@@ -10,27 +10,27 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
-import frc.robot.commands.CollectCargoWithLimit;
+import frc.robot.commands.Grab;
 import frc.robot.subsystems.ArmPositions;
 import frc.robot.subsystems.Bucket;
 
-public class PickUpBallFromGround extends CommandGroup {
+public class PickUpHatch extends CommandGroup {
   
-  public PickUpBallFromGround() {
+  public PickUpHatch() {
 
-    //requires(Robot.bucket);
-    //requires((Subsystem)Robot.armDriveTrain);
+    requires(Robot.bucket);
+    requires((Subsystem)Robot.armDriveTrain);
 
     //one button command that gets the robot ready to collect the ball
     //once ball is collected, collector wheels will stop and robot will go to travel position
-    addSequential(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
-    addSequential(new CollectCargoWithLimit());
+    addSequential(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
+    addSequential(new Grab(Grab.RELEASE_HATCH));
   }
 
   @Override
   protected void end(){
-    new InterpolateAndCheck(ArmPositions.LOW_CARGO).start();
-    Robot.bucket.state = Bucket.BALL;
+    new Grab(Grab.GRAB_HATCH).start();
+    Robot.bucket.state = Bucket.HATCH;
   }
 
   @Override

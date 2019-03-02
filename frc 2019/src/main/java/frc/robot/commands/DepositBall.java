@@ -28,7 +28,7 @@ public class DepositBall extends Command {
     @Override
     protected void execute() {
 
-        Robot.bucket.collectBall();
+        Robot.bucket.ejectBall();
         //this should run the collect method from BucketWheelz
 
     }

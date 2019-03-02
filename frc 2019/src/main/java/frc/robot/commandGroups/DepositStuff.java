@@ -8,33 +8,34 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
-import frc.robot.commands.CollectCargoWithLimit;
+import frc.robot.commands.DepositBall;
+import frc.robot.commands.Grab;
 import frc.robot.subsystems.ArmPositions;
 import frc.robot.subsystems.Bucket;
 
-public class PickUpBallFromGround extends CommandGroup {
-  
-  public PickUpBallFromGround() {
+public class DepositStuff extends CommandGroup {
 
-    //requires(Robot.bucket);
-    //requires((Subsystem)Robot.armDriveTrain);
+  public DepositStuff() {
+    requires(Robot.bucket);
+    if(Robot.bucket.state == Bucket.BALL){
+      addSequential(new DepositBall());
+    }else if(Robot.bucket.state == Bucket.HATCH){
+      addSequential(new Grab(Grab.RELEASE_HATCH));
+    }else{
 
-    //one button command that gets the robot ready to collect the ball
-    //once ball is collected, collector wheels will stop and robot will go to travel position
-    addSequential(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
-    addSequential(new CollectCargoWithLimit());
+    }
   }
 
   @Override
   protected void end(){
-    new InterpolateAndCheck(ArmPositions.LOW_CARGO).start();
-    Robot.bucket.state = Bucket.BALL;
+    new InterpolateAndCheck(ArmPositions.LOW_CARGO);
+    new Grab(Grab.GRAB_HATCH);
   }
 
   @Override
   protected void interrupted(){
     end();
   }
+
 }

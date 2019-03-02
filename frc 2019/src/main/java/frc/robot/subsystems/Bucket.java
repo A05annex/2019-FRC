@@ -10,7 +10,12 @@ public class Bucket extends Subsystem {
     private final Solenoid grabberSolenoid = new Solenoid(RobotMap.grabber);
     VictorSP cargoMotor = new VictorSP(RobotMap.cargoMotor);
     public DigitalInput bucketSwitch = new DigitalInput(RobotMap.limitSwitch);
-    
+
+    public static int HATCH = 0;
+    public static int BALL = 1;
+    public static int EMPTY = 2;
+
+    public int state = HATCH;
 
     @Override
     public void initDefaultCommand() {

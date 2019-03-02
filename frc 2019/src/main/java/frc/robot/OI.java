@@ -11,14 +11,19 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commandgroups.DepositBallHigh;
-import frc.robot.commandgroups.DownerAndLand;
-import frc.robot.commandgroups.DriveAndLand;
+import frc.robot.commandgroups.DepositStuff;
 import frc.robot.commandgroups.InterpolateAndCheck;
-import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commandgroups.LiftToPlatform;
-import frc.robot.commands.*;
+import frc.robot.commandgroups.PickUpBallFromGround;
+import frc.robot.commandgroups.PickUpHatch;
+import frc.robot.commands.ArmInterpolateToTarget;
+import frc.robot.commands.BumpTargetPosition;
+import frc.robot.commands.Grab;
+import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
+import frc.robot.subsystems.Bucket;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -65,12 +70,22 @@ public class OI {
     }
 
     public OI() {
-        trigger.whenPressed(new Shift(true));
-        thumb.whenPressed(new Shift(false));
-        topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
-        topLL.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
-        topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
-        topLR.whenPressed(new Grab(Grab.RELEASE_HATCH));
+        trigger.whenPressed(new DepositStuff());
+        topUL.whenPressed(new PickUpBallFromGround());
+        topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
+        topLL.whenPressed(new PickUpHatch());
+        topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
+        if(Robot.bucket.state == Bucket.BALL){
+            button7.whenPressed(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
+            button9.whenPressed(new InterpolateAndCheck(ArmPositions.MID_CARGO));
+            button11.whenPressed(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
+        }else if(Robot.bucket.state == Bucket.HATCH){
+            button7.whenPressed(new InterpolateAndCheck(ArmPositions.LOW_HATCH));
+            button9.whenPressed(new InterpolateAndCheck(ArmPositions.MID_HATCH));
+            button11.whenPressed(new InterpolateAndCheck(ArmPositions.HIGH_HATCH));
+        }
+        //topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
+        //topLR.whenPressed(new Grab(Grab.RELEASE_HATCH));
 
 //        topUL.whenPressed(new TapeStraighten('L'));
 //        topUR.whenPressed(new TapeStraighten('R'));
@@ -82,11 +97,11 @@ public class OI {
         //END GAME LIFT STUFF
         
         //gets robot in position to drive up to platform and lift
-        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
+        button8.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
-        button8.whenPressed(new LiftToPlatform());
+        button10.whenPressed(new LiftToPlatform());
 
-        button9.whenPressed(new TimedDrive(2.0, 0.2));
+        //button9.whenPressed(new TimedDrive(2.0, 0.2));
         //buttons for testing all end game lift code
         /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftAndDuringLift());
@@ -96,7 +111,7 @@ public class OI {
         button12.whenPressed(new TimedDrive(0.5, -0.2)); */
 
         //More autonomous stuff
-        button10.whenPressed(new DepositBallHigh());
+        //button10.whenPressed(new DepositBallHigh());
         
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
@@ -105,10 +120,14 @@ public class OI {
         //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-        xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+        
+        
+        /*xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
         xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
         xboxY.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-        xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+        xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));*/
+        
+        
         //
         // These are test and calibration initializations - they are NOT required for competition.
         xbox = new XboxController(1);

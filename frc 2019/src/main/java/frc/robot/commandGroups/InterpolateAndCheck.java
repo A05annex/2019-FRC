@@ -8,6 +8,8 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.subsystems.ArmPositions;
@@ -17,6 +19,7 @@ public class InterpolateAndCheck extends CommandGroup {
    * Add your docs here.
    */
   public InterpolateAndCheck(ArmPositions target) {
+    requires((Subsystem)Robot.armDriveTrain);
 
     addSequential(new ArmInterpolateToTarget(target));
     addSequential(new SetAndWaitForArmPosition(target));
