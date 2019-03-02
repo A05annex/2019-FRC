@@ -8,7 +8,7 @@ public class Constants {
     // The practice robot has a different hardware configuration:
     // * true - This is the competition configuration
     // * false - This is the practice robot configuration
-    public static final boolean COMPETITION_ROBOT = false;
+    public static final boolean COMPETITION_ROBOT = true;
 
     // Enable shifter control on the 2 speed gearbox
     // * true - Drive shifter is enabled
@@ -27,7 +27,7 @@ public class Constants {
     // The physical distance, in inches, from the CL of the upper arm pivot to the CL of the bucket pivot.
     public static final double UPPER_ARM_LENGTH = 39.5;
 
-    // This the calibration bump - the change in angle (degrees) that the POV calibration control adds to the
+    // This is the calibration bump - the change in angle (degrees) that the POV calibration control adds to the
     // arm/bucket
     public static final double BUMP_INC_ANGLE = 0.25;
     public static final double BUMP_INC_POSITION = 0.25;
@@ -43,6 +43,13 @@ public class Constants {
     public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 3.0;
     public static final double END_GAME_MOTOR_POWER = 0.7;
     public static final double END_GAME_DRIVE_DURATION = 4.0;
+
+    public static final double LOWER_ARM_PROPORTIONAL_CONSTANT = 20.0;
+    public static final double LOWER_ARM_NTEGRAL_CONSTANT = 3.0;
+    public static final double UPPER_ARM_PROPORTIONAL_CONSTANT = 20.0;
+    public static final double UPPER_ARM_NTEGRAL_CONSTANT = 3.0;
+    public static final double BUCKET_ARM_PROPORTIONAL_CONSTANT =30.0;
+
 
     // This is the number of interpolation steps from the current position to the target position using the
     // {@link ./commands/ArmInterpolateToTarget} command for arm movement.

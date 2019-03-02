@@ -40,6 +40,13 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+
+    void reportArmPositions() {
+        SmartDashboard.putString("DB/String 3", String.format("lower:  %3.3f", armDriveTrain.getLowerArmAngle()));
+        SmartDashboard.putString("DB/String 4", String.format("upper:  %3.3f", armDriveTrain.getUpperArmAngle()));
+        SmartDashboard.putString("DB/String 5", String.format("bucket: %3.3f", armDriveTrain.getBucketAngle()));
+        SmartDashboard.putString("DB/String 6", Boolean.toString(armDriveTrain.isAtTargetPosition()));
+   }
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -77,10 +84,7 @@ public class Robot extends TimedRobot {
         for (int i = 0; i < 10; i++) {
             SmartDashboard.putString("DB/String " + Integer.toString(i), " ");
         }
-        if (null != armDriveTrain) {
-            SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
-            SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
-        }
+        reportArmPositions();
     }
 
     /**
@@ -141,12 +145,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        if (null != armDriveTrain) {
-            SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
-            SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
-        }
-        //SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.getBucketAngle()));
-        //SmartDashboard.putString("DB/String 5", Boolean.toString(armDriveTrain.isAtTargetPosition()));
+        reportArmPositions();
 
     }
 
