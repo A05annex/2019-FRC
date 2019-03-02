@@ -87,7 +87,7 @@ public class OI {
         //END GAME LIFT STUFF
         
         //gets robot in position to drive up to platform and lift
-        topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
+        //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
         //button8.whenPressed(new LiftToPlatform());
         //button9.whenPressed(new TimedDrive(2.0, 0.2));
@@ -103,10 +103,10 @@ public class OI {
 
         //MORE AUTONOMOUS-ISH STFF
         //uses limit switches to deposit balls and pick them up
-        /*button9.whenPressed(new DepositBallAtTarget(ArmPositions.LOW_CARGO));
-        button10.whenPressed(new DepositBallAtTarget(ArmPositions.MID_CARGO));
-        button11.whenPressed(new DepositBallAtTarget(ArmPositions.HIGH_CARGO));
-        button10.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround()); */
+        //button9.whenPressed(new DepositBallAtTarget(ArmPositions.LOW_CARGO));
+        //button10.whenPressed(new DepositBallAtTarget(ArmPositions.MID_CARGO));
+        //button11.whenPressed(new DepositBallAtTarget(ArmPositions.HIGH_CARGO));
+        topUR.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround()); 
         
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
