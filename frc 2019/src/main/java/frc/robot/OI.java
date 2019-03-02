@@ -12,11 +12,17 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commandgroups.DepositBallAtTarget;
+import frc.robot.commandgroups.DownerAndLand;
+import frc.robot.commandgroups.DriveAndLand;
+import frc.robot.commandgroups.DriveAndPullIn;
+import frc.robot.commandgroups.InterpolateAndCheck;
+import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Grab;
+import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.commands.Shift;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
@@ -68,7 +74,7 @@ public class OI {
         thumb.whenPressed(new Shift(false));
         topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
         topLL.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
-        topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
+        //topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
         topLR.whenPressed(new Grab(Grab.RELEASE_HATCH));
 
 //        topUL.whenPressed(new TapeStraighten('L'));
@@ -81,26 +87,26 @@ public class OI {
         //END GAME LIFT STUFF
         
         //gets robot in position to drive up to platform and lift
-        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
+        topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
-        button8.whenPressed(new LiftToPlatform());
+        //button8.whenPressed(new LiftToPlatform());
         //button9.whenPressed(new TimedDrive(2.0, 0.2));
 
 
         //buttons for testing all end game lift code
-        /*button7.whenPressed(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+        button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new LiftAndDuringLift());
         button9.whenPressed(new DriveAndPullIn()); 
         button10.whenPressed(new DriveAndLand()); 
         button11.whenPressed(new DownerAndLand());
-        button12.whenPressed(new TimedDrive(0.5, -0.2)); */
+        //button12.whenPressed(new TimedDrive(0.5, -0.2)); 
 
         //MORE AUTONOMOUS-ISH STFF
         //uses limit switches to deposit balls and pick them up
-        button9.whenPressed(new DepositBallAtTarget(ArmPositions.LOW_CARGO));
+        /*button9.whenPressed(new DepositBallAtTarget(ArmPositions.LOW_CARGO));
         button10.whenPressed(new DepositBallAtTarget(ArmPositions.MID_CARGO));
         button11.whenPressed(new DepositBallAtTarget(ArmPositions.HIGH_CARGO));
-        button10.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround());
+        button10.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround()); */
         
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
