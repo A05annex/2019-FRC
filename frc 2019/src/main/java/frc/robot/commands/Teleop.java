@@ -40,7 +40,7 @@ public class Teleop extends Command {
         // apply the gains
         double forward = useY * Constants.DRIVE_FORWARD_GAIN * ySignMult;
         double rotate = ((useTwist * Constants.DRIVE_TURN_GAIN) -
-                (useY * (Constants.DRIVE_TURN_GAIN - Constants.DRIVE_AT_SPPED_GAIN))) * twistSignMult;
+                (useY * (Constants.DRIVE_TURN_GAIN - Constants.DRIVE_TURN_AT_SPEED_GAIN))) * twistSignMult;
         // Now set the speeds
         Robot.driveTrain.setArcadePower(forward, rotate);
     }

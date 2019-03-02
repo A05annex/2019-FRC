@@ -36,10 +36,10 @@ public class Constants {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Drive tuning constants                                                                                         //
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static double DRIVE_FORWARD_GAIN = 0.66;
-    public static double DRIVE_TURN_GAIN = 0.5;
-    public static double DRIVE_AT_SPPED_GAIN = 0.1;
-    public static double DRIVE_SENSITIVITY = 1.0;
+    public static double DRIVE_FORWARD_GAIN = 1.0;
+    public static double DRIVE_TURN_GAIN = 0.4;
+    public static double DRIVE_TURN_AT_SPEED_GAIN = 0.1;
+    public static double DRIVE_SENSITIVITY = 2.0;
     public static double DRIVE_DEADBAND = 0.05;
 
     public static double FINE_CONTROL_MAX = 0.2;

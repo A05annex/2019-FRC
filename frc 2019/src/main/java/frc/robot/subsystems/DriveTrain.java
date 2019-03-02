@@ -15,7 +15,7 @@ import frc.robot.commands.Teleop;
 public class DriveTrain extends Subsystem implements IUseDriveTrain {
 
     public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
+//    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
     public WPI_TalonSRX
             rightMaster = new WPI_TalonSRX(RobotMap.rm1),
             rm2 = new WPI_TalonSRX(RobotMap.rm2),
@@ -44,14 +44,14 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
         lm3.setInverted(InvertType.FollowMaster);
         setNeutralMode(NeutralMode.Brake);
         rightMaster.setInverted(InvertType.InvertMotorOutput);
-        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+//        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         ahrs.reset();
 
         //setting ramp rate for smoother acceleration
         //not tested as of 2/22/19
-        rightMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
-        leftMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
+//        rightMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
+//        leftMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
     }
 
     @Override
@@ -77,12 +77,12 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
 
     @Override
     public void upShift() {
-        shifter.set(true);
+//        shifter.set(true);
     }
 
     @Override
     public void downShift() {
-        shifter.set(false);
+//        shifter.set(false);
     }
 
     //theos thingy

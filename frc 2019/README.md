@@ -1,9 +1,12 @@
 # 6831 - A05 Annex - FRC 2019
 
-This branch has 1 goal - letting drivers tune control for best drivability. Tuning involves one driver, and
-one tuner. the driver drives using the 3 axis joystick; and the tuner changes the parameters of drive
+This branch has 1 goal - letting drivers tune control for best drivability. Tuning involves one *driver* with an
+optional *tuner*. The driver drives using the 3 axis joystick, and buttons on the joystick to alter the drive
+tuning parameters; alternately a tuner changes the parameters of drive
 using a gamepad as the driver instructs. At the end of a session the the *best drive* parameters are recorded
-and the software is modified to start with those settings.
+and the software is modified to start with those settings. **REMEMBER TO RECORD YOUR FAVORITE SETTINGS SO WE
+CAN UPDATE THE PROGRAMMED DEFAULTS FOR THE COMPETITION SOFTWARE**
+
 ## Drive Tuning Controls
 We use the main joystick for driving. All other buttons are mapped to changing drive parameters, so a single
 driver can control everything from one stick. Buttons on the gamepad are also mapped to changing drive parameters

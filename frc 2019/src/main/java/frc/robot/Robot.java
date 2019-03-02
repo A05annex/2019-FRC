@@ -32,11 +32,11 @@ public class Robot extends TimedRobot {
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     void displayDriveParameters() {
-        SmartDashboard.putString("DB/String 0", String.format("sg:  %0.3f", Constants.DRIVE_FORWARD_GAIN));
-        SmartDashboard.putString("DB/String 1", String.format("tg:  %0.3f", Constants.DRIVE_TURN_GAIN));
-        SmartDashboard.putString("DB/String 2", String.format("tgs: %0.3f", Constants.DRIVE_AT_SPPED_GAIN));
-        SmartDashboard.putString("DB/String 3", String.format("sac: %0.3f", Constants.DRIVE_SENSITIVITY));
-        SmartDashboard.putString("DB/String 4", String.format("db:  %0.3f", Constants.DRIVE_DEADBAND));
+        SmartDashboard.putString("DB/String 0", String.format("sg:  %1.3f", Constants.DRIVE_FORWARD_GAIN));
+        SmartDashboard.putString("DB/String 1", String.format("tg:  %1.3f", Constants.DRIVE_TURN_GAIN));
+        SmartDashboard.putString("DB/String 2", String.format("tgs: %1.3f", Constants.DRIVE_TURN_AT_SPEED_GAIN));
+        SmartDashboard.putString("DB/String 3", String.format("sac: %1.3f", Constants.DRIVE_SENSITIVITY));
+        SmartDashboard.putString("DB/String 4", String.format("db:  %1.3f", Constants.DRIVE_DEADBAND));
     }
 
     /**
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
         for (int i = 0; i < 10; i++) {
-            SmartDashboard.putString("DB/String " + Integer.toString(i), " ");
+            SmartDashboard.putString(String.format("DB/String %d",i), " ");
         }
     }
 

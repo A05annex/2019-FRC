@@ -19,11 +19,11 @@ public class BumpTurnAtSpeedGain extends Command {
 
     @Override
     protected void execute() {
-        Constants.DRIVE_AT_SPPED_GAIN += inc;
-        if (Constants.DRIVE_AT_SPPED_GAIN > 0.5) {
-            Constants.DRIVE_AT_SPPED_GAIN = 0.5;
-        } else if (Constants.DRIVE_AT_SPPED_GAIN < 0.05) {
-            Constants.DRIVE_AT_SPPED_GAIN = 0.05;
+        Constants.DRIVE_TURN_AT_SPEED_GAIN += inc;
+        if (Constants.DRIVE_TURN_AT_SPEED_GAIN > 0.5) {
+            Constants.DRIVE_TURN_AT_SPEED_GAIN = 0.5;
+        } else if (Constants.DRIVE_TURN_AT_SPEED_GAIN < 0.05) {
+            Constants.DRIVE_TURN_AT_SPEED_GAIN = 0.05;
         }
     }
 
