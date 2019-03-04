@@ -37,6 +37,7 @@ public class SynchronisedLift extends Command {
             // in the lift - check roll and pulse leading cylinder as required to get sides synchronised
             // Map so positive roll happens when right side is lower
             double currentRoll = Robot.ahrs.getRoll();
+            currentRoll -= initialRoll;
             if (currentRoll > 10.0) {
                 // Right side is low, pulse left every other cycle to stop the roll
                 Robot.lift.lift_robot_right();
