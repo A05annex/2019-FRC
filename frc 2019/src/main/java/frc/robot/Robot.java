@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -26,18 +27,28 @@ import frc.robot.subsystems.Lift;
  */
 public class Robot extends TimedRobot {
 
-    public static final AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
+    private static AHRS ahrs;
     public static final Lift lift = new Lift();
     private static OI oi;
+    private long msLast = System.currentTimeMillis();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     private void displayParameters() {
+        long msCur = System.currentTimeMillis();
         SmartDashboard.putString("DB/String 0", String.format("Yaw:   %7.3f", ahrs.getYaw()));
         SmartDashboard.putString("DB/String 1", String.format("Pitch: %7.3f", ahrs.getPitch()));
-        SmartDashboard.putString("DB/String 2", String.format("Roll:  %7.3f", ahrs.getRoll()));
+        SmartDashboard.putString("DB/String 2", String.format("Roll:  %7.3f", -ahrs.getRoll()));
         SmartDashboard.putString("DB/String 3", String.format("Yaw Axis:  %d", ahrs.getBoardYawAxis().board_axis.getValue()));
         SmartDashboard.putString("DB/String 4", String.format("firmware:  %s", ahrs.getFirmwareVersion()));
+        SmartDashboard.putString("DB/String 5", String.format("update:   %7.3f", ahrs.getUpdateCount()));
+        SmartDashboard.putString("DB/String 6", String.format("rate:     %d", ahrs.getActualUpdateRate()));
+        SmartDashboard.putString("DB/String 7", String.format("cycle ms: %d", msCur - msLast));
+        msLast = msCur;
+    }
+
+    static public AHRS getAHRS() {
+        return ahrs;
     }
 
     /**
@@ -47,7 +58,16 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
+        ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();
+        while (ahrs.isCalibrating()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
+
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
         for (int i = 0; i < 10; i++) {

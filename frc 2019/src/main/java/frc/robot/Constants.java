@@ -34,6 +34,18 @@ public class Constants {
     public static final double SECS_FROM_NEUTRAL_TO_FULL = 2.0;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Lift tuning constants                                                                                          //
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static double LIFT_CORRECT_MIN_ANGLE = 3.0;
+    public static double LIFT_CORRECT_MID_ANGLE = 5.5;
+    public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
+
+    public static int LIFT_CORRECT_CYCLES = 20;
+    public static int LIFT_CORRECT_MIN = 5;
+    public static int LIFT_CORRECT_MID = 7;
+    public static int LIFT_CORRECT_MAX = 10;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Drive tuning constants                                                                                         //
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // The multiplier for full stick to give the power/speed requested from the drive.

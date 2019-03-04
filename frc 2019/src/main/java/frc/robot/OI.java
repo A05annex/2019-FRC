@@ -68,5 +68,8 @@ public class OI {
     public OI() {
         button7.whenPressed(new SynchronisedLift());
         button8.whenPressed(new RetractLift());
+
+        button11.whenPressed(new TestLift(TestLift.LEFT, TestLift.EXTEND));
+        button12.whenPressed(new TestLift(TestLift.LEFT, TestLift.RETRACT));
     }
 }
