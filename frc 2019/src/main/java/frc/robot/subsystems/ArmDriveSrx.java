@@ -54,7 +54,7 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
     }
 
     @Override
-    public double getBucketAngle() {
+    public int getBucketAngle() {
         return 0;
     }
 

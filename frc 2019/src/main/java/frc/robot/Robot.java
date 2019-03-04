@@ -42,10 +42,10 @@ public class Robot extends TimedRobot {
 
 
     void reportArmPositions() {
-        SmartDashboard.putString("DB/String 3", String.format("lower:  %3.3f", armDriveTrain.getLowerArmAngle()));
-        SmartDashboard.putString("DB/String 4", String.format("upper:  %3.3f", armDriveTrain.getUpperArmAngle()));
-        SmartDashboard.putString("DB/String 5", String.format("bucket: %3.3f", armDriveTrain.getBucketAngle()));
-        SmartDashboard.putString("DB/String 6", Boolean.toString(armDriveTrain.isAtTargetPosition()));
+        SmartDashboard.putString("DB/String 0", String.format("lower:      %7.3f", armDriveTrain.getLowerArmAngle()));
+        SmartDashboard.putString("DB/String 1", String.format("upper:      %7.3f", armDriveTrain.getUpperArmAngle()));
+        SmartDashboard.putString("DB/String 2", String.format("bucket:     %7d", armDriveTrain.getBucketAngle()));
+        SmartDashboard.putString("DB/String 3", String.format("at target:  %b", armDriveTrain.isAtTargetPosition()));
    }
     /**
      * This function is run when the robot is first started up and should be

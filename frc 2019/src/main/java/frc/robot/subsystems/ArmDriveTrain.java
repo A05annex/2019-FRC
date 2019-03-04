@@ -36,14 +36,14 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // The target positions. these are not final because we may be tuning/calibrating positions and the
     // bumpTargetAngles() method may be called to dynamically modify these.
     private double[][] targetPositions = {
-            {88,27.75,0},     // PREGAME
-            {110,36,300},       // HOME
-            {96, 30, 30},           // LOW_HATCH
-            {112,41,382},         // LOW_CARGO
-            {116, 54, 30},          // MID_HATCH
-            {113,75,615},         // MID_CARGO
-            {105.5, 110.0, 30},     // HIGH_HATCH
-            {95,130,831},         // HIGH_CARGO
+            {88, 27.75, 0},         // PREGAME
+            {110, 36, 300},         // HOME
+            {100, 43, 270},         // LOW_HATCH
+            {112, 41, 382},         // LOW_CARGO
+            {109, 73, 513},         // MID_HATCH
+            {113, 75, 615},         // MID_CARGO
+            {91, 134, 790},         // HIGH_HATCH
+            {95, 130, 831},         // HIGH_CARGO
             {85.0, 40.0, 90.0},     // PICKUP_FROM_FLOOR
 
             {75.4, 83.9, 0.0},      // PRE_ENDGAME_LIFT
@@ -149,7 +149,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     }
 
     @Override
-    public double getBucketAngle() {
+    public int getBucketAngle() {
         return bucketMotor.getSelectedSensorPosition();
     }
 
@@ -180,9 +180,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     public void setTargetPosition(ArmPositions armPosition) {
         targetPosition = armPosition;
         targetPositionIndx = armPosition.value;
-        targetAngles[0] = targetPositions[targetPositionIndx][0];
-        targetAngles[1] = targetPositions[targetPositionIndx][1];
-        targetAngles[2] = targetPositions[targetPositionIndx][2];
+        targetAngles[LOWER] = targetPositions[targetPositionIndx][LOWER];
+        targetAngles[UPPER] = targetPositions[targetPositionIndx][UPPER];
+        targetAngles[BUCKET] = targetPositions[targetPositionIndx][BUCKET];
         //resetIntegral();
     }
 
@@ -206,9 +206,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         if (AUTO_POSITION_BUCKET != targetPositions[targetPositionIndx][BUCKET]) {
             targetPositions[targetPositionIndx][BUCKET] += bucketAngleDelta;
         }
-        targetAngles[0] = targetPositions[targetPositionIndx][0];
-        targetAngles[1] = targetPositions[targetPositionIndx][1];
-        targetAngles[2] = targetPositions[targetPositionIndx][2];
+        targetAngles[LOWER] = targetPositions[targetPositionIndx][LOWER];
+        targetAngles[UPPER] = targetPositions[targetPositionIndx][UPPER];
+        targetAngles[BUCKET] = targetPositions[targetPositionIndx][BUCKET];
     }
 
     public double uP, uI, lP, lI, bP, bI;
@@ -244,11 +244,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         if (Robot.getOI().getStick().getRawButton(5)) {
             bucketMotor.setSelectedSensorPosition(0);
         }
-        SmartDashboard.putString("DB/String 0", String.format("tl: %3.3f", targetAngles[LOWER]));
-        SmartDashboard.putString("DB/String 1", String.format("tu: %3.3f", targetAngles[UPPER]));
-        SmartDashboard.putString("DB/String 2", String.format("tb: %3.3f", targetAngles[BUCKET]));
-        SmartDashboard.putString("DB/String 7", Double.toString(bP));
-        SmartDashboard.putString("DB/String 8", Double.toString(lI));
+        SmartDashboard.putString("DB/String 4", String.format("tgt lower:  %7.3f", targetAngles[LOWER]));
+        SmartDashboard.putString("DB/String 5", String.format("tgt upper:  %7.3f", targetAngles[UPPER]));
+        SmartDashboard.putString("DB/String 6", String.format("tgt bucket: %7d", (int)targetAngles[BUCKET]));
+        SmartDashboard.putString("DB/String 7", String.format("low intgl:  %7.3f", lI));
+        SmartDashboard.putString("DB/String 8", String.format("up intgl:   %7.3f", uI));
 //        SmartDashboard.putString("DB/String 7", Double.toString((targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient));
     }
 
@@ -259,7 +259,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         armMotorUpper.set(0.0);
     }
 
-    public double limit(double upper, double lower, double input) {
+    private double limit(double upper, double lower, double input) {
         if (input > upper) input = upper;
         if (input < lower) input = lower;
         return input;
@@ -267,25 +267,20 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public double[] getTargetPositionAngles(ArmPositions armPosition) {
-        double[] angles = {targetPositions[armPosition.value][LOWER],
+        return new double[] {targetPositions[armPosition.value][LOWER],
             targetPositions[armPosition.value][UPPER],
             targetPositions[armPosition.value][BUCKET]};
-        return angles;
     }
 
     @Override
     public double[] getCurrentTargetAngles() {
-        double[] angles = {targetAngles[0],
-            targetAngles[1],
-            targetAngles[2]};
-        return angles;
+        return new double[] {targetAngles[LOWER], targetAngles[UPPER], targetAngles[BUCKET]};
    }
 
     @Override
     public void setTargetAngle(double[] targetAngles) {
-        this.targetAngles[0] = targetAngles[0];
-        this.targetAngles[1] = targetAngles[1];
-        this.targetAngles[2] = targetAngles[2];
-
+        this.targetAngles[LOWER] = targetAngles[LOWER];
+        this.targetAngles[UPPER] = targetAngles[UPPER];
+        this.targetAngles[BUCKET] = targetAngles[BUCKET];
     }
 }
