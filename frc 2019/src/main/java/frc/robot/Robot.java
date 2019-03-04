@@ -32,11 +32,12 @@ public class Robot extends TimedRobot {
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     void displayDriveParameters() {
-        SmartDashboard.putString("DB/String 0", String.format("sg:  %1.3f", Constants.DRIVE_FORWARD_GAIN));
-        SmartDashboard.putString("DB/String 1", String.format("tg:  %1.3f", Constants.DRIVE_TURN_GAIN));
-        SmartDashboard.putString("DB/String 2", String.format("tgs: %1.3f", Constants.DRIVE_TURN_AT_SPEED_GAIN));
-        SmartDashboard.putString("DB/String 3", String.format("sac: %1.3f", Constants.DRIVE_SENSITIVITY));
-        SmartDashboard.putString("DB/String 4", String.format("db:  %1.3f", Constants.DRIVE_DEADBAND));
+        SmartDashboard.putString("DB/String 0", String.format("speed gain:  %4.3f", Constants.DRIVE_FORWARD_GAIN));
+        SmartDashboard.putString("DB/String 1", String.format("turn gain:   %4.3f", Constants.DRIVE_TURN_GAIN));
+        SmartDashboard.putString("DB/String 2", String.format("tas gain:    %4.3f", Constants.DRIVE_TURN_AT_SPEED_GAIN));
+        SmartDashboard.putString("DB/String 3", String.format("sensitivity: %4.3f", Constants.DRIVE_SENSITIVITY));
+        SmartDashboard.putString("DB/String 4", String.format("dead-band:   %4.3f", Constants.DRIVE_DEADBAND));
+        SmartDashboard.putString("DB/String 5", String.format("turn bias:   %4.3f", Constants.DRIVE_TURN_BIAS));
     }
 
     /**

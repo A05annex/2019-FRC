@@ -25,7 +25,7 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
     public WPI_TalonSRX lm3 = new WPI_TalonSRX(RobotMap.lm3);
 
     public DriveTrainPractice() {
-        //constructs and configures all six drive motors
+        // constructs and configures all six drive motors
         // restore everything to known factory default state
         rightMaster.configFactoryDefault();
         rm2.configFactoryDefault();
@@ -67,10 +67,10 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
      */
     @Override
     public void setArcadePower(double forward, double rotate) {
-        double max = Math.abs(forward) + Math.abs(rotate);
+        double max = Math.abs(forward) + Math.abs(Constants.DRIVE_TURN_BIAS) + Math.abs(rotate);
         double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
-        rightMaster.set(scale * (forward + rotate));
-        leftMaster.set(scale * (forward - rotate));
+        rightMaster.set(scale * (forward + (rotate)));
+        leftMaster.set(scale * (forward - (rotate)));
     }
 
     @Override

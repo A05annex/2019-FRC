@@ -11,7 +11,7 @@ public class Constants {
 
     // Enable shifter control on the 2 speed gearbox
     // * true - Drive shifter is enabled
-    // * false - Drive shifter is diabled
+    // * false - Drive shifter is disabled
     public static final boolean ENABLE_DRIVE_SHIFT = false;
 
     // Enable calibration functions controlled by a gamepad. This let's us use the gamepad to make adjustments to
@@ -36,11 +36,21 @@ public class Constants {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Drive tuning constants                                                                                         //
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static double DRIVE_FORWARD_GAIN = 1.0;
-    public static double DRIVE_TURN_GAIN = 0.4;
-    public static double DRIVE_TURN_AT_SPEED_GAIN = 0.1;
+    // The multiplier for full stick to give the power/speed requested from the drive.
+    public static double DRIVE_FORWARD_GAIN = 0.8;
+    // The multiplier for full twist to give the power/speed differential requested from the drive.
+    public static double DRIVE_TURN_GAIN = 0.3;
+    // The multiplier for full twist to give the power/speed differential requested from the drive.
+    public static double DRIVE_TURN_AT_SPEED_GAIN = 0.05;
+    // The center-stick sensitivity, which is really the exponent applied to the stick position to flatten drive
+    // response to stick position for greater sensitivity at low speed.
     public static double DRIVE_SENSITIVITY = 2.0;
+    // The width of the 0 dead-band of the stick as a fraction of full stick movement.
     public static double DRIVE_DEADBAND = 0.05;
+    // The correction for the tendency of the robot to systemically turn as power is applied to the drive. This
+    // tendency to turn can result from many factors - alignment, friction, motor differences, controller
+    // differences, etc.
+    public static double DRIVE_TURN_BIAS = 0.0;
 
     public static double FINE_CONTROL_MAX = 0.2;
 
