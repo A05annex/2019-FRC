@@ -14,9 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.DriveTrainPractice;
-import frc.robot.subsystems.IUseDriveTrain;
+
+import frc.robot.subsystems.Lift;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,22 +26,18 @@ import frc.robot.subsystems.IUseDriveTrain;
  */
 public class Robot extends TimedRobot {
 
-    public final AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-    public final static IUseDriveTrain driveTrain = Constants.COMPETITION_ROBOT ?
-            new DriveTrain() : new DriveTrainPractice();
+    public static final AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
+    public static final Lift lift = new Lift();
     private static OI oi;
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-    void displayDriveParameters() {
-        SmartDashboard.putString("DB/String 0", String.format("speed gain:  %4.3f", Constants.DRIVE_FORWARD_GAIN));
-        SmartDashboard.putString("DB/String 1", String.format("turn gain:   %4.3f", Constants.DRIVE_TURN_GAIN));
-        SmartDashboard.putString("DB/String 2", String.format("tas gain:    %4.3f", Constants.DRIVE_TURN_AT_SPEED_GAIN));
-        SmartDashboard.putString("DB/String 3", String.format("sensitivity: %4.3f", Constants.DRIVE_SENSITIVITY));
-        SmartDashboard.putString("DB/String 4", String.format("dead-band:   %4.3f", Constants.DRIVE_DEADBAND));
-        SmartDashboard.putString("DB/String 5", String.format("turn bias:   %4.3f", Constants.DRIVE_TURN_BIAS));
-        SmartDashboard.putString("DB/String 6", String.format("right posn:  %9.1f", driveTrain.getRightPosition()));
-        SmartDashboard.putString("DB/String 7", String.format("left posn:   %9.1f", driveTrain.getLeftPosition()));
+    private void displayParameters() {
+        SmartDashboard.putString("DB/String 0", String.format("Yaw:   %7.3f", ahrs.getYaw()));
+        SmartDashboard.putString("DB/String 1", String.format("Pitch: %7.3f", ahrs.getPitch()));
+        SmartDashboard.putString("DB/String 2", String.format("Roll:  %7.3f", ahrs.getRoll()));
+        SmartDashboard.putString("DB/String 3", String.format("Yaw Axis:  %d", ahrs.getBoardYawAxis().board_axis.getValue()));
+        SmartDashboard.putString("DB/String 4", String.format("firmware:  %s", ahrs.getFirmwareVersion()));
     }
 
     /**
@@ -83,7 +78,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        displayDriveParameters();
+        displayParameters();
     }
 
     /**
@@ -120,7 +115,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        displayDriveParameters();
+        displayParameters();
     }
 
     @Override
@@ -141,7 +136,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        displayDriveParameters();
+        displayParameters();
     }
 
     /**

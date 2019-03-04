@@ -66,28 +66,7 @@ public class OI {
     }
 
     public OI() {
-        topUL.whileHeld(new BumpDriveGain(0.01));
-        topLL.whileHeld(new BumpDriveGain(-0.01));
-        topUR.whileHeld(new BumpTurnGain(0.01));
-        topLR.whileHeld(new BumpTurnGain(-0.01));
-
-        button7.whileHeld(new BumpTurnAtSpeedGain(-0.01));
-        button8.whileHeld(new BumpTurnAtSpeedGain(0.01));
-        button9.whileHeld(new BumpSensitivity(-0.05));
-        button10.whileHeld(new BumpSensitivity(0.05));
-        button11.whileHeld(new BumpDeadband(-0.005));
-        button12.whileHeld(new BumpDeadband(0.005));
-
-        // on the gamepad
-        xboxY.whileHeld(new BumpDriveGain(0.01));
-        xboxA.whileHeld(new BumpDriveGain(-0.01));
-        xboxX.whileHeld(new BumpTurnGain(-0.01));
-        xboxB.whileHeld(new BumpTurnGain(0.01));
-        povUp.whileHeld(new BumpTurnAtSpeedGain(0.01));
-        povDown.whileHeld(new BumpTurnAtSpeedGain(-0.01));
-        povRight.whileHeld(new BumpSensitivity(0.05));
-        povLeft.whileHeld(new BumpSensitivity(-0.05));
-        bumperLeft.whileHeld(new BumpDeadband(-0.005));
-        bumperRight.whileHeld(new BumpDeadband(0.005));
+        button7.whenPressed(new SynchronisedLift());
+        button8.whenPressed(new RetractLift());
     }
 }
