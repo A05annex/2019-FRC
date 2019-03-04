@@ -5,9 +5,6 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -15,7 +12,6 @@ import frc.robot.commands.Teleop;
 
 public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
 
-    public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
 //    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
     public WPI_TalonSRX rightMaster = new WPI_TalonSRX(RobotMap.rm1);
     public WPI_VictorSPX rm2 = new WPI_VictorSPX(RobotMap.rm2);
@@ -44,7 +40,8 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
         lm3.setInverted(InvertType.FollowMaster);
         setNeutralMode(NeutralMode.Brake);
         rightMaster.setInverted(InvertType.InvertMotorOutput);
-        ahrs.reset();
+        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
         //setting ramp rate for smoother acceleration
         //not tested as of 2/22/19
@@ -110,6 +107,16 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
     public void inputPDrive(double motorleft, double motorright, double threshold) {
         leftMaster.set((motorright - threshold) / threshold);
         rightMaster.set((motorleft - threshold) / threshold);
+    }
+
+    @Override
+    public double getLeftPosition() {
+        return leftMaster.getSelectedSensorPosition();
+    }
+
+    @Override
+    public double getRightPosition() {
+        return rightMaster.getSelectedSensorPosition();
     }
 
     @Override

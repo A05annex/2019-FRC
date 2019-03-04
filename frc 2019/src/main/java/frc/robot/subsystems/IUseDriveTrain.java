@@ -29,6 +29,10 @@ public interface IUseDriveTrain {
 
     public void inputPDrive(double motorleft, double motorright, double threshold);
 
+    public double getLeftPosition();
+
+    public double getRightPosition();
+
     public void setNeutralMode(NeutralMode mode);
 
     public void stop();

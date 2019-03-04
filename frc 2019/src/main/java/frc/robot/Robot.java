@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -25,6 +27,7 @@ import frc.robot.subsystems.IUseDriveTrain;
  */
 public class Robot extends TimedRobot {
 
+    public final AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
     public final static IUseDriveTrain driveTrain = Constants.COMPETITION_ROBOT ?
             new DriveTrain() : new DriveTrainPractice();
     private static OI oi;
@@ -38,6 +41,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putString("DB/String 3", String.format("sensitivity: %4.3f", Constants.DRIVE_SENSITIVITY));
         SmartDashboard.putString("DB/String 4", String.format("dead-band:   %4.3f", Constants.DRIVE_DEADBAND));
         SmartDashboard.putString("DB/String 5", String.format("turn bias:   %4.3f", Constants.DRIVE_TURN_BIAS));
+        SmartDashboard.putString("DB/String 6", String.format("right posn:  %9.1f", driveTrain.getRightPosition()));
+        SmartDashboard.putString("DB/String 7", String.format("left posn:   %9.1f", driveTrain.getLeftPosition()));
     }
 
     /**
@@ -47,6 +52,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
+        ahrs.reset();
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
         for (int i = 0; i < 10; i++) {
