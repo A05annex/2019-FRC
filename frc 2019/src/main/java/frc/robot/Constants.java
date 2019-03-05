@@ -36,14 +36,19 @@ public class Constants {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Lift tuning constants                                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static double LIFT_CORRECT_MIN_ANGLE = 3.0;
-    public static double LIFT_CORRECT_MID_ANGLE = 5.5;
-    public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
-
+    // The number of control cycles for each lift correction cycle
     public static int LIFT_CORRECT_CYCLES = 20;
-    public static int LIFT_CORRECT_MIN = 5;
-    public static int LIFT_CORRECT_MID = 7;
-    public static int LIFT_CORRECT_MAX = 10;
+    // The angle where we get to cylinder stopped.
+    public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
+    // The expected lft time in seconds, everything locks on after that
+    public static double LIFT_TIME = 3.0;
+
+//    public static double LIFT_CORRECT_MIN_ANGLE = 3.0;
+//    public static double LIFT_CORRECT_MID_ANGLE = 5.5;
+//
+//    public static int LIFT_CORRECT_MIN = 5;
+//    public static int LIFT_CORRECT_MID = 7;
+//    public static int LIFT_CORRECT_MAX = 10;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Drive tuning constants                                                                                         //
