@@ -20,7 +20,7 @@ public class TimedDrive extends Command {
 
     public TimedDrive(double driveTime, double power) {
         super();
-        requires((Subsystem)Robot.driveTrain);
+        requires((Subsystem) Robot.driveTrain);
         this.driveTime = driveTime;
         this.power = power;
 

@@ -58,8 +58,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     private ArmPositions targetPosition = ArmPositions.PREGAME;
     private int targetPositionIndx = targetPosition.value;
     private double[] targetAngles = {targetPositions[targetPositionIndx][LOWER],
-        targetPositions[targetPositionIndx][UPPER],
-        targetPositions[targetPositionIndx][BUCKET]};
+            targetPositions[targetPositionIndx][UPPER],
+            targetPositions[targetPositionIndx][BUCKET]};
 
     // construction of the sensor potentiometers hooked to the analog inputs of the Roborio
     private final AnalogPotentiometer lowerArmAngle =
@@ -223,18 +223,18 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     @Override
     public void moveToTarget() {
         double
-            period = time.get()-lastTime,
-            lowerCoefficient = 20,
-            upperCoefficient = 20,
-            bucketCoefficient = 30,
-            lkI = 3;
-        lP = (targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient;
+                period = time.get() - lastTime,
+                lowerCoefficient = 20,
+                upperCoefficient = 20,
+                bucketCoefficient = 30,
+                lkI = 3;
+        lP = (targetAngles[LOWER] - lowerArmAngle.get()) / lowerCoefficient;
         lI += lP * period;
         lI = limit(.3, -.3, lI);
-        uP = (targetAngles[UPPER]-upperArmAngle.get())/upperCoefficient;
+        uP = (targetAngles[UPPER] - upperArmAngle.get()) / upperCoefficient;
         uI += lkI * (uP * period);
         uI = limit(.2, -.1, uI);
-        bP = (targetAngles[BUCKET]-bucketMotor.getSelectedSensorPosition())/bucketCoefficient;
+        bP = (targetAngles[BUCKET] - bucketMotor.getSelectedSensorPosition()) / bucketCoefficient;
 
         lastTime = time.get();
         inputDriveLowArm(limit(.6, -1, (lP + lI)));
@@ -246,7 +246,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         }
         SmartDashboard.putString("DB/String 4", String.format("tgt lower:  %7.3f", targetAngles[LOWER]));
         SmartDashboard.putString("DB/String 5", String.format("tgt upper:  %7.3f", targetAngles[UPPER]));
-        SmartDashboard.putString("DB/String 6", String.format("tgt bucket: %7d", (int)targetAngles[BUCKET]));
+        SmartDashboard.putString("DB/String 6", String.format("tgt bucket: %7d", (int) targetAngles[BUCKET]));
         SmartDashboard.putString("DB/String 7", String.format("low intgl:  %7.3f", lI));
         SmartDashboard.putString("DB/String 8", String.format("up intgl:   %7.3f", uI));
 //        SmartDashboard.putString("DB/String 7", Double.toString((targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient));
@@ -267,15 +267,15 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public double[] getTargetPositionAngles(ArmPositions armPosition) {
-        return new double[] {targetPositions[armPosition.value][LOWER],
-            targetPositions[armPosition.value][UPPER],
-            targetPositions[armPosition.value][BUCKET]};
+        return new double[]{targetPositions[armPosition.value][LOWER],
+                targetPositions[armPosition.value][UPPER],
+                targetPositions[armPosition.value][BUCKET]};
     }
 
     @Override
     public double[] getCurrentTargetAngles() {
-        return new double[] {targetAngles[LOWER], targetAngles[UPPER], targetAngles[BUCKET]};
-   }
+        return new double[]{targetAngles[LOWER], targetAngles[UPPER], targetAngles[BUCKET]};
+    }
 
     @Override
     public void setTargetAngle(double[] targetAngles) {

@@ -76,7 +76,6 @@ public interface IUseArm {
     ArmPositions getTargetPosition();
 
     /**
-     * 
      * @param armPosition The arm position
      * @return (double[]) The [lower,upper,bucket] arm angles for this position.
      */
@@ -85,6 +84,7 @@ public interface IUseArm {
     double[] getCurrentTargetAngles();
 
     void setTargetAngle(double[] targetAngles);
+
     /**
      * Is the arm at the currently set target point
      *

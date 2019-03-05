@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
 
     public final static IUseDriveTrain driveTrain = Constants.COMPETITION_ROBOT ?
             new DriveTrain() : new DriveTrainPractice();
-    public final static IUseArm armDriveTrain =  Constants.COMPETITION_ROBOT ? new ArmDriveTrain() : null;
+    public final static IUseArm armDriveTrain = Constants.COMPETITION_ROBOT ? new ArmDriveTrain() : null;
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
     public final static GripDetection gripDetection = new GripDetection();
     private static OI oi;
@@ -46,7 +46,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putString("DB/String 1", String.format("upper:      %7.3f", armDriveTrain.getUpperArmAngle()));
         SmartDashboard.putString("DB/String 2", String.format("bucket:     %7d", armDriveTrain.getBucketAngle()));
         SmartDashboard.putString("DB/String 3", String.format("at target:  %b", armDriveTrain.isAtTargetPosition()));
-   }
+    }
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.

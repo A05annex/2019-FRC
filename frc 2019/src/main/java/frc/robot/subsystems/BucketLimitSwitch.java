@@ -15,12 +15,12 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class BucketLimitSwitch extends Subsystem {
- 
-  public DigitalInput bucketSwitch = new DigitalInput(RobotMap.limitSwitch);
 
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-  }
+    public DigitalInput bucketSwitch = new DigitalInput(RobotMap.limitSwitch);
+
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        // setDefaultCommand(new MySpecialCommand());
+    }
 }

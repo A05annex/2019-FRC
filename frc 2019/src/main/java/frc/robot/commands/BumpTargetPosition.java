@@ -27,6 +27,7 @@ public class BumpTargetPosition extends Command {
     /**
      * A calibration command used to bump the arm target by a small delta to aid in refining rough target
      * positions determined through hand positioning to the actual positions that will work in competition.
+     *
      * @param moveType
      */
     public BumpTargetPosition(int moveType) {
@@ -51,8 +52,8 @@ public class BumpTargetPosition extends Command {
                     (BUMP_ARM_UP == moveType || BUMP_ARM_OUT == moveType) ?
                             Constants.BUMP_INC_POSITION : -Constants.BUMP_INC_POSITION;
             double[] newAngles = ArmPathInterpToTarget.positionToAngles(position, new double[2]);
-            Robot.armDriveTrain.bumpTargetAngles(newAngles[LOWER]-targetAngles[LOWER],
-                    newAngles[UPPER]-targetAngles[UPPER], 0.0);
+            Robot.armDriveTrain.bumpTargetAngles(newAngles[LOWER] - targetAngles[LOWER],
+                    newAngles[UPPER] - targetAngles[UPPER], 0.0);
 
         }
     }

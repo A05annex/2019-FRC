@@ -18,10 +18,10 @@ public class DownerAndLand extends CommandGroup {
      */
     public DownerAndLand() {
 
-    //robot drives forward as arm retracts so it won't hit edge
-    //as cylanders get to the platform, they retract
-    addParallel(new TimedDrive(1.0, 0.2));
-    addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_PARK));
-    addSequential(new EndGameDowner());
-  }
+        //robot drives forward as arm retracts so it won't hit edge
+        //as cylanders get to the platform, they retract
+        addParallel(new TimedDrive(1.0, 0.2));
+        addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_PARK));
+        addSequential(new EndGameDowner());
+    }
 }

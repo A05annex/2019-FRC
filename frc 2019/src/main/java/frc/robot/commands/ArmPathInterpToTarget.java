@@ -10,7 +10,7 @@ import frc.robot.subsystems.ArmPositions;
  * path and maps those to changes in the arm angles. The {@link ArmInterpolateToTarget} implementation interpolates
  * arm angles between start and end - this does not ensure the end of the arm takes a linear path in space from
  * the start to the end.
- *
+ * <p>
  * This command maps the current and target angle positions to spatial positions, interpolates the spatial
  * positions with ease-out and ease-in and maps those back to the target angle positions for the move. Unlike
  * {@link ArmInterpolateToTarget} which used a 1 sec time to move from start to end, this function uses a maximum
@@ -19,19 +19,19 @@ import frc.robot.subsystems.ArmPositions;
  */
 public class ArmPathInterpToTarget extends Command {
 
-    private static final int LOWER = 0;
-    private static final int UPPER = 1;
-    private static final int BUCKET = 2;
+    protected static final int LOWER = 0;
+    protected static final int UPPER = 1;
+    protected static final int BUCKET = 2;
 
-    private static final int X = 0;
-    private static final int Y = 1;
+    protected static final int X = 0;
+    protected static final int Y = 1;
 
-    private ArmPositions finalTarget;
-    private int currentIncrement = 0;
-    private double useIncrements;
-    private double[] currentTarget;
-    private double[] currentPosition = new double[2];
-    private double[] bumpIncs = new double[3];
+    protected ArmPositions finalTarget;
+    protected int currentIncrement = 0;
+    protected double useIncrements;
+    protected double[] currentTarget;
+    protected double[] currentPosition = new double[2];
+    protected double[] bumpIncs = new double[3];
 
     // This is code that tests the linear path interpolation formulation.
 //    public static void main(final String[] args) {
@@ -86,21 +86,23 @@ public class ArmPathInterpToTarget extends Command {
 
     /**
      * Convert the arm angles to an end position for the arm
-     * @param angles (double[]) The angles to be converted.
+     *
+     * @param angles   (double[]) The angles to be converted.
      * @param position (double[] modified) The x and y positions are written into this array.
      * @return (double[]) Returns the passed in array
      */
     static double[] anglesToPosition(double[] angles, double[] position) {
         position[X] = (Constants.LOWER_ARM_LENGTH * Math.cos(Math.toRadians(angles[LOWER]))) +
-                (Constants.UPPER_ARM_LENGTH * Math.cos(Math.toRadians((angles[LOWER]+angles[UPPER])-180.0)));
+                (Constants.UPPER_ARM_LENGTH * Math.cos(Math.toRadians((angles[LOWER] + angles[UPPER]) - 180.0)));
         position[Y] = (Constants.LOWER_ARM_LENGTH * Math.sin(Math.toRadians(angles[LOWER]))) +
-                (Constants.UPPER_ARM_LENGTH * Math.sin(Math.toRadians((angles[LOWER]+angles[UPPER])-180.0)));
+                (Constants.UPPER_ARM_LENGTH * Math.sin(Math.toRadians((angles[LOWER] + angles[UPPER]) - 180.0)));
         return position;
     }
 
     /**
      * Convert an end position to the angles that would produce that end position.
-     * @param pt (double[]) The position to be converted
+     *
+     * @param pt     (double[]) The position to be converted
      * @param angles (double[] modified) The lower and upper arm angles are written into
      *               this array.
      * @return (double[]) Returns the passed in angles array.
@@ -117,6 +119,7 @@ public class ArmPathInterpToTarget extends Command {
                 (2.0 * Constants.LOWER_ARM_LENGTH * Constants.UPPER_ARM_LENGTH)));
         return angles;
     }
+
     // called whenever this command is restarted
     @Override
     protected void initialize() {
@@ -127,13 +130,17 @@ public class ArmPathInterpToTarget extends Command {
         // in initialized because the position in the table may have been tuned
         currentTarget = Robot.armDriveTrain.getCurrentTargetAngles();
         anglesToPosition(currentTarget, currentPosition);
+        setIncs(endPosition);
+        bumpIncs[X] = (endPosition[X] - currentPosition[X]) / useIncrements;
+        bumpIncs[Y] = (endPosition[Y] - currentPosition[Y]) / useIncrements;
+        bumpIncs[BUCKET] = (endAngles[BUCKET] - currentTarget[BUCKET]) / useIncrements;
+    }
+
+    protected void setIncs(double[] endPosition) {
         double deltaX = endPosition[X] - currentPosition[X];
         double deltaY = endPosition[Y] - currentPosition[Y];
         useIncrements = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY)) /
                 Constants.ARM_INCHES_PER_CYCLE;
-        bumpIncs[X] = (endPosition[X] - currentPosition[X]) / useIncrements;
-        bumpIncs[Y] = (endPosition[Y] - currentPosition[Y]) / useIncrements;
-        bumpIncs[BUCKET] = (endAngles[BUCKET] - currentTarget[BUCKET]) / useIncrements;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -141,7 +148,7 @@ public class ArmPathInterpToTarget extends Command {
     protected void execute() {
         currentPosition[X] += bumpIncs[X];
         currentPosition[Y] += bumpIncs[Y];
-        positionToAngles(currentPosition,currentTarget);
+        positionToAngles(currentPosition, currentTarget);
         currentTarget[BUCKET] += bumpIncs[BUCKET];
         currentIncrement += 1;
         Robot.armDriveTrain.setTargetAngle(currentTarget);

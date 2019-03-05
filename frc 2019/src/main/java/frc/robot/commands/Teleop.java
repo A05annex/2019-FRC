@@ -11,7 +11,7 @@ public class Teleop extends Command {
     public Teleop() {
 
         //only functions if the drive train is not in use by another command
-        requires((Subsystem)Robot.driveTrain);
+        requires((Subsystem) Robot.driveTrain);
     }
 
     @Override

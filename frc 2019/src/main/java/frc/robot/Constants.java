@@ -48,7 +48,7 @@ public class Constants {
     public static final double LOWER_ARM_NTEGRAL_CONSTANT = 3.0;
     public static final double UPPER_ARM_PROPORTIONAL_CONSTANT = 20.0;
     public static final double UPPER_ARM_NTEGRAL_CONSTANT = 3.0;
-    public static final double BUCKET_ARM_PROPORTIONAL_CONSTANT =30.0;
+    public static final double BUCKET_ARM_PROPORTIONAL_CONSTANT = 30.0;
 
 
     // This is the number of interpolation steps from the current position to the target position using the

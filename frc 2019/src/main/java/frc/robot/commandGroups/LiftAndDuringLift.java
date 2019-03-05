@@ -17,9 +17,9 @@ public class LiftAndDuringLift extends CommandGroup {
      */
     public LiftAndDuringLift() {
 
-    //activates pneumatics as arm helps pull robot onto platform
-    addParallel(new InterpolateAndCheck(ArmPositions.DURING_LIFT));
-    addSequential(new EndGameLifter());
-    
-  }
+        //activates pneumatics as arm helps pull robot onto platform
+        addParallel(new InterpolateAndCheck(ArmPositions.DURING_LIFT));
+        addSequential(new EndGameLifter());
+
+    }
 }

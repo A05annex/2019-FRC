@@ -74,7 +74,7 @@ public class OI {
 //        button8.whileHeld(new TapeStraighten('R'));
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
-        
+
         //END GAME LIFT STUFF
 
         if (Constants.COMPETITION_ROBOT) {
@@ -98,7 +98,7 @@ public class OI {
             button10.whenPressed(new DepositBallHigh());
         }
 
-        
+
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
         // B - mid hatch      B+bumber - mid ball

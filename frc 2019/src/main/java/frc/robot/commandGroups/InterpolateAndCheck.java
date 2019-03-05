@@ -13,12 +13,12 @@ import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.subsystems.ArmPositions;
 
 public class InterpolateAndCheck extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public InterpolateAndCheck(ArmPositions target) {
+    /**
+     * Add your docs here.
+     */
+    public InterpolateAndCheck(ArmPositions target) {
 
-    addSequential(new ArmInterpolateToTarget(target));
-    addSequential(new SetAndWaitForArmPosition(target));
-  }
+        addSequential(new ArmInterpolateToTarget(target));
+        addSequential(new SetAndWaitForArmPosition(target));
+    }
 }
