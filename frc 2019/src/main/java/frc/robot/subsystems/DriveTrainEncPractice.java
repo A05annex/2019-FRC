@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -10,7 +11,7 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.Teleop;
 
-public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
+public class DriveTrainEncPractice extends Subsystem implements IUseDriveTrain {
 
 //    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
     public WPI_TalonSRX rightMaster = new WPI_TalonSRX(RobotMap.rm1);
@@ -20,7 +21,7 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
     public WPI_TalonSRX lm2 = new WPI_TalonSRX(RobotMap.lm2);
     public WPI_TalonSRX lm3 = new WPI_TalonSRX(RobotMap.lm3);
 
-    public DriveTrainPractice() {
+    public DriveTrainEncPractice() {
         // constructs and configures all six drive motors
         // restore everything to known factory default state
         rightMaster.configFactoryDefault();
@@ -40,13 +41,23 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
         lm3.setInverted(InvertType.FollowMaster);
         setNeutralMode(NeutralMode.Brake);
         rightMaster.setInverted(InvertType.InvertMotorOutput);
-        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        configureDriveSide(rightMaster);
+        configureDriveSide(leftMaster);
+    }
 
-        //setting ramp rate for smoother acceleration
-        //not tested as of 2/22/19
-//        rightMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
-//        leftMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
+    private void configureDriveSide(WPI_TalonSRX side) {
+        side.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+                0, Constants.TALON_TIMEOUT);
+        side.configNeutralDeadband(Constants.kNeutralDeadband, Constants.TALON_TIMEOUT);
+        side.configPeakOutputForward(+1.0, Constants.TALON_TIMEOUT);
+        side.configPeakOutputReverse(-1.0, Constants.TALON_TIMEOUT);
+        side.config_kP(0, Constants.kGains_Velocit.kP, Constants.TALON_TIMEOUT);
+        side.config_kI(0, Constants.kGains_Velocit.kI, Constants.TALON_TIMEOUT);
+        side.config_kD(0, Constants.kGains_Velocit.kD, Constants.TALON_TIMEOUT);
+        side.config_kF(0, Constants.kGains_Velocit.kF, Constants.TALON_TIMEOUT);
+        side.config_IntegralZone(0, Constants.kGains_Velocit.kIzone, Constants.TALON_TIMEOUT);
+        side.configClosedLoopPeakOutput(0, Constants.kGains_Velocit.kPeakOutput, Constants.TALON_TIMEOUT);
+        side.configAllowableClosedloopError(0, 0, Constants.TALON_TIMEOUT);
     }
 
     @Override
@@ -64,10 +75,17 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
      */
     @Override
     public void setArcadePower(double forward, double rotate) {
-        double max = Math.abs(forward) + (Math.abs(forward) * Math.abs(Constants.DRIVE_TURN_BIAS)) + Math.abs(rotate);
+        double max = Math.abs(forward) + Math.abs(rotate);
         double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
-        rightMaster.set(scale * (forward + (rotate + (forward * Constants.DRIVE_TURN_BIAS))));
-        leftMaster.set(scale * (forward - (rotate + (forward * Constants.DRIVE_TURN_BIAS))));
+
+        double right_RPM = (scale * (forward + rotate)) * 250;	// +- 250 RPM max
+        double right_unitsPer100ms = right_RPM * Constants.SENSOR_UNITS_PER_REV / 600.0;	//RPM -> Native units
+
+        double left_RPM = (scale * (forward - rotate)) * 250;	// +- 250 RPM max
+        double left_unitsPer100ms = left_RPM * Constants.SENSOR_UNITS_PER_REV / 600.0;	//RPM -> Native units
+
+        rightMaster.set(ControlMode.Velocity, right_unitsPer100ms);
+        leftMaster.set(ControlMode.Velocity, left_unitsPer100ms);
     }
 
     @Override
