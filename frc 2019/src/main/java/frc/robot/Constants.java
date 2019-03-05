@@ -37,7 +37,7 @@ public class Constants {
     // Lift tuning constants                                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // The number of control cycles for each lift correction cycle
-    public static int LIFT_CORRECT_CYCLES = 20;
+    public static int LIFT_CORRECT_CYCLES = 15;
     // The angle where we get to cylinder stopped.
     public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
     // The expected lft time in seconds, everything locks on after that
