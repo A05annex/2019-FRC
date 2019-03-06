@@ -33,13 +33,23 @@ public enum ArmPositions {
     HIGH_HATCH(6),
     HIGH_CARGO(7),
     PICKUP_FROM_FLOOR(8),
+    
+    //Endgame lift positions
     PRE_ENDGAME_LIFT(9),
-    DURING_LIFT(10),
-    PULL_IN(11),
-    ENDGAME_LIFT(12),
-    ENDGAME_LAND(13),
-    ENDGAME_PARK(14),
-    POST_ENDGAME_PARK(15);
+    START_LIFT(10),
+    DURING_LIFT(11),
+    PULL_IN(12),
+    ENDGAME_LIFT(13),
+    ENDGAME_LAND(14),
+    ENDGAME_PARK(15),
+    POST_ENDGAME_PARK(16),
+
+    //Low lift positions
+    PRE_LOW_LIFT(17),
+    START_LOW_LIFT(18),
+    DURING_LOW_LIFT(19),
+    PULL_IN_LOW(20),
+    LIFT_ARM(21);
 
 
     public final int value;

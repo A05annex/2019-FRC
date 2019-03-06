@@ -9,6 +9,7 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.TimedDrive;
+import frc.robot.subsystems.ArmPositions;
 
 
 public class LiftToPlatform extends CommandGroup {
@@ -24,7 +25,7 @@ public class LiftToPlatform extends CommandGroup {
         //uses command groups that we have tested to make one button that does it all
 
         //need to retest with new pneumatics!!!!!
-
+        addSequential(new InterpolateAndCheck(ArmPositions.START_LIFT));
         addSequential(new LiftAndDuringLift());
         addSequential(new DriveAndPullIn());
         addSequential(new DriveAndLand());

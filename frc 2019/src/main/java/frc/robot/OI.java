@@ -17,6 +17,7 @@ import frc.robot.commandgroups.DriveAndLand;
 import frc.robot.commandgroups.DriveAndPullIn;
 import frc.robot.commandgroups.InterpolateAndCheck;
 import frc.robot.commandgroups.LiftAndDuringLift;
+import frc.robot.commandgroups.LiftToLowPlatform;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
@@ -84,30 +85,50 @@ public class OI {
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
         button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
         
-        //END GAME LIFT STUFF
-        
+        //END GAME LIFT
         //gets robot in position to drive up to platform and lift
         //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
         //button8.whenPressed(new LiftToPlatform());
         //button9.whenPressed(new TimedDrive(2.0, 0.2));
 
-
-        //buttons for testing all end game lift code
+        //CHUNKS OF END GAME LIFT
         button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
-        button8.whenPressed(new LiftAndDuringLift());
-        button9.whenPressed(new DriveAndPullIn()); 
-        button10.whenPressed(new DriveAndLand()); 
-        button11.whenPressed(new DownerAndLand());
-        //button12.whenPressed(new TimedDrive(0.5, -0.2)); 
+        button8.whenPressed(new InterpolateAndCheck(ArmPositions.START_LIFT));
+        button9.whenPressed(new LiftAndDuringLift());
+        button10.whenPressed(new DriveAndPullIn()); 
+        button11.whenPressed(new DriveAndLand()); 
+        button12.whenPressed(new DownerAndLand());
+        //button12.whenPressed(new TimedDrive(0.5, -0.2));
 
+        
+        
+        //LOW LIFT
+        //button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_LOW_LIFT));
+        //button8.whenPressed(new LiftToLowPlatform());
+        
+        //CHUNKS OF LOW LIFT
+        /*topUR.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_LOW_LIFT));
+        button7.whenPressed(new InterpolateAndCheck(ArmPositions.START_LOW_LIFT));
+        button8.whenPressed(new InterpolateAndCheck(ArmPositions.DURING_LOW_LIFT));
+        button9.whenPressed(new InterpolateAndCheck(ArmPositions.PULL_IN_LOW));
+        button10.whenPressed(new InterpolateAndCheck(ArmPositions.LIFT_ARM));
+        button11.whenPressed(new TimedDrive(1.0, 0.5));
+        //Go to HOME here
+        //should we go to home while driving? or drive first? should it really be HOME?
+        button12.whenPressed(new TimedDrive(1.5, 0.5)); */
+
+
+        
         //MORE AUTONOMOUS-ISH STFF
         //uses limit switches to deposit balls and pick them up
         //button9.whenPressed(new DepositBallAtTarget(ArmPositions.LOW_CARGO));
         //button10.whenPressed(new DepositBallAtTarget(ArmPositions.MID_CARGO));
         //button11.whenPressed(new DepositBallAtTarget(ArmPositions.HIGH_CARGO));
-        topUR.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround()); 
+        //topUR.whenPressed(new frc.robot.commandgroups.PickUpBallFromGround()); 
         
+
+
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
         // B - mid hatch      B+bumber - mid ball
