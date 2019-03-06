@@ -37,14 +37,14 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // The target positions. these are not final because we may be tuning/calibrating positions and the
     // bumpTargetPosition() method may be called to dynamically modify these.
     private double[][] targetPositions = {
-            {110.0, 35.0, 0.0},                         // PREGAME
-            {96.0, 33.0, 30},                          // HOME
-            {96, 30, 30},        // LOW_HATCH
-            {106, 39, 200},         // LOW_CARGO
-            {116, 54, 30},        // MID_HATCH
-            {116, 71, 500},        // MID_CARGO
-            {105.5, 110.0, 30},       // HIGH_HATCH
-            {98, 126, 750},       // HIGH_CARGO
+            {88, 27.75, 0},                         // PREGAME
+            {110, 38, 250},                          // HOME
+            {100, 43, 270},        // LOW_HATCH
+            {112, 41, 382},         // LOW_CARGO
+            {109, 73, 513},        // MID_HATCH
+            {113, 75, 615},        // MID_CARGO
+            {91, 134, 790},       // HIGH_HATCH
+            {95, 130, 831},       // HIGH_CARGO
             {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
 
             {75.4, 83.9, 0.0},                          // PRE_ENDGAME_LIFT
@@ -56,7 +56,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {76.9, 49.8, 0.0}                           // POST_ENDGAME_PARK (not using)
     };
 
-    private ArmPositions targetPosition = ArmPositions.HOME;
+    private ArmPositions targetPosition = ArmPositions.PREGAME;
     private int targetPositionIndx = targetPosition.value;
     private double[] targetAngles = {targetPositions[targetPositionIndx][LOWER],
         targetPositions[targetPositionIndx][UPPER],
@@ -97,9 +97,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         armMotorLower.set(0.0);
         armMotorUpper.set(0.0);
         // configures both drive motors for the motors
-        armMotorLower.setNeutralMode(NeutralMode.Brake);
-        armMotorUpper.setNeutralMode(NeutralMode.Brake);
-        bucketMotor.setNeutralMode(NeutralMode.Brake);
+        armMotorLower.setNeutralMode(NeutralMode.Coast);
+        armMotorUpper.setNeutralMode(NeutralMode.Coast);
+        bucketMotor.setNeutralMode(NeutralMode.Coast);
         bucketMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         bucketMotor.setSelectedSensorPosition(0);
         armMotorUpper.setInverted(true);
@@ -238,8 +238,6 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         bP = (targetAngles[2]-bucketMotor.getSelectedSensorPosition())/bucketCoefficient;
 
         lastTime = time.get();
-        //inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
-        //inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
         inputDriveLowArm(limit(.6, -1, (lP + lI)));
         inputDriveUppArm(limit(1, -.5, (uP + uI)));
         inputDriveBucket(limit(.5, -.8, (bP)));

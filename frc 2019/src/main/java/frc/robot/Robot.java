@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.Lifter;
 import frc.robot.subsystems.*;
 
@@ -129,6 +130,8 @@ public class Robot extends TimedRobot {
         }
         // Make sure the lifters are retracted before we start moving around.
         new Lifter(Lifter.RETRACT_LIFTERS).start();
+        new ArmInterpolateToTarget(ArmPositions.HOME).start();
+
     }
 
     /**

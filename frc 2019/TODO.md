@@ -4,13 +4,14 @@
 ## 2-mar-2019: 2<sup>nd</sup> 2hr Un-Bag
 
 ### Pre Un-Bag ###
-- [ ] (roy) Install drive tuning code on the practice robot - make it ready for driver testing.
+- [x] (roy) Install drive tuning code on the practice robot - make it ready for driver testing.
 - [ ] Build team:
   - [ ] Battery hold-down fixed so it wont catch and tear off arm pneumatics and wiring.
   - [ ] Lift cylinders fixed so we can drive the robot.
-- [ ] Resolve github issue with `commandGroup` and `commandgroup` - if you clone from
-      github it is `commandGroup`
+- [x] Resolve github issue with `commandGroup` and `commandgroup` - if you clone from
+      github it is `commandGroup` - change it to lower case after today's session.
 - [ ] Review the **During Un-Bag** list and agree on order.
+- [x] (Jason) Consolidated bucket wheels, and grabber into a Bucket subsystem.
 
 ### During Un-Bag ###
 - [ ] Verify drive works.
@@ -44,7 +45,14 @@
   - [ ] Full drive onto platform:
     - [ ] final arm position
     - [ ] Drive dime/distance
-    
+- [ ] Tune cargo/hatch collection methods
+  - [ ] Test limit switch(es?)
+  - [ ] Decide how autonomous it should be
+  - [ ] Get controls figured out
+- [ ] Test code that may improve driving
+  - [ ] Ramp
+  - [ ] The thing that cubes input and gives greater control at slower speed
+- [ ] Have joysticks set up how we want them for competitions
 ### Post Un-Bag ###
 - [ ] Review:
   - [ ] mechanical issues that need resolution

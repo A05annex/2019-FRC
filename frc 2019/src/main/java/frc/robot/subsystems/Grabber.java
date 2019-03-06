@@ -16,18 +16,12 @@ public class Grabber extends Subsystem {
 
     }
 
-    /**
-     * Lifts the robot lift_robot. Only needs to be applied for a short time to move the switching piston.
-     */
     public void grabHatch() {
-        grabberSolenoid.set(true);
+        grabberSolenoid.set(false);
     }
 
-    /**
-     * Lowers the robot. Only needs to be applied for a short time to move the switching piston.
-     */
     public void releaseHatch() {
-        grabberSolenoid.set(false);
+        grabberSolenoid.set(true);
     }
 
 }
