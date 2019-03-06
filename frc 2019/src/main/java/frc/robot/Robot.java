@@ -9,12 +9,14 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.DriveTrainEncPractice;
 import frc.robot.subsystems.DriveTrainPractice;
 import frc.robot.subsystems.IUseDriveTrain;
 
@@ -27,6 +29,7 @@ import frc.robot.subsystems.IUseDriveTrain;
  */
 public class Robot extends TimedRobot {
 
+    public Solenoid solenoid = new Solenoid(0);
     public final AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
     public final static IUseDriveTrain driveTrain = Constants.COMPETITION_ROBOT ?
             new DriveTrain() : new DriveTrainPractice();

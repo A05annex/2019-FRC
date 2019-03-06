@@ -49,6 +49,8 @@ public class DriveTrainEncPractice extends Subsystem implements IUseDriveTrain {
         side.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
                 0, Constants.TALON_TIMEOUT);
         side.configNeutralDeadband(Constants.kNeutralDeadband, Constants.TALON_TIMEOUT);
+        side.configNominalOutputForward(0, Constants.TALON_TIMEOUT);
+        side.configNominalOutputReverse(0, Constants.TALON_TIMEOUT);
         side.configPeakOutputForward(+1.0, Constants.TALON_TIMEOUT);
         side.configPeakOutputReverse(-1.0, Constants.TALON_TIMEOUT);
         side.config_kP(0, Constants.kGains_Velocit.kP, Constants.TALON_TIMEOUT);
@@ -58,6 +60,7 @@ public class DriveTrainEncPractice extends Subsystem implements IUseDriveTrain {
         side.config_IntegralZone(0, Constants.kGains_Velocit.kIzone, Constants.TALON_TIMEOUT);
         side.configClosedLoopPeakOutput(0, Constants.kGains_Velocit.kPeakOutput, Constants.TALON_TIMEOUT);
         side.configAllowableClosedloopError(0, 0, Constants.TALON_TIMEOUT);
+        side.selectProfileSlot(0, 0);
     }
 
     @Override
@@ -78,10 +81,10 @@ public class DriveTrainEncPractice extends Subsystem implements IUseDriveTrain {
         double max = Math.abs(forward) + Math.abs(rotate);
         double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
 
-        double right_RPM = (scale * (forward + rotate)) * 250;	// +- 250 RPM max
+        double right_RPM = (scale * (forward + rotate)) * 2500;	// +- 250 RPM max
         double right_unitsPer100ms = right_RPM * Constants.SENSOR_UNITS_PER_REV / 600.0;	//RPM -> Native units
 
-        double left_RPM = (scale * (forward - rotate)) * 250;	// +- 250 RPM max
+        double left_RPM = (scale * (forward - rotate)) * 2500;	// +- 250 RPM max
         double left_unitsPer100ms = left_RPM * Constants.SENSOR_UNITS_PER_REV / 600.0;	//RPM -> Native units
 
         rightMaster.set(ControlMode.Velocity, right_unitsPer100ms);
