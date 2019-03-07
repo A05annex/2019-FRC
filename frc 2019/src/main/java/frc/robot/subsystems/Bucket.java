@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 public class Bucket extends Subsystem {
-    private final Solenoid grabberSolenoid = new Solenoid(RobotMap.grabber);
+    //private final Solenoid grabberSolenoid = new Solenoid(RobotMap.grabber);
     public Servo servo = new Servo(RobotMap.servo);
-    VictorSP cargoMotor = new VictorSP(RobotMap.cargoMotor);
+    //VictorSP cargoMotor = new VictorSP(RobotMap.cargoMotor);
     
 
     @Override
@@ -21,7 +21,7 @@ public class Bucket extends Subsystem {
         servo.set(0);
     }
 
-    public void grabHatch() {
+    /*public void grabHatch() {
         grabberSolenoid.set(true);
     }
 
@@ -39,5 +39,5 @@ public class Bucket extends Subsystem {
 
     public void stop() {
         cargoMotor.set(0.0);
-    }
+    }*/
 }

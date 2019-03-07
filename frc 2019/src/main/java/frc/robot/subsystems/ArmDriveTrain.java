@@ -240,7 +240,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         lastTime = time.get();
         inputDriveLowArm(limit(.6, -1, (lP + lI)));
         inputDriveUppArm(limit(1, -.5, (uP + uI)));
-        inputDriveBucket(limit(.5, -.8, (bP)));
+        //inputDriveBucket(limit(.5, -.8, (bP)));
 
         if (Robot.getOI().getStick().getRawButton(5)) {
             bucketMotor.setSelectedSensorPosition(0);

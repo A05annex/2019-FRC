@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.Lifter;
+import frc.robot.commands.SetAndWaitForArmPosition;
+import frc.robot.commands.SetArmTarget;
 import frc.robot.subsystems.*;
 
 /**
@@ -32,7 +34,7 @@ public class Robot extends TimedRobot {
     private static OI oi;
     public final static Bucket bucket = new Bucket();
     public final static GripDetection grip = new GripDetection();
-    public final static BucketWheelz bucketWheelz = new BucketWheelz();
+
     public final static Grabber grabber = new Grabber();
     public final static Lift lift = new Lift();
     public final static ArmInterpolate armInterpolate = new ArmInterpolate();
@@ -40,6 +42,7 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+    public final static BucketWheelz bucketWheelz = new BucketWheelz();
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -130,7 +133,7 @@ public class Robot extends TimedRobot {
         }
         // Make sure the lifters are retracted before we start moving around.
         new Lifter(Lifter.RETRACT_LIFTERS).start();
-        new ArmInterpolateToTarget(ArmPositions.HOME).start();
+        new SetAndWaitForArmPosition(ArmPositions.HOME).start();
 
     }
 
