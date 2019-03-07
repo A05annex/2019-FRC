@@ -93,7 +93,7 @@ public class OI {
         button12.whenPressed(new TimedDrive(0.5, -0.2)); */
 
         //More autonomous stuff
-        button10.whenPressed(new DepositBallHigh());
+        //button10.whenPressed(new DepositBallHigh());
         
         // Controlling position selection
         // A - low hatch      A+bumber - low ball
