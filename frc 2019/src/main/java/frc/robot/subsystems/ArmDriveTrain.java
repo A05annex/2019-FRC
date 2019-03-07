@@ -47,9 +47,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {98, 126, 750},       // HIGH_CARGO
             {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
 
-            {75.4, 83.9, 0.0},                          // PRE_ENDGAME_LIFT
-            {75.4, 83.9, 0.0},                          //START_LIFT
-            {57.6, 78.2, 0.0},                          // DURING_LIFT
+            {89.4, 77.4, 306},                          // PRE_ENDGAME_LIFT
+            {73, 75.5, 181},                          //START_LIFT
+            {56.84, 67.7, 0.0},                          // DURING_LIFT
             {62.5, 62.4, 0.0},                          // PULL_IN (front lift only)
             {29.5, 95.0, 0.0},                          // ENDGAME_LIFT (rear lift only)
             {71.25, 55.05, 0.0},                        // ENDGAME_LAND
