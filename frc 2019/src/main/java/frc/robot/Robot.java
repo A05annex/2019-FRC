@@ -12,10 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ArmInterpolateToTarget;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Lifter;
-import frc.robot.commands.SetAndWaitForArmPosition;
-import frc.robot.commands.SetArmTarget;
 import frc.robot.subsystems.*;
 
 /**
@@ -30,19 +28,18 @@ public class Robot extends TimedRobot {
     public final static DriveTrain driveTrain = new DriveTrain();
     public final static IUseArm armDriveTrain = new ArmDriveTrain();
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
+    public final static ExampleSubsystem m_subsystem = new ExampleSubsystem();
     public final static GripDetection gripDetection = new GripDetection();
     private static OI oi;
     public final static Bucket bucket = new Bucket();
     public final static GripDetection grip = new GripDetection();
-
-    public final static Grabber grabber = new Grabber();
+    public final static BucketWheelz bucketWheelz = new BucketWheelz();
     public final static Lift lift = new Lift();
     public final static ArmInterpolate armInterpolate = new ArmInterpolate();
     public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-    public final static BucketWheelz bucketWheelz = new BucketWheelz();
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -50,6 +47,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
+        m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
     }
@@ -78,9 +76,9 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().removeAll();
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             SmartDashboard.putString("DB/String " + Integer.toString(i), " ");
-        }
+        }*/
         SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
         SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
     }
@@ -133,8 +131,6 @@ public class Robot extends TimedRobot {
         }
         // Make sure the lifters are retracted before we start moving around.
         new Lifter(Lifter.RETRACT_LIFTERS).start();
-        new SetAndWaitForArmPosition(ArmPositions.HOME).start();
-
     }
 
     /**

@@ -31,10 +31,10 @@ public class OI {
 
     private final JoystickButton trigger = new JoystickButton(this.stick, 1);
     private final JoystickButton thumb = new JoystickButton(this.stick, 2);
-    private final JoystickButton topLL = new JoystickButton(this.stick, 3);
-    private final JoystickButton topLR = new JoystickButton(this.stick, 4);
-    private final JoystickButton topUL = new JoystickButton(this.stick, 5);
-    private final JoystickButton topUR = new JoystickButton(this.stick, 6);
+    private final JoystickButton top = new JoystickButton(this.stick, 3);
+    private final JoystickButton top2 = new JoystickButton(this.stick, 4);
+    private final JoystickButton button5 = new JoystickButton(this.stick, 5);
+    private final JoystickButton button6 = new JoystickButton(this.stick, 6);
     private final JoystickButton button7 = new JoystickButton(this.stick, 7);
     private final JoystickButton button8 = new JoystickButton(this.stick, 8);
     private final JoystickButton button9 = new JoystickButton(this.stick, 9);
@@ -67,13 +67,10 @@ public class OI {
     public OI() {
         trigger.whenPressed(new Shift(true));
         thumb.whenPressed(new Shift(false));
-        topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
-        topLL.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
-        topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
-        topLR.whenPressed(new Grab(Grab.RELEASE_HATCH));
-
-//        topUL.whenPressed(new TapeStraighten('L'));
-//        topUR.whenPressed(new TapeStraighten('R'));
+        top.whenPressed(new MoveServo(0));
+        top2.whenPressed(new MoveServo(1));
+//        button5.whenPressed(new TapeStraighten('L'));
+//        button6.whenPressed(new TapeStraighten('R'));
 //        button7.whileHeld(new TapeStraighten('L'));
 //        button8.whileHeld(new TapeStraighten('R'));
         /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));

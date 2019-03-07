@@ -5,8 +5,8 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -15,7 +15,7 @@ import frc.robot.commands.Teleop;
 public class DriveTrain extends Subsystem {
 
     public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
+    public DoubleSolenoid shifter = new DoubleSolenoid(RobotMap.shifter1, RobotMap.shifter2);
     public WPI_TalonSRX
             rightMaster = new WPI_TalonSRX(RobotMap.rm1),
             rm2 = new WPI_TalonSRX(RobotMap.rm2),
@@ -71,13 +71,6 @@ public class DriveTrain extends Subsystem {
         double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
         rightMaster.set(scale * (forward + rotate));
         leftMaster.set(scale * (forward - rotate));
-    }
-
-    public void upShift() {
-        shifter.set(true);
-    }
-    public void downShift() {
-        shifter.set(false);
     }
 
     //theos thingy
