@@ -30,8 +30,8 @@ public class RobotMap {
             arm1 = 4,
             arm2 = 1,
             bucket = 8,
-            lift = 0,
-            shifter = 3,
+            liftLeft = 0,
+            liftRight = 1,
             grabber = 2,
             servo = 1,
             cargoMotor = 0, //plugged into PWM port 0

@@ -82,9 +82,7 @@ public class OI {
 //        topUR.whenPressed(new TapeStraighten('R'));
 //        button7.whileHeld(new TapeStraighten('L'));
 //        button8.whileHeld(new TapeStraighten('R'));
-        /*button9.whenPressed(new Lifter(Lifter.LIFT_ROBOT));
-        button10.whenPressed(new Lifter(Lifter.RETRACT_LIFTERS)); */
-        
+
         //END GAME LIFT
         //gets robot in position to drive up to platform and lift
         //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));

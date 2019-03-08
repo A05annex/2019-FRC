@@ -10,13 +10,13 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-//import frc.robot.commands.Lifter;
 
 /**
  * The robot lift pneumatics
  */
 public class Lift extends Subsystem {
-    private final Solenoid liftSolenoid = new Solenoid(RobotMap.lift);
+    private final Solenoid leftSolenoid = new Solenoid(RobotMap.liftLeft);
+    private final Solenoid rightSolenoid = new Solenoid(RobotMap.liftRight);
 
     public Lift() {
         super();
@@ -26,18 +26,28 @@ public class Lift extends Subsystem {
     public void initDefaultCommand() {
     }
 
-    /**
-     * Lifts the robot lift_robot. Only needs to be applied for a short time to move the switching piston.
-     */
-    public void lift_robot() {
-        liftSolenoid.set(true);
+    public void lift_robot_left() {
+        leftSolenoid.set(true);
+    }
+    public void retract_robot_left() {
+        leftSolenoid.set(false);
     }
 
-    /**
-     * Lowers the robot. Only needs to be applied for a short time to move the switching piston.
-     */
+    public void lift_robot_right() {
+        rightSolenoid.set(true);
+    }
+
+    public void retract_robot_right() {
+        rightSolenoid.set(false);
+    }
+
+    public void extend_lifters() {
+        leftSolenoid.set(true);
+        rightSolenoid.set(true);
+    }
     public void retract_lifters() {
-        liftSolenoid.set(false);
+        leftSolenoid.set(false);
+        rightSolenoid.set(false);
     }
 
 }
