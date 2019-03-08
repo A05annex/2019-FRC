@@ -5,22 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.ArmInterpolateToTarget;
+import frc.robot.commands.SetAndWaitForArmPosition;
 import frc.robot.subsystems.ArmPositions;
 
+public class InterpolateAndCheck extends CommandGroup {
+    /**
+     * Add your docs here.
+     */
+    public InterpolateAndCheck(ArmPositions target) {
 
-public class DepositBallHigh extends CommandGroup {
-
-    public DepositBallHigh() {
-
-        //goes to high position, runs ejecting cargo wheels until ball has left, then returns home
-        //can make for other cargo deposits as well
-        //wil lhook up to buttons if deemed useful
-
-        addSequential(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
-//    addSequential(new DepositBallHigh());
-        addSequential(new InterpolateAndCheck(ArmPositions.HOME));
+        addSequential(new ArmInterpolateToTarget(target));
+        addSequential(new SetAndWaitForArmPosition(target));
     }
 }

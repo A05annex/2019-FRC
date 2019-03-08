@@ -5,20 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.CollectCargoWithLimit;
+import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
-public class PickUpBallFromGround extends CommandGroup {
+public class DriveAndLand extends CommandGroup {
+    /**
+     * Add your docs here.
+     */
+    public DriveAndLand() {
 
-    public PickUpBallFromGround() {
+        //robot drives forward as arm moves into landing position
+        addParallel(new TimedDrive(2.0, 0.2));
+        addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_LAND));
 
-        //one button command that gets the robot ready to collect the ball
-        //once ball is collected, collector wheels will stop and robot will go to travel position
-        addSequential(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
-        addSequential(new CollectCargoWithLimit());
-        addSequential(new InterpolateAndCheck(ArmPositions.HOME));
     }
 }

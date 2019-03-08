@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandGroups.DepositBallHigh;
-import frc.robot.commandGroups.LiftToPlatform;
+import frc.robot.commandgroups.DepositBallHigh;
+import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ArmPositions;
 

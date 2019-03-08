@@ -5,21 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
-public class DriveAndLand extends CommandGroup {
-    /**
-     * Add your docs here.
-     */
-    public DriveAndLand() {
 
-        //robot drives forward as arm moves into landing position
-        addParallel(new TimedDrive(2.0, 0.2));
-        addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_LAND));
+public class DepositBallHigh extends CommandGroup {
 
+    public DepositBallHigh() {
+
+        //goes to high position, runs ejecting cargo wheels until ball has left, then returns home
+        //can make for other cargo deposits as well
+        //wil lhook up to buttons if deemed useful
+
+        addSequential(new InterpolateAndCheck(ArmPositions.HIGH_CARGO));
+//    addSequential(new DepositBallHigh());
+        addSequential(new InterpolateAndCheck(ArmPositions.HOME));
     }
 }

@@ -5,21 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.EndGameLifter;
+import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
-public class LiftAndDuringLift extends CommandGroup {
+public class DriveAndPullIn extends CommandGroup {
     /**
      * Add your docs here.
      */
-    public LiftAndDuringLift() {
+    public DriveAndPullIn() {
 
-        //activates pneumatics as arm helps pull robot onto platform
-        addParallel(new InterpolateAndCheck(ArmPositions.DURING_LIFT));
-        addSequential(new EndGameLifter());
+        //the arm pulls the robot up as the wheels begin to drive forward
+        addParallel(new TimedDrive(1.0, 0.2));
+        addSequential(new InterpolateAndCheck(ArmPositions.PULL_IN));
 
     }
 }

@@ -5,23 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commandGroups;
+package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.EndGameDowner;
-import frc.robot.commands.TimedDrive;
+import frc.robot.commands.CollectCargoWithLimit;
 import frc.robot.subsystems.ArmPositions;
 
-public class DownerAndLand extends CommandGroup {
-    /**
-     * Add your docs here.
-     */
-    public DownerAndLand() {
+public class PickUpBallFromGround extends CommandGroup {
 
-        //robot drives forward as arm retracts so it won't hit edge
-        //as cylanders get to the platform, they retract
-        addParallel(new TimedDrive(1.0, 0.2));
-        addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_PARK));
-        addSequential(new EndGameDowner());
+    public PickUpBallFromGround() {
+
+        //one button command that gets the robot ready to collect the ball
+        //once ball is collected, collector wheels will stop and robot will go to travel position
+        addSequential(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
+        addSequential(new CollectCargoWithLimit());
+        addSequential(new InterpolateAndCheck(ArmPositions.HOME));
     }
 }
