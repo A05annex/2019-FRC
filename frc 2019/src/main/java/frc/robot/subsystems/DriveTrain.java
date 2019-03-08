@@ -14,7 +14,6 @@ import frc.robot.commands.Teleop;
 
 public class DriveTrain extends Subsystem {
 
-    public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
     public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
     public WPI_TalonSRX
             rightMaster = new WPI_TalonSRX(RobotMap.rm1),
@@ -46,12 +45,9 @@ public class DriveTrain extends Subsystem {
         rightMaster.setInverted(InvertType.InvertMotorOutput);
         rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        ahrs.reset();
 
         //setting ramp rate for smoother acceleration
         //not tested as of 2/22/19
-        rightMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
-        leftMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
     }
 
     public void initDefaultCommand() {

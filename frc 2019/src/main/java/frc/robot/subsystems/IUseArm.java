@@ -111,4 +111,6 @@ public interface IUseArm {
     void moveToTarget();
 
     void stop();
+
+    void setLifting(boolean lifting);
 }

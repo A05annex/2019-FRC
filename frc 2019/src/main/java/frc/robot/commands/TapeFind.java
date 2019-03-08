@@ -4,8 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class TapeFind extends Command {
+    public TapeFind(){
 
-    char direction;
+    }
+
+    /*char direction;
 
     public TapeFind(char direction) {
 
@@ -42,5 +45,9 @@ public class TapeFind extends Command {
     protected void interrupted() {
         //runs the end method when another command requests use of the drivetrain
         end();
-    } 
+    } */
+    @Override
+    public boolean isFinished(){
+        return false;
+    }
 }

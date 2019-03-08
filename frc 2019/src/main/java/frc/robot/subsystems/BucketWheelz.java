@@ -26,6 +26,6 @@ public class BucketWheelz extends Subsystem {
     }
 
     public void stop() {
-        cargoMotor.set(0.0);
+        cargoMotor.set(-.4);
     }
 }
