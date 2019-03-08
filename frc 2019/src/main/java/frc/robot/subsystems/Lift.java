@@ -42,6 +42,10 @@ public class Lift extends Subsystem {
         rightSolenoid.set(false);
     }
 
+    public void extend_lifters() {
+        leftSolenoid.set(true);
+        rightSolenoid.set(true);
+    }
     public void retract_lifters() {
         leftSolenoid.set(false);
         rightSolenoid.set(false);
