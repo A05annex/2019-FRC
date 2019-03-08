@@ -19,6 +19,7 @@ import frc.robot.commandgroups.InterpolateAndCheck;
 import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commandgroups.LiftToLowPlatform;
 import frc.robot.commandgroups.LiftToPlatform;
+import frc.robot.commandgroups.PickUpBallFromGround;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
@@ -71,12 +72,15 @@ public class OI {
     }
 
     public OI() {
-        trigger.whenPressed(new Shift(true));
-        thumb.whenPressed(new Shift(false));
+        topUL.whenPressed(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
         topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
-        topLL.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
-        //topUR.whenPressed(new Grab(Grab.GRAB_HATCH));
-        topLR.whenPressed(new Grab(Grab.RELEASE_HATCH));
+        trigger.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
+        topLL.whenPressed(new Grab(Grab.GRAB_HATCH));
+        trigger.whenPressed(new Grab(Grab.RELEASE_HATCH));
+        topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
+        topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
+        //if(stick.getRawButton(4)){Robot.armDriveTrain.setLifting(true);}
+
 
 //        topUL.whenPressed(new TapeStraighten('L'));
 //        topUR.whenPressed(new TapeStraighten('R'));
@@ -91,12 +95,12 @@ public class OI {
         //button9.whenPressed(new TimedDrive(2.0, 0.2));
 
         //CHUNKS OF END GAME LIFT
-        button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
+        /*button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new InterpolateAndCheck(ArmPositions.START_LIFT));
         button9.whenPressed(new LiftAndDuringLift());
         button10.whenPressed(new DriveAndPullIn()); 
         button11.whenPressed(new DriveAndLand()); 
-        button12.whenPressed(new DownerAndLand());
+        button12.whenPressed(new DownerAndLand());*/
         //button12.whenPressed(new TimedDrive(0.5, -0.2));
 
         
@@ -112,9 +116,11 @@ public class OI {
         button9.whenPressed(new InterpolateAndCheck(ArmPositions.PULL_IN_LOW));
         button10.whenPressed(new InterpolateAndCheck(ArmPositions.LIFT_ARM));
         button11.whenPressed(new TimedDrive(1.0, 0.5));
+        topLR.whenPressed(new InterpolateAndCheck(ArmPositions.HOME));
         //Go to HOME here
         //should we go to home while driving? or drive first? should it really be HOME?
-        button12.whenPressed(new TimedDrive(1.5, 0.5)); */
+        button12.whenPressed(new TimedDrive(1.5, 0.5)); 
+        //thumb.whenPressed(lifting =true);*/
 
 
         
@@ -134,10 +140,11 @@ public class OI {
         //xboxA.whenPressed(new SetRocketPosition(SetRocketPosition.LOWER));
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
-        xboxA.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
-        xboxB.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-        xboxY.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-        xboxX.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+
+        //button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+        //button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
+        //button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
+        //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.
         xbox = new XboxController(1);

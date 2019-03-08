@@ -29,6 +29,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     private static final int LOWER = 0;
     private static final int UPPER = 1;
     private static final int BUCKET = 2;
+    private boolean lifting = false;
 
     // picked this because it is unambiguously represented and way outside any reasonable angle range.
     private static final double AUTO_POSITION_BUCKET = 1024.0;
@@ -39,17 +40,17 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     private double[][] targetPositions = {
             {110.0, 35.0, 0.0},                         // PREGAME
             {96.0, 33.0, 30},                          // HOME
-            {96, 30, 30},        // LOW_HATCH
-            {106, 39, 200},         // LOW_CARGO
+            {102, 43.2, 202},        // LOW_HATCH
+            {102, 43.2, 202},         // LOW_CARGO
             {116, 54, 30},        // MID_HATCH
-            {116, 71, 500},        // MID_CARGO
+            {106, 80, 452},        // MID_CARGO
             {105.5, 110.0, 30},       // HIGH_HATCH
-            {98, 126, 750},       // HIGH_CARGO
-            {85.0, 40.0, 90.0},                         // PICKUP_FROM_FLOOR
+            {93.75, 131, 751},       // HIGH_CARGO
+            {76.5, 57.5, 424},                         // PICKUP_FROM_FLOOR
 
-            {75.4, 83.9, 0.0},                          // PRE_ENDGAME_LIFT
-            {75.4, 83.9, 0.0},                          //START_LIFT
-            {57.6, 78.2, 0.0},                          // DURING_LIFT
+            {89.4, 77.4, 306},                          // PRE_ENDGAME_LIFT
+            {73, 75.5, 181},                          //START_LIFT
+            {56.84, 67.7, 0.0},                          // DURING_LIFT
             {62.5, 62.4, 0.0},                          // PULL_IN (front lift only)
             {29.5, 95.0, 0.0},                          // ENDGAME_LIFT (rear lift only)
             {71.25, 55.05, 0.0},                        // ENDGAME_LAND
@@ -158,7 +159,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public double getBucketAngle() {
-        return 0;
+        return bucketMotor.getSelectedSensorPosition();
     }
 
     @Override
@@ -238,7 +239,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             lkI = 3;
         lP = (targetAngles[0]-lowerArmAngle.get())/lowerCoefficient;
         lI += lP * period;
-        lI = limit(.3, -.3, lI);
+        lI = limit(.5, -.3, lI);
         uP = (targetAngles[1]-upperArmAngle.get())/upperCoefficient;
         uI += lkI * (uP * period);
         uI = limit(.2, -.1, uI);
@@ -247,13 +248,14 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         lastTime = time.get();
         //inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
         //inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
-        inputDriveLowArm(limit(.6, -1, (lP + lI)));
+        if(lifting){
+            inputDriveLowArm(limit(1, -1, (lP + lI)));
+        }else{
+            inputDriveLowArm(limit(1, -.1, (lP + lI)));
+        }
         inputDriveUppArm(limit(1, -.5, (uP + uI)));
         inputDriveBucket(limit(.5, -.8, (bP)));
 
-        if (Robot.getOI().getStick().getRawButton(5)) {
-            bucketMotor.setSelectedSensorPosition(0);
-        }
         SmartDashboard.putString("DB/String 0", Double.toString(targetAngles[LOWER]));
         SmartDashboard.putString("DB/String 1", Double.toString(targetAngles[UPPER]));
         SmartDashboard.putString("DB/String 4", Double.toString(bP));
@@ -261,6 +263,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         SmartDashboard.putString("DB/String 6", Integer.toString(bucketMotor.getSelectedSensorPosition()));
         SmartDashboard.putString("DB/String 7", Double.toString((targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient));
         SmartDashboard.putString("DB/String 8", Boolean.toString(isAtTargetPosition()));
+        SmartDashboard.putString("DB/String 9", "Lifting: " + Boolean.toString(lifting));
     }
 
     @Override
@@ -298,5 +301,10 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         this.targetAngles[1] = targetAngles[1];
         this.targetAngles[2] = targetAngles[2];
 
+    }
+
+    @Override
+    public void setLifting(boolean lifting){
+        this.lifting = lifting;
     }
 }

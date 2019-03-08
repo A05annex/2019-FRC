@@ -9,6 +9,9 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -29,8 +32,9 @@ public class Robot extends TimedRobot {
     private static AHRS ahrs;
     public final static DriveTrain driveTrain = new DriveTrain();
     public final static IUseArm armDriveTrain = new ArmDriveTrain();
+    public UsbCamera camera;
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
-    public final static GripDetection gripDetection = new GripDetection();
+    //public final static GripDetection gripDetection = new GripDetection();
     private static OI oi;
     public final static Bucket bucket = new Bucket();
     public final static GripDetection grip = new GripDetection();
@@ -53,6 +57,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        camera = CameraServer.getInstance().startAutomaticCapture();
         oi = new OI();
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();
@@ -97,6 +102,7 @@ public class Robot extends TimedRobot {
         }
         SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
         SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        SmartDashboard.putString("DB/String 6", Double.toString(armDriveTrain.getBucketAngle()));
     }
 
     /**
@@ -125,6 +131,7 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.start();
         }
+        grabber.grabHatch();
     }
 
     /**

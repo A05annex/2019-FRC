@@ -123,4 +123,9 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
     public void setTargetAngle(double[] targetAngles) {
 
     }
+
+    @Override
+    public void setLifting(boolean lifting){
+        
+    }
 }

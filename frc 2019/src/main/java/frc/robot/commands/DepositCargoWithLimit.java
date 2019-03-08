@@ -34,7 +34,7 @@ public class DepositCargoWithLimit extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        if((Robot.bucketLimitSwitch.bucketSwitch.get() == false) && (Robot.bucketLimitSwitch.bucketSwitch2.get() == false)){
+        if((Robot.bucketLimitSwitch.bucketSwitch.get() == false)){
             return true;
           }
           else{

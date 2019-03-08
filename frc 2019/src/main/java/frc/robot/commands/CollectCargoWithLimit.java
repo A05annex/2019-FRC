@@ -35,7 +35,7 @@ public class CollectCargoWithLimit extends Command {
   @Override
   protected boolean isFinished() {
 
-    if((Robot.bucketLimitSwitch.bucketSwitch.get() == true) && (Robot.bucketLimitSwitch.bucketSwitch2.get() == true)){
+    if((!Robot.bucketLimitSwitch.bucketSwitch.get())){
       return true;
     }
     else{

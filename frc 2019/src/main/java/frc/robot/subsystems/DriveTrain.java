@@ -45,8 +45,6 @@ public class DriveTrain extends Subsystem {
 
         //setting ramp rate for smoother acceleration
         //not tested as of 2/22/19
-        rightMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
-        leftMaster.configOpenloopRamp(Constants.SECS_FROM_NEUTRAL_TO_FULL);
     }
 
     public void initDefaultCommand() {

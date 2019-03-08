@@ -6,11 +6,11 @@ import frc.robot.Robot;
 public class TapeStraighten extends Command {
 
     public TapeStraighten() {
-
+/*
         //only functions if the drive train is not in use by another command
         requires(Robot.driveTrain);
-        requires(Robot.gripDetection);
-    }
+        requires(Robot.gripDetection);*/
+    }/*
 
     @Override
     protected void initialize() {
@@ -44,5 +44,9 @@ public class TapeStraighten extends Command {
     protected void interrupted() {
         //runs the end method when another command requests use of the drivetrain
         end();
+    }*/
+    @Override
+    public boolean isFinished(){
+        return false;
     }
 }
