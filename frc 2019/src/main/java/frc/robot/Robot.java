@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Lifter;
+import frc.robot.commands.RetractLift;
 import frc.robot.subsystems.*;
 
 /**
@@ -27,6 +29,7 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
 
+    private static AHRS ahrs;
     public final static DriveTrain driveTrain = new DriveTrain();
     public final static IUseArm armDriveTrain = new ArmDriveTrain();
     public UsbCamera camera;
@@ -44,6 +47,10 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+    static public AHRS getAHRS() {
+        return ahrs;
+    }
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -52,6 +59,16 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         camera = CameraServer.getInstance().startAutomaticCapture();
         oi = new OI();
+        ahrs = new AHRS(SPI.Port.kMXP);
+        ahrs.reset();
+        while (ahrs.isCalibrating()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
+
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
     }
@@ -137,12 +154,8 @@ public class Robot extends TimedRobot {
         }
 
         // Make sure the lifters are retracted before we start moving around.
-        //not necessary anymore I dont think
-        //new Lifter(Lifter.RETRACT_LIFTERS).start();
-        //oh wait this'll prolly do it
-        new Lifter(Lifter.RETRACT_LIFTERS, 0.5).start();
-        grabber.grabHatch();
-        }
+        new RetractLift(0.0).start();
+    }
 
     /**
      * This function is called periodically during operator control.

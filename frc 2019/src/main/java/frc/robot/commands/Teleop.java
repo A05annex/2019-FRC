@@ -3,12 +3,13 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class Teleop extends Command {
 
     public Teleop() {
-
+        super();
         //only functions if the drive train is not in use by another command
         requires(Robot.driveTrain);
     }
@@ -22,17 +23,25 @@ public class Teleop extends Command {
     @Override
     protected void execute() {
         Joystick stick = Robot.getOI().getStick();
-        double forward = -stick.getRawAxis(1) / 1;
-        double rotate = -stick.getRawAxis(2) / 1.5;
+        // get stick values and set the signs to match the arcade drive forward,rotate conventions
+        double stickY = -stick.getY();
+        double twist = -stick.getTwist();
+        // subtract the dead band and scale what is left outside the dead band
+        double ySignMult = (stickY > 0.0) ? 1.0 : -1.0;
+        double twistSignMult = (twist > 0.0) ? 1.0 : -1.0;
+        double useY = (Math.abs(stickY) <= Constants.DRIVE_DEADBAND) ? 0.0 :
+                (Math.abs(stickY) - Constants.DRIVE_DEADBAND) / (1.0 - Constants.DRIVE_DEADBAND);
+        double useTwist = (Math.abs(twist) <= Constants.DRIVE_DEADBAND) ? 0.0 :
+                (Math.abs(twist) - Constants.DRIVE_DEADBAND) / (1.0 - Constants.DRIVE_DEADBAND);
+        // do the sensitivity power function
+        useY = Math.pow(useY, Constants.DRIVE_SENSITIVITY);
+        useTwist = Math.pow(useTwist, Constants.DRIVE_SENSITIVITY);
+        // apply the gains
+        double forward = useY * Constants.DRIVE_FORWARD_GAIN * ySignMult;
+        double rotate = ((useTwist * Constants.DRIVE_TURN_GAIN) -
+                (useY * (Constants.DRIVE_TURN_GAIN - Constants.DRIVE_TURN_AT_SPEED_GAIN))) * twistSignMult;
+        // Now set the speeds
         Robot.driveTrain.setArcadePower(forward, rotate);
-
-        //make the joystick do a cubed graph thingy so more control when slow
-        //talked to aarm bout it
-        //not tested yet
-        /*Joystick stick = Robot.getOI().getStick();
-        double forward = -stick.getRawAxis(1) * -stick.getRawAxis(1) * -stick.getRawAxis(1);
-        double rotate = -stick.getRawAxis(2) * -stick.getRawAxis(2) * -stick.getRawAxis(2);
-        Robot.driveTrain.setArcadePower(forward, rotate); */
     }
 
     @Override

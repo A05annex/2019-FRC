@@ -27,10 +27,36 @@ public class Constants {
 
 
     public static final double END_GAME_PNEUMATICS_LIFT_DURATION = 3.0;
-    public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 3.0;
+    public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 4.0;
     public static final double END_GAME_MOTOR_POWER = 0.7;
     public static final double END_GAME_DRIVE_DURATION = 4.0;
     public static final int INTERPOLATE_STEPS = 50;
     public static final double SECS_FROM_NEUTRAL_TO_FULL = 2.0;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Lift tuning constants                                                                                          //
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // The number of control cycles for each lift correction cycle
+    public static int LIFT_CORRECT_CYCLES = 15;
+    // The angle where we get to cylinder stopped.
+    public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
+    // The expected lft time in seconds, everything locks on after that
+    public static double LIFT_TIME = 25.0;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Drive tuning constants                                                                                         //
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // The multiplier for full stick to give the power/speed requested from the drive.
+    public static double DRIVE_FORWARD_GAIN = 0.8;
+    // The multiplier for full twist to give the power/speed differential requested from the drive.
+    public static double DRIVE_TURN_GAIN = 0.3;
+    // The multiplier for full twist to give the power/speed differential requested from the drive.
+    public static double DRIVE_TURN_AT_SPEED_GAIN = 0.05;
+    // The center-stick sensitivity, which is really the exponent applied to the stick position to flatten drive
+    // response to stick position for greater sensitivity at low speed.
+    public static double DRIVE_SENSITIVITY = 2.0;
+    // The width of the 0 dead-band of the stick as a fraction of full stick movement.
+    public static double DRIVE_DEADBAND = 0.05;
+
 
 }
