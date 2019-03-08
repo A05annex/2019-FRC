@@ -11,22 +11,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandgroups.DepositBallAtTarget;
-import frc.robot.commandgroups.DownerAndLand;
-import frc.robot.commandgroups.DriveAndLand;
-import frc.robot.commandgroups.DriveAndPullIn;
 import frc.robot.commandgroups.InterpolateAndCheck;
-import frc.robot.commandgroups.LiftAndDuringLift;
-import frc.robot.commandgroups.LiftToLowPlatform;
-import frc.robot.commandgroups.LiftToPlatform;
-import frc.robot.commandgroups.PickUpBallFromGround;
-import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Grab;
-import frc.robot.commands.SetAndWaitForArmPosition;
-import frc.robot.commands.Shift;
-import frc.robot.commands.TimedDrive;
+import frc.robot.commands.LiftingPower;
 import frc.robot.subsystems.ArmPositions;
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -79,7 +68,7 @@ public class OI {
         trigger.whenPressed(new Grab(Grab.RELEASE_HATCH));
         topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
         topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
-        //if(stick.getRawButton(4)){Robot.armDriveTrain.setLifting(true);}
+        button12.whenPressed(new LiftingPower(true));
 
 
 //        topUL.whenPressed(new TapeStraighten('L'));
