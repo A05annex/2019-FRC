@@ -4,9 +4,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -14,8 +11,7 @@ import frc.robot.commands.Teleop;
 
 public class DriveTrain extends Subsystem {
 
-    public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
+//    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
     public WPI_TalonSRX
             rightMaster = new WPI_TalonSRX(RobotMap.rm1),
             rm2 = new WPI_TalonSRX(RobotMap.rm2),
@@ -46,7 +42,6 @@ public class DriveTrain extends Subsystem {
         rightMaster.setInverted(InvertType.InvertMotorOutput);
         rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        ahrs.reset();
 
         //setting ramp rate for smoother acceleration
         //not tested as of 2/22/19
@@ -74,10 +69,10 @@ public class DriveTrain extends Subsystem {
     }
 
     public void upShift() {
-        shifter.set(true);
+//        shifter.set(true);
     }
     public void downShift() {
-        shifter.set(false);
+//        shifter.set(false);
     }
 
     //theos thingy
@@ -99,6 +94,14 @@ public class DriveTrain extends Subsystem {
     public void inputPDrive(double motorleft, double motorright, double threshold) {
         leftMaster.set((motorright - threshold) / threshold);
         rightMaster.set((motorleft - threshold) / threshold);
+    }
+
+    public double getLeftPosition() {
+        return leftMaster.getSelectedSensorPosition();
+    }
+
+    public double getRightPosition() {
+        return rightMaster.getSelectedSensorPosition();
     }
 
     public void setNeutralMode(NeutralMode mode) {
