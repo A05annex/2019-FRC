@@ -13,7 +13,7 @@ import frc.robot.Robot;
 
 public class LiftingPower extends Command {
   boolean liftPower;
-  boolean isFinnished;
+  boolean isFinished;
 
   public LiftingPower(boolean liftPower) {
     this.liftPower = liftPower;
@@ -22,6 +22,7 @@ public class LiftingPower extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    isFinished = false;
   
   }
 
@@ -31,12 +32,13 @@ public class LiftingPower extends Command {
     SmartDashboard.putString("DB/String 4", Boolean.toString(liftPower));
   
     Robot.armDriveTrain.setLifting(liftPower);
+    isFinished = true;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return isFinished;
   }
 
   // Called once after isFinished returns true

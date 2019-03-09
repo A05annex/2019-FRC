@@ -16,10 +16,13 @@ import frc.robot.commandgroups.DriveAndLand;
 import frc.robot.commandgroups.DriveAndPullIn;
 import frc.robot.commandgroups.InterpolateAndCheck;
 import frc.robot.commandgroups.LiftAndDuringLift;
+import frc.robot.commandgroups.LiftToPlatform;
+import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Grab;
 import frc.robot.commands.LiftingPower;
+import frc.robot.commands.SynchronisedLift;
 import frc.robot.subsystems.ArmPositions;
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -82,19 +85,20 @@ public class OI {
 
         //END GAME LIFT
         //gets robot in position to drive up to platform and lift
-        //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
+        button10.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
-        //button8.whenPressed(new LiftToPlatform());
-        //button9.whenPressed(new TimedDrive(2.0, 0.2));
+        button12.whenPressed(new LiftToPlatform());
+
+        //button11.whenPressed(new SynchronisedLift());
+    
 
         //CHUNKS OF END GAME LIFT
-        button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
+        /*button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new InterpolateAndCheck(ArmPositions.START_LIFT));
-        topUR.whenPressed(new LiftingPower(true));
         button9.whenPressed(new LiftAndDuringLift());
         button10.whenPressed(new DriveAndPullIn()); 
         button11.whenPressed(new DriveAndLand()); 
-        button12.whenPressed(new DownerAndLand());
+        button12.whenPressed(new DownerAndLand()); */
         //button12.whenPressed(new TimedDrive(0.5, -0.2));
 
          
@@ -135,7 +139,7 @@ public class OI {
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
 
-        //buttons for rocket positions
+        //buttons for rocket positions- ENABLE FOR MATCHES!!!
         //button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
         //button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
         //button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));

@@ -23,11 +23,10 @@ public class LiftAndDuringLift extends CommandGroup {
 
     //activates pneumatics as arm helps pull robot onto platform
     addSequential(new LiftingPower(true));
+    addSequential(new InterpolateAndCheck(ArmPositions.START_LIFT));
     addParallel(new ArmTimedToTarget(ArmPositions.DURING_LIFT,Constants.END_GAME_PNEUMATICS_DROP,
     Constants.END_GAME_PNEUMATICS_LIFT_DURATION));
     addSequential(new SynchronisedLift());
-
-    //will need to retest with new pneumatics. timing may be off.
-    
-  }
+    }
 }
+
