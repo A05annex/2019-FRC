@@ -23,12 +23,10 @@ public class DownerAndLand extends CommandGroup {
     //robot drives forward as arm retracts so it won't hit edge
     //as cylanders get to the platform, they retract
 
+    addSequential(new LiftingPower(false));
     addParallel(new TimedDrive(1.0, 0.2));
-    addParallel(new LiftingPower(false));
     addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_PARK));
-
-    //ehh eitherll prolly work
     addSequential(new RetractLift(Constants.END_GAME_PNEUMATICS_RETRACT_DURATION));
-    //addSequential(new EndGameDowner());
+  
   }
 }
