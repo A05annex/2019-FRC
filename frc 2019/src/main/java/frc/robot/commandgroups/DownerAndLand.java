@@ -9,6 +9,7 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.LiftingPower;
 import frc.robot.commands.RetractLift;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
@@ -23,6 +24,7 @@ public class DownerAndLand extends CommandGroup {
     //as cylanders get to the platform, they retract
 
     addParallel(new TimedDrive(1.0, 0.2));
+    addParallel(new LiftingPower(false));
     addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_PARK));
 
     //ehh eitherll prolly work
