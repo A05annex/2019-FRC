@@ -24,7 +24,7 @@ public class DownerAndLand extends CommandGroup {
     //as cylanders get to the platform, they retract
 
     addSequential(new LiftingPower(false));
-    addParallel(new TimedDrive(1.0, 0.1));
+    addParallel(new TimedDrive(1.5, 0.05));
     addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_PARK));
     addSequential(new RetractLift(Constants.END_GAME_PNEUMATICS_RETRACT_DURATION));
   

@@ -11,18 +11,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
-import frc.robot.commandgroups.DownerAndLand;
-import frc.robot.commandgroups.DriveAndLand;
-import frc.robot.commandgroups.DriveAndPullIn;
 import frc.robot.commandgroups.InterpolateAndCheck;
-import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Grab;
-import frc.robot.commands.LiftingPower;
-import frc.robot.commands.SynchronisedLift;
 import frc.robot.subsystems.ArmPositions;
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -46,12 +40,12 @@ public class OI {
     private final JoystickButton button12 = new JoystickButton(this.stick, 12);
 
     // These are test and calibration initializations - they are NOT required for competition.
-    private XboxController xbox = new XboxController(1);
+    //private XboxController xbox = new XboxController(1);
 
-    private final JoystickButton xboxA = new JoystickButton(xbox, 1);
+    /*private final JoystickButton xboxA = new JoystickButton(xbox, 1);
     private final JoystickButton xboxB = new JoystickButton(xbox, 2);
     private final JoystickButton xboxX = new JoystickButton(xbox, 3);
-    private final JoystickButton xboxY = new JoystickButton(xbox, 4);
+    private final JoystickButton xboxY = new JoystickButton(xbox, 4);*/
 
     public Joystick getStick() {
         //method to be called by other commands or subsystems to use the joystick
@@ -63,9 +57,9 @@ public class OI {
      *
      * @return (XboxController) The gamepad if calibration is enabled, <tt>null</tt> otherwise.
      */
-    public XboxController getXbox() {
-        return (xbox);
-    }
+    /*public XboxController getXbox() {
+        return (new XboxController());
+    }*/
 
     public OI() {
         topUL.whenPressed(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
@@ -146,7 +140,9 @@ public class OI {
         //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.
-        xbox = new XboxController(1);
+        
+        
+        /*xbox = new XboxController(1);
         final POVButton decArmAngle = new POVButton(xbox, 0);
         decArmAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.DECREMENT));
@@ -162,6 +158,6 @@ public class OI {
         final POVButton incBucketAngle = new POVButton(xbox, 270);
         incBucketAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
-
+*/
     }
 }

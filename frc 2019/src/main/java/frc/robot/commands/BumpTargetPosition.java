@@ -31,7 +31,7 @@ public class BumpTargetPosition extends Command {
     @Override
     protected void execute() {
         super.execute();
-        XboxController xbox = Robot.getOI().getXbox();
+        /*XboxController xbox = Robot.getOI().getXbox();
         if (bumpArm) {
             if (xbox.getBumper(GenericHID.Hand.kLeft)) {
                 Robot.armDriveTrain.bumpTargetPosition(0.0, inc, 0.0);
@@ -42,7 +42,7 @@ public class BumpTargetPosition extends Command {
         } else {
             Robot.armDriveTrain.bumpTargetPosition(0.0, 0.0, inc);
 
-        }
+        }*/
     }
 
     @Override

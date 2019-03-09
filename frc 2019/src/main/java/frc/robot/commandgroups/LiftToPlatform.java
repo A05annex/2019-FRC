@@ -30,7 +30,7 @@ public class LiftToPlatform extends CommandGroup {
         addSequential(new DriveAndPullIn());
         addSequential(new DriveAndLand());
         addSequential(new DownerAndLand());
-        addSequential(new TimedDrive(1.0, 0.15));
+        addSequential(new TimedDrive(1.5, 0.1));
 
 
 

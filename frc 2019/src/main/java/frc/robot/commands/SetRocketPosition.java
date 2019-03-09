@@ -34,13 +34,13 @@ public class SetRocketPosition extends Command {
     @Override
     protected void execute() {
         super.execute();
-        XboxController xbox = Robot.getOI().getXbox();
+        /*XboxController xbox = Robot.getOI().getXbox();
         if (xbox.getBumper(GenericHID.Hand.kRight)) {
             Robot.armDriveTrain.setTargetPosition(ballPosition);
         } else {
             Robot.armDriveTrain.setTargetPosition(hatchPosition);
         }
-        finished = true;
+        finished = true;*/
     }
 
     @Override
