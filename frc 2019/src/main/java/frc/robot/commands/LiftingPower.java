@@ -14,7 +14,7 @@ public class LiftingPower extends Command {
   boolean liftPower;
 
   public LiftingPower(boolean liftPower) {
-    liftPower=this.liftPower;
+    this.liftPower = liftPower;
   }
 
   // Called just before this Command runs the first time

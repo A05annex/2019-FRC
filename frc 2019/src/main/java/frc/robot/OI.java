@@ -70,6 +70,7 @@ public class OI {
         topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
         topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
         button12.whenPressed(new LiftingPower(true));
+        button8.whenPressed(new InterpolateAndCheck(ArmPositions.CARGO_BAY));
 
 
 //        topUL.whenPressed(new TapeStraighten('L'));

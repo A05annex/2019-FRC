@@ -62,6 +62,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {96.0, 33.0, 30},                           //DURING_LOW_LIFT
             {96.0, 33.0, 30},                           //PULL_IN_LOW
             {96.0, 33.0, 30},                           //LIFT_ARM
+
+            {98.0, 74.0, 634}                              //CARGO_BAY
     };
 
     private ArmPositions targetPosition = ArmPositions.HOME;
