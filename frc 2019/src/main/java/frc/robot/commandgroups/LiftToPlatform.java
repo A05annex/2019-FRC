@@ -25,12 +25,12 @@ public class LiftToPlatform extends CommandGroup {
         //uses command groups that we have tested to make one button that does it all
 
         //need to retest with new pneumatics!!!!!
-        
+        addSequential(new InterpolateAndCheck(ArmPositions.START_LIFT));
         addSequential(new LiftAndDuringLift());
         addSequential(new DriveAndPullIn());
         addSequential(new DriveAndLand());
         addSequential(new DownerAndLand());
-        addSequential(new TimedDrive(1.5, 0.1));
+        addSequential(new TimedDrive(1.0, 0.15));
 
 
 
@@ -64,6 +64,10 @@ public class LiftToPlatform extends CommandGroup {
     addParallel(new EndGameDrive());
     addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_PARK));
     addSequential(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK)); */
+
+    //NOTES
+    //drive a bit more before pneumatics come up
+    //lift arm a bit after we pull in so we can drive easier
 
 
     }
