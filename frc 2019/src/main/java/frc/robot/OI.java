@@ -11,7 +11,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import frc.robot.commandgroups.DownerAndLand;
+import frc.robot.commandgroups.DriveAndLand;
+import frc.robot.commandgroups.DriveAndPullIn;
 import frc.robot.commandgroups.InterpolateAndCheck;
+import frc.robot.commandgroups.LiftAndDuringLift;
 import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Grab;
@@ -84,12 +88,12 @@ public class OI {
         //button9.whenPressed(new TimedDrive(2.0, 0.2));
 
         //CHUNKS OF END GAME LIFT
-        /*button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
+        button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new InterpolateAndCheck(ArmPositions.START_LIFT));
         button9.whenPressed(new LiftAndDuringLift());
         button10.whenPressed(new DriveAndPullIn()); 
         button11.whenPressed(new DriveAndLand()); 
-        button12.whenPressed(new DownerAndLand());*/
+        button12.whenPressed(new DownerAndLand());
         //button12.whenPressed(new TimedDrive(0.5, -0.2));
 
         
