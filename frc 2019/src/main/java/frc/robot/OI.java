@@ -72,7 +72,7 @@ public class OI {
         trigger.whenPressed(new Grab(Grab.RELEASE_HATCH));
         topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
         topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
-        button12.whenPressed(new LiftingPower(true));
+        //button12.whenPressed(new LiftingPower(true));
 
 
 //        topUL.whenPressed(new TapeStraighten('L'));
@@ -90,6 +90,7 @@ public class OI {
         //CHUNKS OF END GAME LIFT
         button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_ENDGAME_LIFT));
         button8.whenPressed(new InterpolateAndCheck(ArmPositions.START_LIFT));
+        topUR.whenPressed(new LiftingPower(true));
         button9.whenPressed(new LiftAndDuringLift());
         button10.whenPressed(new DriveAndPullIn()); 
         button11.whenPressed(new DriveAndLand()); 
@@ -134,6 +135,7 @@ public class OI {
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
 
+        //buttons for rocket positions
         //button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
         //button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
         //button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));

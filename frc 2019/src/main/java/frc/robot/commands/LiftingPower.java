@@ -12,6 +12,7 @@ import frc.robot.Robot;
 
 public class LiftingPower extends Command {
   boolean liftPower;
+  boolean isFinnished;
 
   public LiftingPower(boolean liftPower) {
     liftPower=this.liftPower;
@@ -20,6 +21,7 @@ public class LiftingPower extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+  
   }
 
   // Called repeatedly when this Command is scheduled to run

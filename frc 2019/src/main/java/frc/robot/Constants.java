@@ -26,9 +26,9 @@ public class Constants {
     public static final double TARGET_POSITION_TOLERANCE = 5.0;
 
 
-    public static final double END_GAME_PNEUMATICS_LIFT_DURATION = 15.0;
+    public static final double END_GAME_PNEUMATICS_LIFT_DURATION = 25.0;
     public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 4.0;
-    public static final double END_GAME_PNEUMATICS_DROP = 5.0;
+    public static final double END_GAME_PNEUMATICS_DROP = 7.2;
     
     public static final double END_GAME_MOTOR_POWER = 0.7;
     public static final double END_GAME_DRIVE_DURATION = 4.0;
@@ -43,7 +43,7 @@ public class Constants {
     // The angle where we get to cylinder stopped.
     public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
     // The expected lft time in seconds, everything locks on after that
-    public static double LIFT_TIME = 25.0;
+    public static double LIFT_TIME = 35.0;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Drive tuning constants                                                                                         //
