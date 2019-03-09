@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commandgroups.InterpolateAndCheck;
+import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Grab;
@@ -132,10 +133,10 @@ public class OI {
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
 
-        //button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
-        //button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-        //button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-        //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+        button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+        button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
+        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
+        topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.
         xbox = new XboxController(1);
