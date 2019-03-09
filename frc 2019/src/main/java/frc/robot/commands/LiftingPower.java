@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class LiftingPower extends Command {
@@ -15,7 +16,7 @@ public class LiftingPower extends Command {
   boolean isFinnished;
 
   public LiftingPower(boolean liftPower) {
-    liftPower=this.liftPower;
+    this.liftPower = liftPower;
   }
 
   // Called just before this Command runs the first time
@@ -27,6 +28,7 @@ public class LiftingPower extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    SmartDashboard.putString("DB/String 4", Boolean.toString(liftPower));
   
     Robot.armDriveTrain.setLifting(liftPower);
   }

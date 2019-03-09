@@ -62,6 +62,8 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {96.0, 33.0, 30},                           //DURING_LOW_LIFT
             {96.0, 33.0, 30},                           //PULL_IN_LOW
             {96.0, 33.0, 30},                           //LIFT_ARM
+
+            {98.0, 74.0, 634}                           //CARGO_BAY
     };
 
     private ArmPositions targetPosition = ArmPositions.HOME;
@@ -258,12 +260,12 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
         SmartDashboard.putString("DB/String 0", Double.toString(targetAngles[LOWER]));
         SmartDashboard.putString("DB/String 1", Double.toString(targetAngles[UPPER]));
-        SmartDashboard.putString("DB/String 4", Double.toString(bP));
-        SmartDashboard.putString("DB/String 5", Double.toString(lI));
+        //SmartDashboard.putString("DB/String 4", Double.toString(bP));
+        //SmartDashboard.putString("DB/String 5", Double.toString(lI));
         SmartDashboard.putString("DB/String 6", Integer.toString(bucketMotor.getSelectedSensorPosition()));
-        SmartDashboard.putString("DB/String 7", Double.toString((targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient));
+        //SmartDashboard.putString("DB/String 7", Double.toString((targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient));
         SmartDashboard.putString("DB/String 8", Boolean.toString(isAtTargetPosition()));
-        SmartDashboard.putString("DB/String 9", "Lifting: " + Boolean.toString(lifting));
+        SmartDashboard.putString("DB/String 9", Boolean.toString(lifting));
     }
 
     @Override
@@ -305,6 +307,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void setLifting(boolean lifting){
+        SmartDashboard.putString("DB/String 5", "I dont think this will work");
         this.lifting = lifting;
     }
 }
