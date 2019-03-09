@@ -32,5 +32,19 @@ public class Constants {
     public static final double END_GAME_DRIVE_DURATION = 4.0;
     public static final int INTERPOLATE_STEPS = 50;
     public static final double SECS_FROM_NEUTRAL_TO_FULL = 2.0;
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Drive tuning constants                                                                                         //
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // The multiplier for full stick to give the power/speed requested from the drive.
+    public static double DRIVE_FORWARD_GAIN = 0.8;
+    // The multiplier for full twist to give the power/speed differential requested from the drive.
+    public static double DRIVE_TURN_GAIN = 0.3;
+    // The multiplier for full twist to give the power/speed differential requested from the drive.
+    public static double DRIVE_TURN_AT_SPEED_GAIN = 0.05;
+    // The center-stick sensitivity, which is really the exponent applied to the stick position to flatten drive
+    // response to stick position for greater sensitivity at low speed.
+    public static double DRIVE_SENSITIVITY = 2.0;
+    // The width of the 0 dead-band of the stick as a fraction of full stick movement.
+    public static double DRIVE_DEADBAND = 0.05;
 
 }
