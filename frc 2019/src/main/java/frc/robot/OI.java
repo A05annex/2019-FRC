@@ -69,7 +69,7 @@ public class OI {
         trigger.whenPressed(new Grab(Grab.RELEASE_HATCH));
         topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
         topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
-        //button12.whenPressed(new LiftingPower(true));
+        button8.whenPressed(new InterpolateAndCheck(ArmPositions.CARGO_BAY));
 
 
 //        topUL.whenPressed(new TapeStraighten('L'));
@@ -133,11 +133,10 @@ public class OI {
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
 
-        //buttons for rocket positions- ENABLE FOR MATCHES!!!
-        //button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
-        //button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-        //button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-        //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+        button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+        button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
+        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
+        topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.
         
