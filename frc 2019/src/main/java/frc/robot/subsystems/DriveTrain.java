@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Solenoid;
+//import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -93,6 +93,11 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
     }
 
     @Override
+    public void inputDrive(double right, double left) {
+        leftMaster.set(right);
+        rightMaster.set(left);
+   }
+   @Override
     public void inputDriveDB(double motorleft, double motorright) {
         leftMaster.set(motorleft);
         rightMaster.set(limitTo(motorright, -.1, .1));
@@ -136,6 +141,22 @@ public class DriveTrain extends Subsystem implements IUseDriveTrain {
             value = lowerlim;
         }
         return (value);
+    }
+
+ 
+    @Override
+    public int getRightPosition() {
+        return rightMaster.getSelectedSensorPosition();
+    }
+
+    @Override
+    public int getLeftPosition() {
+        return leftMaster.getSelectedSensorPosition();
+    }
+
+    @Override
+    public double getHeading() {
+        return ahrs.getAngle();
     }
 }
 

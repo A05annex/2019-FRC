@@ -22,31 +22,27 @@ public class Turn4Enc extends Command {
         requires((Subsystem)Robot.driveTrain);
     }
 
-
     protected void initialize() {
         //SetTargetDeg(); 
         //Robot.driveTrain.ahrs.isCalibrating();
-        Robot.driveTrain.AHRS.getActualUpdateRate();
+        //Robot.driveTrain.AHRS.getActualUpdateRate();
         }  
     
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     //CorrectEnc();
-    if (Robot.driveTrain.AHRS.getAngle() < desiredDeg) {
-        Robot.driveTrain.rightMaster.set((-motorPower*0.1*(desiredDeg - Robot.driveTrain.AHRS.getAngle())));
-        Robot.driveTrain.leftMaster.set((motorPower*0.1*(desiredDeg - Robot.driveTrain.AHRS.getAngle())));
+    if (Robot.driveTrain.getHeading() < desiredDeg) {
+        Robot.driveTrain.inputDrive((-motorPower*0.1*(desiredDeg - Robot.driveTrain.getHeading())), motorPower*0.1*(desiredDeg - Robot.driveTrain.getHeading()));
     }
-    else if (Robot.driveTrain.AHRS.getAngle() > desiredDeg) {
-        Robot.driveTrain.rightMaster.set((motorPower*0.1*(Robot.driveTrain.AHRS.getAngle() - desiredDeg)));
-        Robot.driveTrain.leftMaster.set((-motorPower*0.1*(Robot.driveTrain.AHRS.getAngle() - desiredDeg)));
+    else if (Robot.driveTrain.getHeading() > desiredDeg) {
+        Robot.driveTrain.inputDrive((motorPower*0.1*(desiredDeg - Robot.driveTrain.getHeading())), -motorPower*0.1*(desiredDeg - Robot.driveTrain.getHeading()));
     }
-
    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (Math.abs(Robot.driveTrain.AHRS.getAngle() - desiredDeg) < 5) {
+        if (Math.abs(Robot.driveTrain.getHeading() - desiredDeg) < 5) {
             /*Robot.driveTrain.rightMaster.set(0);
             Robot.driveTrain.leftMaster.set(0);*/
             return true;
@@ -57,8 +53,7 @@ public class Turn4Enc extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.driveTrain.rightMaster.set(0);
-        Robot.driveTrain.leftMaster.set(0);
+        Robot.driveTrain.inputDriveSG(0);
     }
 
     // Called when another command which requires one or more of the same

@@ -65,8 +65,8 @@ public class OI {
     }
 
     public OI() {
-        trigger.whenPressed(new Shift(true));
-        thumb.whenPressed(new Shift(false));
+        //trigger.whenPressed(new Shift(true));
+        //thumb.whenPressed(new Shift(false));
         topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
         topLL.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
         topUR.whenPressed(new Grab(Grab.GRAB_HATCH));

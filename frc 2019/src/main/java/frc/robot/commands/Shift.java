@@ -1,4 +1,4 @@
-package frc.robot.commands;
+/*package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Timer;
@@ -57,4 +57,4 @@ public class Shift extends Command {
         //runs the end method when another command requests use of the drivetrain
         end();
     }
-}
+}*/

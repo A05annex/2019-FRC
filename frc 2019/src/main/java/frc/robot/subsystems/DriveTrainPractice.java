@@ -16,7 +16,7 @@ import frc.robot.commands.Teleop;
 public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
 
     public AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
+    //public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
     public WPI_TalonSRX rightMaster = new WPI_TalonSRX(RobotMap.rm1);
     public WPI_VictorSPX rm2 = new WPI_VictorSPX(RobotMap.rm2);
     public WPI_VictorSPX rm3 = new WPI_VictorSPX(RobotMap.rm3);
@@ -75,7 +75,7 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
         leftMaster.set(scale * (forward - rotate));
     }
 
-    @Override
+    /*@Override
     public void upShift() {
         if (null != shifter) {
             shifter.set(true);
@@ -86,7 +86,7 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
         if (null != shifter) {
             shifter.set(false);
         }
-    }
+    }*/
 
     //theos thingy
     @Override
@@ -94,6 +94,12 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
         leftMaster.set(motorInput[0]);
         rightMaster.set(motorInput[1]);
     }
+    
+    @Override
+    public void inputDrive(double right, double left) {
+        leftMaster.set(right);
+        rightMaster.set(left);
+   }
 
     @Override
     public void inputDriveDB(double motorleft, double motorright) {
@@ -141,4 +147,21 @@ public class DriveTrainPractice extends Subsystem implements IUseDriveTrain {
         return (value);
     }
 
+    @Override
+    public int getRightPosition() {
+        return rightMaster.getSelectedSensorPosition();
+    }
+
+    @Override
+    public int getLeftPosition() {
+        return leftMaster.getSelectedSensorPosition();
+    }
+
+    @Override
+    public double getHeading() {
+        return ahrs.getAngle();
+    }
 }
+
+
+

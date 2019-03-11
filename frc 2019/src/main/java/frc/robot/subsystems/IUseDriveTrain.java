@@ -24,6 +24,8 @@ public interface IUseDriveTrain {
     //theos thingy
     public void inputDrive(double[] motorInput);
 
+    public void inputDrive(double right, double left);
+
     public void inputDriveDB(double motorleft, double motorright);
 
     public void inputDriveSG(double motorpow);
@@ -31,6 +33,11 @@ public interface IUseDriveTrain {
     public void inputPDrive(double motorleft, double motorright, double threshold);
 
     public void setNeutralMode(NeutralMode mode);
+
+    public int getRightPosition();
+    public int getLeftPosition();
+
+    public double getHeading();
 
     public void stop();
 
