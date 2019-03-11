@@ -40,12 +40,12 @@ public class OI {
     private final JoystickButton button12 = new JoystickButton(this.stick, 12);
 
     // These are test and calibration initializations - they are NOT required for competition.
-    private XboxController xbox = new XboxController(1);
+    //private XboxController xbox = new XboxController(1);
 
-    private final JoystickButton xboxA = new JoystickButton(xbox, 1);
+    /*private final JoystickButton xboxA = new JoystickButton(xbox, 1);
     private final JoystickButton xboxB = new JoystickButton(xbox, 2);
     private final JoystickButton xboxX = new JoystickButton(xbox, 3);
-    private final JoystickButton xboxY = new JoystickButton(xbox, 4);
+    private final JoystickButton xboxY = new JoystickButton(xbox, 4);*/
 
     public Joystick getStick() {
         //method to be called by other commands or subsystems to use the joystick
@@ -57,9 +57,9 @@ public class OI {
      *
      * @return (XboxController) The gamepad if calibration is enabled, <tt>null</tt> otherwise.
      */
-    public XboxController getXbox() {
+    /*public XboxController getXbox() {
         return (xbox);
-    }
+    }*/
 
     public OI() {
         topUL.whenPressed(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
@@ -140,20 +140,20 @@ public class OI {
         topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.
-        xbox = new XboxController(1);
-        final POVButton decArmAngle = new POVButton(xbox, 0);
+        //xbox = new XboxController(1);
+        final POVButton decArmAngle = new POVButton(stick, 0);
         decArmAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.DECREMENT));
 
-        final POVButton incArmAngle = new POVButton(xbox, 180);
+        final POVButton incArmAngle = new POVButton(stick, 180);
         incArmAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.INCREMENT));
 
-        final POVButton decBucketAngle = new POVButton(xbox, 90);
+        final POVButton decBucketAngle = new POVButton(stick, 90);
         decBucketAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.DECREMENT));
 
-        final POVButton incBucketAngle = new POVButton(xbox, 270);
+        final POVButton incBucketAngle = new POVButton(stick, 270);
         incBucketAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
 
