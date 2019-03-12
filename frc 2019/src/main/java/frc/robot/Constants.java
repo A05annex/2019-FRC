@@ -26,7 +26,7 @@ public class Constants {
     public static final double TARGET_POSITION_TOLERANCE = 5.0;
 
 
-    public static final double END_GAME_PNEUMATICS_LIFT_DURATION = 5.5;
+    public static final double END_GAME_PNEUMATICS_LIFT_DURATION = 7.0;
     public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 4.0;
     public static final double END_GAME_PNEUMATICS_DROP = 1.0;
     
@@ -58,22 +58,7 @@ public class Constants {
     // The angle where we get to cylinder stopped.
     public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
     // The expected lft time in seconds, everything locks on after that
-    public static double LIFT_TIME = 7.0;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Drive tuning constants                                                                                         //
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // The multiplier for full stick to give the power/speed requested from the drive.
-    public static double DRIVE_FORWARD_GAIN = 0.8;
-    // The multiplier for full twist to give the power/speed differential requested from the drive.
-    public static double DRIVE_TURN_GAIN = 0.5;
-    // The multiplier for full twist to give the power/speed differential requested from the drive.
-    public static double DRIVE_TURN_AT_SPEED_GAIN = 0.3;
-    // The center-stick sensitivity, which is really the exponent applied to the stick position to flatten drive
-    // response to stick position for greater sensitivity at low speed.
-    public static double DRIVE_SENSITIVITY = 2.0;
-    // The width of the 0 dead-band of the stick as a fraction of full stick movement.
-    public static double DRIVE_DEADBAND = 0.05;
+    public static double LIFT_TIME = 0;
 
 
 }
