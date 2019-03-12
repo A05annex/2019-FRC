@@ -9,7 +9,6 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.ArmTimedToTarget;
 import frc.robot.commands.LiftingPower;
 import frc.robot.commands.SynchronisedLift;
