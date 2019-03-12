@@ -12,8 +12,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.cameraserver.*;
 import frc.robot.commands.Lifter;
+import edu.wpi.cscore.*;
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.HttpCamera.HttpCameraKind;
 import frc.robot.subsystems.*;
+import org.opencv.core.Mat;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,6 +44,8 @@ public class Robot extends TimedRobot {
     public final static BucketLimitSwitch bucketLimitSwitch = new BucketLimitSwitch();
     private Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
+    HttpCamera piCam1;
+    CvSink cvSink1;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -46,6 +53,16 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        
+        piCam1 = new HttpCamera("cam1", "http://frcvision.local:1181/?action=stream", HttpCameraKind.kMJPGStreamer);
+        
+        
+        cvSink1 = CameraServer.getInstance().getVideo(piCam1);
+
+        CameraServer.getInstance().addServer("cam1");
+        
+
+        
         oi = new OI();
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);
@@ -141,6 +158,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        
+        //CameraServer.getInstance().startAutomaticCapture(camera);
         Scheduler.getInstance().run();
         if (null != armDriveTrain) {
             SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
