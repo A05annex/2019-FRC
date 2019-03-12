@@ -70,7 +70,7 @@ public class DriveTrain extends Subsystem {
         rightMaster.set(scale * (forward + rotate));
         leftMaster.set(scale * (forward - rotate));
     }
-
+//////
     //theos thingy
     public void inputDrive(double[] motorInput) {
         leftMaster.set(motorInput[0]);
