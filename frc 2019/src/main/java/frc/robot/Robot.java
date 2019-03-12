@@ -58,7 +58,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        ahrs = new AHRS(SPI.Port.kMXP);
+//        ahrs = new AHRS(SPI.Port.kMXP);
+        ahrs = new AHRS(SerialPort.Port.kUSB1);
         ahrs.reset();
         while (ahrs.isCalibrating()) {
             try {

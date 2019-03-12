@@ -23,25 +23,26 @@ public class SynchronisedLift extends Command {
         timer.reset();
         timer.start();
         // Map so positive roll happens when right side is lower
-        initialRoll = Robot.getAHRS().getYaw();
+        initialRoll = Robot.getAHRS().getRoll();
         liftCycle = 0;
     }
 
     @Override
     protected void execute() {
-        if (timer.get() > Constants.LIFT_TIME) {
+        if (timer.get() > Constants.LIFT_CORRECTION_TIME) {
             // we've been going long enough to be done - just lock them on and finish.
             isFinished = true;
         } else {
             // in the lift - check roll and pulse leading cylinder as required to get sides synchronised
             // Map so positive roll happens when right side is lower
-            double currentRoll = Robot.getAHRS().getYaw();
+            double currentRoll = Robot.getAHRS().getRoll();
             currentRoll -= initialRoll;
             if (currentRoll > 0) {
                 // Right side is low, pulse left to slow it down
                 Robot.lift.lift_robot_right();
                 if (liftCycle%Constants.LIFT_CORRECT_CYCLES <
-                        (((currentRoll * Constants.LIFT_CORRECT_CYCLES)/(2.0 * Constants.LIFT_CORRECT_MAX_ANGLE)) - 2)) {
+                        (((currentRoll * Constants.LIFT_CORRECT_CYCLES)/
+                                (2.0 * Constants.LIFT_CORRECT_MAX_ANGLE)) - Constants.LIFT_CORRECTION_DEADBAND)) {
                     Robot.lift.retract_robot_left();
                 } else {
                     Robot.lift.lift_robot_left();
@@ -49,7 +50,8 @@ public class SynchronisedLift extends Command {
             } else {
                 // Left side is low, pulse right to slow it down
                 if (liftCycle%Constants.LIFT_CORRECT_CYCLES <
-                        ((((-currentRoll) * Constants.LIFT_CORRECT_CYCLES)/(2.0 * Constants.LIFT_CORRECT_MAX_ANGLE)) - 2)) {
+                        ((((-currentRoll) * Constants.LIFT_CORRECT_CYCLES)/
+                                (2.0 * Constants.LIFT_CORRECT_MAX_ANGLE)) - Constants.LIFT_CORRECTION_DEADBAND)) {
                     Robot.lift.retract_robot_right();
                 } else {
                     Robot.lift.lift_robot_right();
