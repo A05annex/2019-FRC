@@ -224,7 +224,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         targetAngles[2] = targetPositions[targetPositionIndx][2];
     }
 
-    public double uP, uI, lP, lI, bP, bI;
+    public double uP, uI, uD, uLastAngle, lP, lI, lLastAngle = lowerArmAngle.get(), lD, bP, bI;
 
     @Override
     public void resetIntegral() {
@@ -240,16 +240,20 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             lowerCoefficient = 20,
             upperCoefficient = 20,
             bucketCoefficient = 30,
-            lkI = 3;
+            lkI = 2.3,
+            lkD = 1,
+            ukI = 3,
+            ukD = 1;
         lP = (targetAngles[0]-lowerArmAngle.get())/lowerCoefficient;
-        lI += lP * period;
+        lI += lkI * (lP * period);
         lI = limit(.5, -.3, lI);
         uP = (targetAngles[1]-upperArmAngle.get())/upperCoefficient;
-        uI += lkI * (uP * period);
+        uI += ukI * (uP * period);
         uI = limit(.2, -.1, uI);
         bP = (targetAngles[2]-bucketMotor.getSelectedSensorPosition())/bucketCoefficient;
 
         lastTime = time.get();
+        lLastAngle = lowerArmAngle.get();
         //inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
         //inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
         if(lifting){
@@ -258,7 +262,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             inputDriveLowArm(limit(1, -.1, (lP + lI)));
         }
         inputDriveUppArm(limit(1, -.5, (uP + uI)));
-        inputDriveBucket(limit(.5, -.3, (bP)));
+        inputDriveBucket(limit(1, -1, (bP)));
 
         SmartDashboard.putString("DB/String 0", Double.toString(targetAngles[LOWER]));
         SmartDashboard.putString("DB/String 1", Double.toString(targetAngles[UPPER]));
