@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import frc.robot.commandgroups.DepositHatch;
 import frc.robot.commandgroups.InterpolateAndCheck;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.ArmInterpolateToTarget;
@@ -18,6 +19,7 @@ import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Grab;
 import frc.robot.subsystems.ArmPositions;
+import frc.robot.subsystems.Bucket;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -64,12 +66,21 @@ public class OI {
     public OI() {
         topUL.whenPressed(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
         topUL.whileHeld(new BallCollector(BallCollector.GRAB_BALL));
-        trigger.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
-        topLL.whenPressed(new Grab(Grab.GRAB_HATCH));
-        trigger.whenPressed(new Grab(Grab.RELEASE_HATCH));
         topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
+        topLL.whenPressed(new Grab(Grab.GRAB_HATCH));
         topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
         button8.whenPressed(new InterpolateAndCheck(ArmPositions.CARGO_BAY));
+
+        if(Bucket.stuff == Bucket.BALL){
+            trigger.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
+        }
+        if(Bucket.stuff = Bucket.HATCH){
+            trigger.whenPressed(new DepositHatch());
+        }
+        else{
+            trigger.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
+            trigger.whenPressed(new Grab(Grab.GRAB_HATCH));
+        }
 
 
 //        topUL.whenPressed(new TapeStraighten('L'));
@@ -157,6 +168,6 @@ public class OI {
         final POVButton incBucketAngle = new POVButton(xbox, 270);
         incBucketAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
-*/
+                */
     }
 }

@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Bucket;
 
 /**
  * This subsystem controls the cargo (ball) collection wheels to either grab the ball into the bucket,
@@ -24,9 +25,12 @@ public class BallCollector extends Command {
     protected void execute() {
         if (collect) {
             Robot.bucketWheelz.collect();
+            frc.robot.subsystems.Bucket.deposit(Bucket.BALL);
         } else {
             Robot.bucketWheelz.eject();
+
         }
+
     }
 
     @Override

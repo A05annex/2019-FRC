@@ -51,6 +51,7 @@ public enum ArmPositions {
     PULL_IN_LOW(20),
     LIFT_ARM(21),
 
+    //misc
     CARGO_BAY(22);
 
 
