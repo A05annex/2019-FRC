@@ -39,16 +39,16 @@ public class Constants {
     // // Drive tuning constants                                                                                         //
     // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // // The multiplier for full stick to give the power/speed requested from the drive.
-    // public static double DRIVE_FORWARD_GAIN = 0.8;
+    public static double DRIVE_FORWARD_GAIN = 0.8;
     // // The multiplier for full twist to give the power/speed differential requested from the drive.
-    // public static double DRIVE_TURN_GAIN = 0.5;
+    public static double DRIVE_TURN_GAIN = 0.5;
     // // The multiplier for full twist to give the power/speed differential requested from the drive.
-    // public static double DRIVE_TURN_AT_SPEED_GAIN = 0.3;
+    public static double DRIVE_TURN_AT_SPEED_GAIN = 0.3;
     // // The center-stick sensitivity, which is really the exponent applied to the stick position to flatten drive
     // // response to stick position for greater sensitivity at low speed.
-    // public static double DRIVE_SENSITIVITY = 2.0;
+    public static double DRIVE_SENSITIVITY = 2.0;
     // // The width of the 0 dead-band of the stick as a fraction of full stick movement.
-    // public static double DRIVE_DEADBAND = 0.05;
+    public static double DRIVE_DEADBAND = 0.05;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Lift tuning constants                                                                                          //
