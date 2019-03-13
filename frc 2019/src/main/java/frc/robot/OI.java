@@ -12,7 +12,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commandgroups.DepositHatch;
+import frc.robot.commandgroups.DriveAndDuringlow;
+import frc.robot.commandgroups.DriveAndPullInLow;
 import frc.robot.commandgroups.InterpolateAndCheck;
+import frc.robot.commandgroups.LiftArmAndDriveOn;
+import frc.robot.commandgroups.LiftPowerAndStart;
+import frc.robot.commandgroups.LiftToLowPlatform;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
@@ -69,7 +74,7 @@ public class OI {
         topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
         topLL.whenPressed(new Grab(Grab.GRAB_HATCH));
         topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
-        button8.whenPressed(new InterpolateAndCheck(ArmPositions.CARGO_BAY));
+        //button8.whenPressed(new InterpolateAndCheck(ArmPositions.CARGO_BAY));
 
         if(Bucket.stuff == Bucket.BALL){
             trigger.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
@@ -90,9 +95,9 @@ public class OI {
 
         //END GAME LIFT
         //gets robot in position to drive up to platform and lift
-        button10.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
+        //button10.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
-        button12.whenPressed(new LiftToPlatform());
+        //button12.whenPressed(new LiftToPlatform());
 
         //button11.whenPressed(new SynchronisedLift());
     
@@ -109,24 +114,18 @@ public class OI {
          
         
         //LOW LIFT
-        //button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_LOW_LIFT));
-        //button8.whenPressed(new LiftToLowPlatform());
+        button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_LOW_LIFT));
+        button8.whenPressed(new LiftToLowPlatform());
         
         //CHUNKS OF LOW LIFT
-        /*topUR.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_LOW_LIFT));
-        button7.whenPressed(new InterpolateAndCheck(ArmPositions.START_LOW_LIFT));
-        button8.whenPressed(new InterpolateAndCheck(ArmPositions.DURING_LOW_LIFT));
-        button9.whenPressed(new InterpolateAndCheck(ArmPositions.PULL_IN_LOW));
-        button10.whenPressed(new InterpolateAndCheck(ArmPositions.LIFT_ARM));
-        button11.whenPressed(new TimedDrive(1.0, 0.5));
-        topLR.whenPressed(new InterpolateAndCheck(ArmPositions.HOME));
-        //Go to HOME here
-        //should we go to home while driving? or drive first? should it really be HOME?
-        button12.whenPressed(new TimedDrive(1.5, 0.5)); 
-        //thumb.whenPressed(lifting =true);*/
-
-
+        //button7.whenPressed(new LiftPowerAndStart());
+        //button8.whenPressed(new DriveAndDuringlow());
+        //button9.whenPressed(new DriveAndPullInLow());
+        //button11.whenPressed(new )
+        //button10.whenPressed(new LiftArmAndDriveOn());
+        //button11.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_LOW_LIFT));
         
+
         //MORE AUTONOMOUS-ISH STFF
         //uses limit switches to deposit balls and pick them up
         //button9.whenPressed(new DepositBallAtTarget(ArmPositions.LOW_CARGO));
@@ -144,10 +143,11 @@ public class OI {
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
 
-        button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
-        button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-        topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+        //REGULAR POSITIONS
+        //button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+        //button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
+        //button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
+        //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
         //
         // These are test and calibration initializations - they are NOT required for competition.
         

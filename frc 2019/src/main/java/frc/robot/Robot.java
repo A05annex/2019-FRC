@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ArmTimedToTarget;
 import frc.robot.commands.RetractLift;
 import frc.robot.subsystems.*;
 
@@ -162,6 +163,7 @@ public class Robot extends TimedRobot {
 
         // Make sure the lifters are retracted before we start moving around.
         new RetractLift(0.0).start();
+        new ArmTimedToTarget(ArmPositions.LOW_CARGO, 0, 3);
     }
 
     /**
@@ -170,8 +172,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putString("DB/String 2", Double.toString(armDriveTrain.getLowerArmAngle()));
-        SmartDashboard.putString("DB/String 3", Double.toString(armDriveTrain.getUpperArmAngle()));
+        SmartDashboard.putString("DB/String 2", "CLA:" + Double.toString(armDriveTrain.getLowerArmAngle()));
+        SmartDashboard.putString("DB/String 3", "CUA:" + Double.toString(armDriveTrain.getUpperArmAngle()));
         //SmartDashboard.putString("DB/String 4", Double.toString(armDriveTrain.getBucketAngle()));
         //SmartDashboard.putString("DB/String 5", Boolean.toString(armDriveTrain.isAtTargetPosition()));
 

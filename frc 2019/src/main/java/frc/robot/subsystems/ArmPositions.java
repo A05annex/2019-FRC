@@ -49,10 +49,12 @@ public enum ArmPositions {
     START_LOW_LIFT(18),
     DURING_LOW_LIFT(19),
     PULL_IN_LOW(20),
-    LIFT_ARM(21),
+    LIFT_TWO(21),
+    PULL_IN_TWO(22),
+    LIFT_ARM(23),
 
     //misc
-    CARGO_BAY(22);
+    CARGO_BAY(24);
 
 
     public final int value;

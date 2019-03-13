@@ -57,16 +57,20 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {80.25, 55.05, 0.0},                        // ENDGAME_PARK
             {76.9, 49.8, 0.0},                          // POST_ENDGAME_PARK (not using)
 
-            {96.0, 33.0, 30},                           //PRE_LOW_LIFT
-            {96.0, 33.0, 30},                           //START_LOW_LIFT
-            {96.0, 33.0, 30},                           //DURING_LOW_LIFT
-            {96.0, 33.0, 30},                           //PULL_IN_LOW
-            {96.0, 33.0, 30},                           //LIFT_ARM
+            {76.1, 71.1, 0.0},                           //PRE_LOW_LIFT(just low cargo)
+            {66.8, 69.2, 0.0},                          //START_LOW_LIFT
+            {51.2, 71.2, 0.0},                           //DURING_LOW_LIFT
+            //{63.6, 54.9, 0.0},                            //PULL_IN_LOW(old)
+            {52.5, 53.2, 0.0},                              //PULL_IN_LOW
+            {71.2, 59.3, 0.0},                          //LIFT_TWO
+            //{53.3, 77.2, 0.0}                         //SET_DOWN
+            {44.2, 73.2, 0.0},                          //PULL_IN_TWO
+            {67.3, 65.5, 0.0},                           //LIFT_ARM
 
             {98.0, 74.0, 634},                             //CARGO_BAY
     };
 
-    private ArmPositions targetPosition = ArmPositions.LOW_CARGO;
+    private ArmPositions targetPosition = ArmPositions.PREGAME;
     private int targetPositionIndx = targetPosition.value;
     private double[] targetAngles = {targetPositions[targetPositionIndx][LOWER],
         targetPositions[targetPositionIndx][UPPER],
@@ -258,19 +262,21 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         //inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
         if(lifting){
             inputDriveLowArm(limit(1, -1, (lP + lI)));
+            inputDriveUppArm(limit(1, -1, (uP + uI)));
         }else{
             inputDriveLowArm(limit(1, -.1, (lP + lI)));
+            inputDriveUppArm(limit(1, -.5, (uP + uI)));
         }
-        inputDriveUppArm(limit(1, -.5, (uP + uI)));
+    
         inputDriveBucket(limit(1, -1, (bP)));
 
-        SmartDashboard.putString("DB/String 0", Double.toString(targetAngles[LOWER]));
-        SmartDashboard.putString("DB/String 1", Double.toString(targetAngles[UPPER]));
+        SmartDashboard.putString("DB/String 0", "Target lower:" + Double.toString(targetAngles[LOWER]));
+        SmartDashboard.putString("DB/String 1", "Target upper:" + Double.toString(targetAngles[UPPER]));
         SmartDashboard.putString("DB/String 4", Double.toString(bP));
         SmartDashboard.putString("DB/String 5", Double.toString(lI));
-        SmartDashboard.putString("DB/String 6", Integer.toString(bucketMotor.getSelectedSensorPosition()));
+        SmartDashboard.putString("DB/String 6", "Bucket current:" + Integer.toString(bucketMotor.getSelectedSensorPosition()));
         SmartDashboard.putString("DB/String 7", Double.toString((targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient));
-        SmartDashboard.putString("DB/String 8", Boolean.toString(isAtTargetPosition()));
+        SmartDashboard.putString("DB/String 8", "Is at target position:" + Boolean.toString(isAtTargetPosition()));
         SmartDashboard.putString("DB/String 9", "Lifting: " + Boolean.toString(lifting));
     }
 
