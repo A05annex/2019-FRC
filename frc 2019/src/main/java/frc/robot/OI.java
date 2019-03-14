@@ -23,6 +23,7 @@ import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
 import frc.robot.commands.BumpTargetPosition;
 import frc.robot.commands.Grab;
+import frc.robot.commands.LiftingPower;
 import frc.robot.subsystems.ArmPositions;
 import frc.robot.subsystems.Bucket;
 /**
@@ -74,9 +75,13 @@ public class OI {
         topUL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
         topLL.whenPressed(new Grab(Grab.GRAB_HATCH));
         topLL.whenReleased(new InterpolateAndCheck(ArmPositions.LOW_CARGO));
-        //button8.whenPressed(new InterpolateAndCheck(ArmPositions.CARGO_BAY));
+        button8.whenPressed(new InterpolateAndCheck(ArmPositions.CARGO_BAY));
+        
+        //just for now
+        button12.whenPressed(new LiftingPower(true));
 
-        if(Bucket.stuff == Bucket.BALL){
+        //my weird code that makes robot scoot back after depositing hatch
+        /* if(Bucket.stuff == Bucket.BALL){
             trigger.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
         }
         if(Bucket.stuff = Bucket.HATCH){
@@ -85,7 +90,25 @@ public class OI {
         else{
             trigger.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
             trigger.whenPressed(new Grab(Grab.GRAB_HATCH));
-        }
+        } */
+
+        //regular stuff that we've been using for depositing
+        trigger.whileHeld(new BallCollector(BallCollector.EJECT_BALL));
+        trigger.whenPressed(new Grab(Grab.GRAB_HATCH));
+
+
+
+        //REGULAR POSITIONS
+        button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
+        button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
+        button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
+        topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
+
+        //topLR.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_LOW_LIFT));
+        //endgame will be on 10 and 12. idk where i'm putting low lift yet. 
+
+        //
+        // These are test and calibration initializations - they are NOT required for competition.
 
 
 //        topUL.whenPressed(new TapeStraighten('L'));
@@ -114,8 +137,8 @@ public class OI {
          
         
         //LOW LIFT
-        button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_LOW_LIFT));
-        button8.whenPressed(new LiftToLowPlatform());
+        //button7.whenPressed(new InterpolateAndCheck(ArmPositions.PRE_LOW_LIFT));
+        //button8.whenPressed(new LiftToLowPlatform());
         
         //CHUNKS OF LOW LIFT
         //button7.whenPressed(new LiftPowerAndStart());
@@ -143,13 +166,6 @@ public class OI {
         //xboxB.whenPressed(new SetRocketPosition(SetRocketPosition.MIDDLE));
         //xboxY.whenPressed(new SetRocketPosition(SetRocketPosition.UPPER));
 
-        //REGULAR POSITIONS
-        //button11.whenPressed(new ArmInterpolateToTarget(ArmPositions.LOW_CARGO));
-        //button9.whenPressed(new ArmInterpolateToTarget(ArmPositions.MID_CARGO));
-        //button7.whenPressed(new ArmInterpolateToTarget(ArmPositions.HIGH_CARGO));
-        //topUR.whenPressed(new ArmInterpolateToTarget(ArmPositions.HOME));
-        //
-        // These are test and calibration initializations - they are NOT required for competition.
         
         
         /*xbox = new XboxController(1);
