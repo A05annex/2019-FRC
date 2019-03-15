@@ -113,4 +113,6 @@ public interface IUseArm {
     void stop();
 
     void setLifting(boolean lifting);
+
+    void setBucketLifting(boolean bucketLifting);
 }

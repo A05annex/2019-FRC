@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.commands.ArmTimedToTarget;
+import frc.robot.commands.BucketLiftingPower;
 import frc.robot.commands.LiftingPower;
 import frc.robot.commands.SynchronisedLift;
 import frc.robot.subsystems.ArmPositions;
@@ -41,6 +42,7 @@ public class LiftAndDuringLift extends CommandGroup {
         //activates pneumatics as arm helps pull robot onto platform
         addSequential(new LiftingPower(true));
         addSequential(new InterpolateAndCheck(ArmPositions.START_LIFT));
+        addSequential(new BucketLiftingPower(true));
         addParallel(new ArmTimedToTarget(ArmPositions.DURING_LIFT,Constants.END_GAME_PNEUMATICS_DROP,
         Constants.END_GAME_PNEUMATICS_LIFT_DURATION));
         addSequential(new SynchronisedLift());

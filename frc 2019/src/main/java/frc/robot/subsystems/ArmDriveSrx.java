@@ -128,4 +128,9 @@ public class ArmDriveSrx extends Subsystem implements IUseArm {
     public void setLifting(boolean lifting){
         
     }
+
+    @Override
+    public void setBucketLifting(boolean bucketLifting){
+        
+    }
 }

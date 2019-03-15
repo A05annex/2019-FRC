@@ -27,7 +27,7 @@ public class Constants {
 
 
     public static final double END_GAME_PNEUMATICS_LIFT_DURATION = 6.0;
-    public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 4.5;
+    public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 5.0;
     public static final double END_GAME_PNEUMATICS_DROP = 1.0;
 
     public static final double END_GAME_MOTOR_POWER = 0.7;

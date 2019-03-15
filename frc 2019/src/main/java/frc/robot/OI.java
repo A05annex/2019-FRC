@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commandgroups.InterpolateAndCheck;
 import frc.robot.commandgroups.LiftToLowPlatform;
 import frc.robot.commandgroups.LiftToPlatform;
@@ -87,12 +88,10 @@ public class OI {
         button10.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
         
-        if(lifting && stick.getRawAxis(3) > 0){
-            button12.whenPressed(new LiftToPlatform());
-        }
-        if(lifting && stick.getRawAxis(3) < 0){
-            button12.whenPressed(new LiftToLowPlatform());
-        }
+        button12.whenPressed(new LiftToPlatform());
+        topLR.whenPressed(new LiftToLowPlatform());
+        
+        SmartDashboard.putString("DB/String 9", "Lifting: " + Boolean.toString(lifting));
 
         //button11.whenPressed(new SynchronisedLift());
     

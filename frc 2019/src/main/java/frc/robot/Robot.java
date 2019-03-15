@@ -8,8 +8,9 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.cscore.HttpCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -56,6 +57,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        HttpCamera piCam = new HttpCamera("cam1", "http://10.68.31.11:1181/?action=stream");
+        CameraServer.getInstance().getVideo(piCam);
+
         oi = new OI();
 //        ahrs = new AHRS(SPI.Port.kMXP);
         ahrs = new AHRS(SerialPort.Port.kUSB1);

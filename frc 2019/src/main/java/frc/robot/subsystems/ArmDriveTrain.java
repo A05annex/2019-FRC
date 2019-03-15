@@ -30,6 +30,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     private static final int UPPER = 1;
     private static final int BUCKET = 2;
     private boolean lifting = false;
+    private boolean bucketLifting = false;
 
     // picked this because it is unambiguously represented and way outside any reasonable angle range.
     private static final double AUTO_POSITION_BUCKET = 1024.0;
@@ -49,7 +50,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {76.5, 57.5, 424},              // PICKUP_FROM_FLOOR
 
             {89.4, 77.4, 304},              // PRE_ENDGAME_LIFT
-            {73, 75.5, 176},                // START_LIFT
+            {73, 75.5, 0.0},                // START_LIFT
             {51.8, 82.4, 0.0},              // DURING_LIFT
             {73.3, 55.5, 0.0},              // PULL_IN (front lift only)
             {29.5, 95.0, 0.0},              // ENDGAME_LIFT (rear lift only)
@@ -188,7 +189,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void inputDriveBucket(double bucketPower) {
-        if(!lifting){
+        if(!bucketLifting){
             bucketMotor.set(bucketPower);
         }
     }
@@ -276,7 +277,6 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         SmartDashboard.putString("DB/String 6", Integer.toString(bucketMotor.getSelectedSensorPosition()));
         SmartDashboard.putString("DB/String 7", Double.toString((targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient));
         SmartDashboard.putString("DB/String 8", "At target posn:" + Boolean.toString(isAtTargetPosition()));
-        SmartDashboard.putString("DB/String 9", "Lifting: " + Boolean.toString(lifting));
     }
 
     @Override
@@ -319,5 +319,10 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     @Override
     public void setLifting(boolean lifting){
         this.lifting = lifting;
+    }
+
+    @Override
+    public void setBucketLifting(boolean bucketLifting){
+        this.bucketLifting = bucketLifting;
     }
 }
