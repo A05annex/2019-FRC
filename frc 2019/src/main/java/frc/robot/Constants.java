@@ -41,7 +41,9 @@ public class Constants {
     // The angle where we get to cylinder stopped.
     public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
     // The expected lft time in seconds, everything locks on after that
-    public static double LIFT_TIME = 25.0;
+    public static double LIFT_CORRECTION_TIME = 600.0;
+
+    public static int LIFT_CORRECTION_DEADBAND = 1;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Drive tuning constants                                                                                         //

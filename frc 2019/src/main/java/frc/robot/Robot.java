@@ -8,10 +8,10 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -59,7 +59,8 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         camera = CameraServer.getInstance().startAutomaticCapture();
         oi = new OI();
-        ahrs = new AHRS(SPI.Port.kMXP);
+//        ahrs = new AHRS(SPI.Port.kMXP);
+        ahrs = new AHRS(SerialPort.Port.kUSB2);
         ahrs.reset();
         while (ahrs.isCalibrating()) {
             try {
