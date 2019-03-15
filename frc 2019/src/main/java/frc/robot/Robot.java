@@ -130,7 +130,10 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.start();
         }
+        // Make sure the lifters are retracted before we start moving around.
+        new RetractLift(0.0).start();
         grabber.grabHatch();
+        new ArmTimedToTarget(ArmPositions.LOW_CARGO, 0, 3);
     }
 
     /**
