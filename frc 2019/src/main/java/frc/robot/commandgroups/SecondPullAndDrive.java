@@ -8,23 +8,17 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.LiftingPower;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
-public class LiftToLowPlatform extends CommandGroup {
+public class SecondPullAndDrive extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public LiftToLowPlatform() {
-    
-        addSequential(new LiftPowerAndStart());
-        addSequential(new DriveAndDuringlow());
-        addSequential(new DriveAndPullInLow());
-        //addSequential(new SecondPullAndDrive());
-        addSequential(new LiftArmAndDriveOn());
+  public SecondPullAndDrive() {
 
-
+    addParallel(new TimedDrive(1.0, 0.3));
+    addSequential(new InterpolateAndCheck(ArmPositions.LIFT_TWO));
 
   }
 }

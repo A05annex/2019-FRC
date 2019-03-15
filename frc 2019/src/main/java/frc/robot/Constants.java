@@ -27,7 +27,7 @@ public class Constants {
 
 
     public static final double END_GAME_PNEUMATICS_LIFT_DURATION = 6.0;
-    public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 4.0;
+    public static final double END_GAME_PNEUMATICS_RETRACT_DURATION = 4.5;
     public static final double END_GAME_PNEUMATICS_DROP = 1.0;
 
     public static final double END_GAME_MOTOR_POWER = 0.7;
@@ -41,7 +41,7 @@ public class Constants {
     // The number of control cycles for each lift correction cycle
     public static int LIFT_CORRECT_CYCLES = 15;
     // The angle where we get to cylinder stopped.
-    public static double LIFT_CORRECT_MAX_ANGLE = 8.0;
+    public static double LIFT_CORRECT_MAX_ANGLE = 5.0;
     // The expected lft time in seconds, everything locks on after that
     public static double LIFT_CORRECTION_TIME = 7.0;
 

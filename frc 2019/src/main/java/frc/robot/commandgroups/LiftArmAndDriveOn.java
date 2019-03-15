@@ -12,19 +12,15 @@ import frc.robot.commands.LiftingPower;
 import frc.robot.commands.TimedDrive;
 import frc.robot.subsystems.ArmPositions;
 
-public class LiftToLowPlatform extends CommandGroup {
+public class LiftArmAndDriveOn extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public LiftToLowPlatform() {
-    
-        addSequential(new LiftPowerAndStart());
-        addSequential(new DriveAndDuringlow());
-        addSequential(new DriveAndPullInLow());
-        //addSequential(new SecondPullAndDrive());
-        addSequential(new LiftArmAndDriveOn());
-
-
-
+  public LiftArmAndDriveOn() {
+    addSequential(new LiftingPower(false));
+    addSequential(new InterpolateAndCheck(ArmPositions.LIFT_ARM));
+    addParallel(new TimedDrive(1.0, 0.5));
+    addSequential(new InterpolateAndCheck(ArmPositions.HOME));
+    addSequential(new TimedDrive(1.5, 0.5));
   }
 }
