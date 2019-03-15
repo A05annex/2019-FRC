@@ -8,9 +8,6 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -34,7 +31,6 @@ public class Robot extends TimedRobot {
     private static AHRS ahrs;
     public final static DriveTrain driveTrain = new DriveTrain();
     public final static IUseArm armDriveTrain = new ArmDriveTrain();
-    public UsbCamera camera;
     //public static IUseArm armDriveTrain = new ArmDriveSrx();
     //public final static GripDetection gripDetection = new GripDetection();
     private static OI oi;
@@ -59,10 +55,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        camera = CameraServer.getInstance().startAutomaticCapture();
         oi = new OI();
 //        ahrs = new AHRS(SPI.Port.kMXP);
-        ahrs = new AHRS(SerialPort.Port.kUSB2);
+        ahrs = new AHRS(SerialPort.Port.kUSB1);
         ahrs.reset();
         while (ahrs.isCalibrating()) {
             try {
