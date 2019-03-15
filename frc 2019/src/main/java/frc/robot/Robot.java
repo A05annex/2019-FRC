@@ -66,12 +66,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-<<<<<<< HEAD
-        // camera = CameraServer.getInstance().startAutomaticCapture();
-        // HttpCamera piCam = new HttpCamera("piCam", "http://frcvision.local:1181/?action=stream",HttpCameraKind.kMJPGStreamer);
-        // CvSink cvSink1 = CameraServer.getInstance().getVideo(piCam);
-=======
->>>>>>> f88ca2955e2cba8fb0cad59127603e633d72ad50
         oi = new OI();
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();
