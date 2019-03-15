@@ -141,22 +141,20 @@ public class OI {
         // These are test and calibration initializations - they are NOT required for competition.
         
         
-        /*xbox = new XboxController(1);
-        final POVButton decArmAngle = new POVButton(xbox, 0);
+        final POVButton decArmAngle = new POVButton(this.stick, 0);
         decArmAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.DECREMENT));
 
-        final POVButton incArmAngle = new POVButton(xbox, 180);
+        final POVButton incArmAngle = new POVButton(this.stick, 180);
         incArmAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_ARM_ANGLE, BumpTargetPosition.INCREMENT));
 
-        final POVButton decBucketAngle = new POVButton(xbox, 90);
+        final POVButton decBucketAngle = new POVButton(this.stick, 90);
         decBucketAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.DECREMENT));
 
-        final POVButton incBucketAngle = new POVButton(xbox, 270);
+        final POVButton incBucketAngle = new POVButton(this.stick, 270);
         incBucketAngle.whileHeld(
                 new BumpTargetPosition(BumpTargetPosition.BUMP_BUCKET_ANGLE, BumpTargetPosition.INCREMENT));
-*/
     }
 }
