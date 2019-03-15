@@ -1,9 +1,6 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 import frc.robot.subsystems.ArmPositions;
 
 public class SetRocketPosition extends Command {
@@ -34,13 +31,13 @@ public class SetRocketPosition extends Command {
     @Override
     protected void execute() {
         super.execute();
-        XboxController xbox = Robot.getOI().getXbox();
+        /*XboxController xbox = Robot.getOI().getXbox();
         if (xbox.getBumper(GenericHID.Hand.kRight)) {
             Robot.armDriveTrain.setTargetPosition(ballPosition);
         } else {
             Robot.armDriveTrain.setTargetPosition(hatchPosition);
         }
-        finished = true;
+        finished = true;*/
     }
 
     @Override

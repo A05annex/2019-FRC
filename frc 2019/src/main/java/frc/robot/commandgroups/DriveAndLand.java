@@ -18,8 +18,9 @@ public class DriveAndLand extends CommandGroup {
     public DriveAndLand() {
 
     //robot drives forward as arm moves into landing position
-    addParallel(new TimedDrive(2.0, 0.2));
+    addParallel(new TimedDrive(1.0, 0.2));
     addSequential(new InterpolateAndCheck(ArmPositions.ENDGAME_LAND));
+    addSequential(new TimedDrive(1.5, 0.2));
 
   }
 }

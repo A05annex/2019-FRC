@@ -1,8 +1,6 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
@@ -29,10 +27,10 @@ public class ArmTeleop extends Command {
 
     @Override
     protected void execute() {
-        XboxController xbox = Robot.getOI().getXbox();
+        /*XboxController xbox = Robot.getOI().getXbox();
         // left stick is lower arm lift_robot-retract_lifters, right stick is upper arm lift_robot-retract_lifters
         Robot.armDriveTrain.inputDriveLowArm(xbox.getY(GenericHID.Hand.kLeft) * s_maxSpeed);
-        Robot.armDriveTrain.inputDriveUppArm(xbox.getY(GenericHID.Hand.kRight) * s_maxSpeed);
+        Robot.armDriveTrain.inputDriveUppArm(xbox.getY(GenericHID.Hand.kRight) * s_maxSpeed);*/
     }
 
     @Override

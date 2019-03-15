@@ -32,5 +32,43 @@ public class LiftToPlatform extends CommandGroup {
         addSequential(new DownerAndLand());
         addSequential(new TimedDrive(1.0, 0.15));
 
+
+
+    //front lift not in command groups. timed drive numbers are probably off
+
+    /*addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+    addParallel(new EndGameLifter());
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
+    addParallel(new TimedDrive(1.0, -0.2));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.PULL_IN));
+    addParallel(new TimedDrive(1.0, -0.2));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_LAND));
+    addParallel(new EndGameDowner());
+    addParallel(new TimedDrive(1.0, -0.2));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_PARK));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK));
+    addSequential(new TimedDrive(0.5, -0.2)); */
+
+    //rear lift
+    //no longer using
+
+    /*addParallel(new EndGameDrive());
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.PRE_ENDGAME_LIFT));
+    addParallel(new SetAndWaitForArmPosition(ArmPositions.DURING_LIFT));
+    //still need to make DURING_LIFT
+
+    addSequential(new EndGameLifter());
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_LIFT));
+    addParallel(new EndGameDowner());
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_LAND));
+    addParallel(new EndGameDrive());
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.ENDGAME_PARK));
+    addSequential(new SetAndWaitForArmPosition(ArmPositions.POST_ENDGAME_PARK)); */
+
+    //NOTES
+    //drive a bit more before pneumatics come up
+    //lift arm a bit after we pull in so we can drive easier
+
+
     }
 }

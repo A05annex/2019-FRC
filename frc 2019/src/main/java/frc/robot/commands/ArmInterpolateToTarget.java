@@ -19,6 +19,7 @@ public class ArmInterpolateToTarget extends Command {
   double[] bumpIncs = new double[3];
   int currentIncrement = 0;
   double[] currentTarget;
+  int interpolateSteps;
 
   public ArmInterpolateToTarget(ArmPositions newTarget) {
     super();
@@ -35,11 +36,16 @@ public class ArmInterpolateToTarget extends Command {
     double deltaLower = newTarget[0] - currentTarget[0];
     double deltaUpper = newTarget[1] - currentTarget[1];
     double deltaBucket = newTarget[2] - currentTarget[2];
-    bumpIncs[0] = deltaLower / Constants.INTERPOLATE_STEPS;
-    bumpIncs[1] = deltaUpper / Constants.INTERPOLATE_STEPS;
-    bumpIncs[2] = deltaBucket / Constants.INTERPOLATE_STEPS;
+    interpolateSteps = getSteps();
+    bumpIncs[0] = deltaLower / interpolateSteps;
+    bumpIncs[1] = deltaUpper / interpolateSteps;
+    bumpIncs[2] = deltaBucket / interpolateSteps;
 
     }
+
+  protected int getSteps(){
+    return Constants.INTERPOLATE_STEPS;
+  }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -54,7 +60,7 @@ public class ArmInterpolateToTarget extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(currentIncrement>=Constants.INTERPOLATE_STEPS){
+    if(currentIncrement>=interpolateSteps){
       Robot.armDriveTrain.setTargetPosition(finalTarget);
       return true;
     }

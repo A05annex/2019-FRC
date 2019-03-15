@@ -15,6 +15,7 @@ public class BucketWheelz extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
+        stop();
     }
 
     public void collect() {

@@ -3,12 +3,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveArmToTarget;
 
@@ -48,10 +48,10 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {93.75, 131, 751},       // HIGH_CARGO
             {76.5, 57.5, 424},                         // PICKUP_FROM_FLOOR
 
-            {89.4, 77.4, 306},                          // PRE_ENDGAME_LIFT
-            {73, 75.5, 181},                          //START_LIFT
-            {56.84, 67.7, 0.0},                          // DURING_LIFT
-            {62.5, 62.4, 0.0},                          // PULL_IN (front lift only)
+            {89.4, 77.4, 304},                          // PRE_ENDGAME_LIFT
+            {73, 75.5, 176},                          //START_LIFT
+            {51.8, 82.4, 0.0},                          // DURING_LIFT
+            {73.3, 55.5, 0.0},                          // PULL_IN (front lift only)
             {29.5, 95.0, 0.0},                          // ENDGAME_LIFT (rear lift only)
             {71.25, 55.05, 0.0},                        // ENDGAME_LAND
             {80.25, 55.05, 0.0},                        // ENDGAME_PARK
@@ -62,9 +62,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {96.0, 33.0, 30},                           //DURING_LOW_LIFT
             {96.0, 33.0, 30},                           //PULL_IN_LOW
             {96.0, 33.0, 30},                           //LIFT_ARM
+
+            {98.0, 74.0, 634}                              //CARGO_BAY
     };
 
-    private ArmPositions targetPosition = ArmPositions.HOME;
+    private ArmPositions targetPosition = ArmPositions.LOW_CARGO;
     private int targetPositionIndx = targetPosition.value;
     private double[] targetAngles = {targetPositions[targetPositionIndx][LOWER],
         targetPositions[targetPositionIndx][UPPER],
@@ -182,7 +184,9 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
 
     @Override
     public void inputDriveBucket(double bucketPower) {
-        bucketMotor.set(bucketPower);
+        if(!lifting){
+            bucketMotor.set(bucketPower);
+        }
     }
 
     @Override
@@ -220,7 +224,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
         targetAngles[2] = targetPositions[targetPositionIndx][2];
     }
 
-    public double uP, uI, lP, lI, bP, bI;
+    public double uP, uI, uD, uLastAngle, lP, lI, lLastAngle = lowerArmAngle.get(), lD, bP, bI;
 
     @Override
     public void resetIntegral() {
@@ -236,16 +240,20 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             lowerCoefficient = 20,
             upperCoefficient = 20,
             bucketCoefficient = 30,
-            lkI = 3;
+            lkI = 2.3,
+            lkD = 1,
+            ukI = 3,
+            ukD = 1;
         lP = (targetAngles[0]-lowerArmAngle.get())/lowerCoefficient;
-        lI += lP * period;
+        lI += lkI * (lP * period);
         lI = limit(.5, -.3, lI);
         uP = (targetAngles[1]-upperArmAngle.get())/upperCoefficient;
-        uI += lkI * (uP * period);
+        uI += ukI * (uP * period);
         uI = limit(.2, -.1, uI);
         bP = (targetAngles[2]-bucketMotor.getSelectedSensorPosition())/bucketCoefficient;
 
         lastTime = time.get();
+        lLastAngle = lowerArmAngle.get();
         //inputDriveLowArm(limit(.6, -1, (targetPositions[targetPositionIndx][0]-lowerArmAngle.get())/lowerCoefficient));
         //inputDriveUppArm(limit(.5, -.5, (targetPositions[targetPositionIndx][UPPER]-upperArmAngle.get())/upperCoefficient + constantErrorUpper));
         if(lifting){
@@ -254,7 +262,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             inputDriveLowArm(limit(1, -.1, (lP + lI)));
         }
         inputDriveUppArm(limit(1, -.5, (uP + uI)));
-        inputDriveBucket(limit(.5, -.8, (bP)));
+        inputDriveBucket(limit(1, -1, (bP)));
 
         SmartDashboard.putString("DB/String 0", Double.toString(targetAngles[LOWER]));
         SmartDashboard.putString("DB/String 1", Double.toString(targetAngles[UPPER]));
