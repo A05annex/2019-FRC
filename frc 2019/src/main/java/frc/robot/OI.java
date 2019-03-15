@@ -8,10 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.commandgroups.InterpolateAndCheck;
+import frc.robot.commandgroups.LiftToLowPlatform;
 import frc.robot.commandgroups.LiftToPlatform;
 import frc.robot.commands.ArmInterpolateToTarget;
 import frc.robot.commands.BallCollector;
@@ -23,6 +23,8 @@ import frc.robot.subsystems.ArmPositions;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+
+    private boolean lifting = false;
 
     private final Joystick stick = new Joystick(0);
 
@@ -79,9 +81,18 @@ public class OI {
 
         //END GAME LIFT
         //gets robot in position to drive up to platform and lift
+        if(stick.getRawButton(10)){
+            lifting = true;
+        }
         button10.whenPressed(new ArmInterpolateToTarget(ArmPositions.PRE_ENDGAME_LIFT));
         //robot lifts itself onto the platform
-        button12.whenPressed(new LiftToPlatform());
+        
+        if(lifting && stick.getRawAxis(3) > 0){
+            button12.whenPressed(new LiftToPlatform());
+        }
+        if(lifting && stick.getRawAxis(3) < 0){
+            button12.whenPressed(new LiftToLowPlatform());
+        }
 
         //button11.whenPressed(new SynchronisedLift());
     
