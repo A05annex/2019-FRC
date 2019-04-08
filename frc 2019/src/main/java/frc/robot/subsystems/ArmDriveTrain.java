@@ -40,7 +40,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     // bumpTargetPosition() method may be called to dynamically modify these.
     private double[][] targetPositions = {
             {110.0, 35.0, 0.0},             // PREGAME
-            {96.0, 33.0, 30},               // HOME
+            {96.0, 28.0, 0},               // HOME
             {102, 43.2, 202},               // LOW_HATCH
             {102, 43.2, 202},               // LOW_CARGO
             {116, 54, 30},                  // MID_HATCH
@@ -71,7 +71,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             {98.0, 74.0, 634}               // CARGO_BAY
     };
 
-    private ArmPositions targetPosition = ArmPositions.PREGAME;
+    private ArmPositions targetPosition = ArmPositions.HOME;
     private int targetPositionIndx = targetPosition.value;
     private double[] targetAngles = {targetPositions[targetPositionIndx][LOWER],
         targetPositions[targetPositionIndx][UPPER],
@@ -242,7 +242,7 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
     public void moveToTarget() {
         double
             period = time.get()-lastTime,
-            lowerCoefficient = 20,
+            lowerCoefficient = 30,
             upperCoefficient = 20,
             bucketCoefficient = 30,
             lkI = 2.3,
@@ -268,11 +268,11 @@ public class ArmDriveTrain extends Subsystem implements IUseArm {
             inputDriveLowArm(limit(1, -.1, (lP + lI)));
             inputDriveUppArm(limit(1, -.5, (uP + uI)));
         }
-        inputDriveBucket(limit(1, -1, (bP)));
+        inputDriveBucket(limit(.5, -.5, (bP)));
 
         SmartDashboard.putString("DB/String 0", Double.toString(targetAngles[LOWER]));
         SmartDashboard.putString("DB/String 1", Double.toString(targetAngles[UPPER]));
-        SmartDashboard.putString("DB/String 4", Double.toString(bP));
+        SmartDashboard.putString("DB/String 4", Double.toString(lP+lI));
         SmartDashboard.putString("DB/String 5", Double.toString(lI));
         SmartDashboard.putString("DB/String 6", Integer.toString(bucketMotor.getSelectedSensorPosition()));
         SmartDashboard.putString("DB/String 7", Double.toString((targetAngles[LOWER]-lowerArmAngle.get())/lowerCoefficient));
