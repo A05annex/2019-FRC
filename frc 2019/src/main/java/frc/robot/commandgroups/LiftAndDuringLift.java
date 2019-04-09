@@ -20,7 +20,13 @@ public class LiftAndDuringLift extends CommandGroup {
      */
     public LiftAndDuringLift() {
 
-    //activates pneumatics as arm helps pull robot onto platform
+    //Part of LiftToPlatform.
+    //Activates pneumatics as arm helps pull robot onto platform.
+    //This command also sets LiftingPower to true, meaning that the arm has full strength. 
+    //To move the arm at the same rate as we are lifting the pneumatics, we used a different command.
+    //This new command, ArmTimedToTarget, interpolates the arm movement but at a specific rate.
+    //We can adjust the lift time in Constants. 
+    
     addSequential(new LiftingPower(true));
     addSequential(new InterpolateAndCheck(ArmPositions.START_LIFT));
     addParallel(new ArmTimedToTarget(ArmPositions.DURING_LIFT,Constants.END_GAME_PNEUMATICS_DROP,

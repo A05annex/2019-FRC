@@ -17,6 +17,7 @@ public class DriveAndDuringlow extends CommandGroup {
    */
   public DriveAndDuringlow() {
     
+    //Goes to DURING_LOW_LIFT position. In a command group becuase the robot formerly drove at the same time. 
     addSequential(new InterpolateAndCheck(ArmPositions.DURING_LOW_LIFT));
   }
 }

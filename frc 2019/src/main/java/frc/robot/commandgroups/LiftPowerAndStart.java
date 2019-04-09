@@ -16,6 +16,11 @@ public class LiftPowerAndStart extends CommandGroup {
    * Add your docs here.
    */
   public LiftPowerAndStart() {
+
+    //Part of LiftToLowPlatform.
+    //Sets liftingPower to true so the arm has full power. 
+    //Puts the arm on the box. 
+    
     addSequential(new LiftingPower(true));
     addSequential(new InterpolateAndCheck(ArmPositions.START_LOW_LIFT));
 

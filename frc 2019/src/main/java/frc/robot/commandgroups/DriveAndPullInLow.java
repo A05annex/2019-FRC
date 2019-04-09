@@ -16,6 +16,10 @@ public class DriveAndPullInLow extends CommandGroup {
    * Add your docs here.
    */
   public DriveAndPullInLow() {
+
+    //Part of LiftToLowPlatform.
+    //Robot drives forward as the arm pulls it in. 
+    
     addParallel(new TimedDrive(1.5, 0.4));
     addSequential(new InterpolateAndCheck(ArmPositions.PULL_IN_LOW));
   }

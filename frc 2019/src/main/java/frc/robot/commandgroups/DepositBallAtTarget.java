@@ -18,7 +18,7 @@ public class DepositBallAtTarget extends CommandGroup {
 
   public DepositBallAtTarget(ArmPositions target) {
 
-    //goes to target position, runs ejecting cargo wheels until ball has left, then returns home
+    //Goes to target position, runs ejecting cargo wheels until ball has left, then returns to home position.
 
     addSequential(new InterpolateAndCheck(target));
     addSequential(new DepositCargoWithLimit());

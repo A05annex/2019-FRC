@@ -18,8 +18,10 @@ public class InterpolateAndCheck extends CommandGroup {
    */
   public InterpolateAndCheck(ArmPositions target) {
 
-    //makes arm go to target nice n smooth
-    //ends command/command group when the robot is at the target position
+    //Makes arm go to target nice n smooth.
+    //Ends command/command group when the robot is at the target position.
+    //Our main commandgroup for moving the arm. 
+    
     addSequential(new ArmInterpolateToTarget(target));
     addSequential(new SetAndWaitForArmPosition(target));
   }

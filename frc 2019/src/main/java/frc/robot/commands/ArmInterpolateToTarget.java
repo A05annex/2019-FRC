@@ -13,6 +13,9 @@ import frc.robot.Robot;
 import frc.robot.subsystems.ArmPositions;
 
 public class ArmInterpolateToTarget extends Command {
+
+  //Moves the arm to a target position by interpolating the arm angles between the current position and the target.
+  //
    
   ArmPositions finalTarget;
   double[] newTarget;

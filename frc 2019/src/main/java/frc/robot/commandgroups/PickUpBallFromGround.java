@@ -15,8 +15,9 @@ public class PickUpBallFromGround extends CommandGroup {
   
   public PickUpBallFromGround() {
 
-    //one button command that gets the robot ready to collect the ball
-    //once ball is collected, collector wheels will stop and robot will go to travel position
+    //One button command that gets the robot ready to collect the ball.
+    //Once ball is collected, collector wheels will stop and robot will go to travel position.
+    
     addSequential(new InterpolateAndCheck(ArmPositions.PICKUP_FROM_FLOOR));
     addSequential(new CollectCargoWithLimit());
     addSequential(new InterpolateAndCheck(ArmPositions.HOME));

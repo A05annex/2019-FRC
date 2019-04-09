@@ -17,6 +17,8 @@ public class SecondPullAndDrive extends CommandGroup {
    */
   public SecondPullAndDrive() {
 
+    //Part of LiftToLowPlatform.
+    //Second lifting position that the arm goes to to pull the robot onto the platform. 
     addParallel(new TimedDrive(1.0, 0.3));
     addSequential(new InterpolateAndCheck(ArmPositions.LIFT_TWO));
     

@@ -17,6 +17,12 @@ public class LiftArmAndDriveOn extends CommandGroup {
    * Add your docs here.
    */
   public LiftArmAndDriveOn() {
+
+    //Part of LiftToPlatform. 
+    //At the end of the sequence, so liftingPower is set back to false, as the arm no longer needs full power. 
+    //The arm lifts up and drives onto the platform in a way where it will not unbalance the robot. 
+    //The arm then returns to home position. 
+
     addSequential(new LiftingPower(false));
     addSequential(new InterpolateAndCheck(ArmPositions.LIFT_ARM));
     addParallel(new TimedDrive(1.0, 0.5));

@@ -17,6 +17,11 @@ public class LiftToLowPlatform extends CommandGroup {
    * Add your docs here.
    */
   public LiftToLowPlatform() {
+
+        //A commandgroup to lift the robot onto the lower platform- the 6" one. 
+        //Can be hooked to one button. 
+        //Is a few commandgroups strung together so that the code can be tested in chunks. 
+        //Easy to modify. 
     
         addSequential(new LiftPowerAndStart());
         addSequential(new DriveAndDuringlow());

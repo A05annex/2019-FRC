@@ -17,7 +17,9 @@ public class DriveAndPullIn extends CommandGroup {
      */
     public DriveAndPullIn() {
 
-    //the arm pulls the robot up as the wheels begin to drive forward
+    //Part of LiftToPlatform.
+    //The arm pulls the robot up as the wheels begin to drive forward.
+    
     addParallel(new TimedDrive(2.0, 0.2));
     addSequential(new InterpolateAndCheck(ArmPositions.PULL_IN));
   

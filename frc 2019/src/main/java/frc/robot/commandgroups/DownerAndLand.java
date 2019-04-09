@@ -20,8 +20,9 @@ public class DownerAndLand extends CommandGroup {
      */
     public DownerAndLand() {
 
-    //robot drives forward as arm retracts so it won't hit edge
-    //as cylanders get to the platform, they retract
+    //Part of LiftToPlatform.
+    //Robot drives forward as arm retracts so it won't hit the edge of the platform. 
+    //As cylanders get to the platform, they retract.
 
     addSequential(new LiftingPower(false));
     addParallel(new TimedDrive(1.5, 0.1));
