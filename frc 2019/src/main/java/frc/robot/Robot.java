@@ -62,20 +62,33 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         
-        HttpCamera piCam1 = new HttpCamera("cam1", "http://frcvision.local:1181/?action=stream", HttpCameraKind.kMJPGStreamer);
-        CvSink cvSink1 = CameraServer.getInstance().getVideo(piCam1);
-        CameraServer.getInstance().addServer("cam1");
+        try{
+            HttpCamera piCam1 = new HttpCamera("cam1", "http://frcvision.local:1181/?action=stream", HttpCameraKind.kMJPGStreamer);
+            CvSink cvSink1 = CameraServer.getInstance().getVideo(piCam1);
+            CameraServer.getInstance().addServer("cam1");
+        } catch (Exception e) {
+            System.out.println("Can't initialize piCam1, no camera feed.");
+            e.printStackTrace();
+        }
+
+
 
         oi = new OI();
-        ahrs = new AHRS(SPI.Port.kMXP);
-        ahrs.reset();
-        while (ahrs.isCalibrating()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                break;
-            }
+
+        try {
+                ahrs = new AHRS(SPI.Port.kMXP);
+                ahrs.reset();
+                while (ahrs.isCalibrating()) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        break;
+                    }       
+                }       
+        } catch (Exception e) {
+            ahrs = null;
         }
+    
 
         // chooser.addOption("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", m_chooser);

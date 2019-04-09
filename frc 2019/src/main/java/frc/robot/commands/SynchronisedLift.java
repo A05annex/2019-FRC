@@ -9,6 +9,7 @@ public class SynchronisedLift extends Command {
 
     private final Timer timer = new Timer();
     private boolean isFinished = false;
+    private boolean useNavx;
     private double initialRoll = 0.0;
     private int liftCycle = 0;
 
@@ -23,7 +24,10 @@ public class SynchronisedLift extends Command {
         timer.reset();
         timer.start();
         // Map so positive roll happens when right side is lower
-        initialRoll = -Robot.getAHRS().getYaw();
+        useNavx = (null != Robot.getAHRS());
+        if (useNavx) {
+            initialRoll = -Robot.getAHRS().getYaw();
+        }
         liftCycle = 0;
     }
 
@@ -35,26 +39,31 @@ public class SynchronisedLift extends Command {
         } else {
             // in the lift - check roll and pulse leading cylinder as required to get sides synchronised
             // Map so positive roll happens when right side is lower
-            double currentRoll = -Robot.getAHRS().getYaw();
-            currentRoll -= initialRoll;
-            if (currentRoll > 0) {
-                // Right side is low, pulse left to slow it down
-                Robot.lift.lift_robot_right();
-                if (liftCycle%Constants.LIFT_CORRECT_CYCLES <
-                        (((currentRoll * Constants.LIFT_CORRECT_CYCLES)/(2.0 * Constants.LIFT_CORRECT_MAX_ANGLE)) - 2)) {
-                    Robot.lift.retract_robot_left();
+            if (useNavx) {
+                double currentRoll = -Robot.getAHRS().getYaw();
+                currentRoll -= initialRoll;
+                if (currentRoll > 0) {
+                    // Right side is low, pulse left to slow it down
+                    Robot.lift.lift_robot_right();
+                    if (liftCycle%Constants.LIFT_CORRECT_CYCLES <
+                            (((currentRoll * Constants.LIFT_CORRECT_CYCLES)/(2.0 * Constants.LIFT_CORRECT_MAX_ANGLE)) - 2)) {
+                        Robot.lift.retract_robot_left();
+                    } else {
+                        Robot.lift.lift_robot_left();
+                    }
                 } else {
+                    // Left side is low, pulse right to slow it down
+                    if (liftCycle%Constants.LIFT_CORRECT_CYCLES <
+                            ((((-currentRoll) * Constants.LIFT_CORRECT_CYCLES)/(2.0 * Constants.LIFT_CORRECT_MAX_ANGLE)) - 2)) {
+                        Robot.lift.retract_robot_right();
+                    } else {
+                        Robot.lift.lift_robot_right();
+                    }
                     Robot.lift.lift_robot_left();
                 }
             } else {
-                // Left side is low, pulse right to slow it down
-                if (liftCycle%Constants.LIFT_CORRECT_CYCLES <
-                        ((((-currentRoll) * Constants.LIFT_CORRECT_CYCLES)/(2.0 * Constants.LIFT_CORRECT_MAX_ANGLE)) - 2)) {
-                    Robot.lift.retract_robot_right();
-                } else {
-                    Robot.lift.lift_robot_right();
-                }
                 Robot.lift.lift_robot_left();
+                Robot.lift.lift_robot_right();
             }
         }
         liftCycle++;
