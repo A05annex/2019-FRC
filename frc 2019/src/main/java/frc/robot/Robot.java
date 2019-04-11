@@ -76,17 +76,19 @@ public class Robot extends TimedRobot {
         oi = new OI();
 
         try {
-                ahrs = new AHRS(SPI.Port.kMXP);
-                ahrs.reset();
-                while (ahrs.isCalibrating()) {
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        break;
-                    }       
+            ahrs = new AHRS(SPI.Port.kMXP);
+            ahrs.reset();
+            while (ahrs.isCalibrating()) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    break;
                 }       
+            }       
         } catch (Exception e) {
             ahrs = null;
+            System.out.println("Can't initialize Navx.");
+            e.printStackTrace();
         }
     
 
