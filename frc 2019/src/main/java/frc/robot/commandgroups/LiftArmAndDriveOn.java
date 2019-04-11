@@ -10,6 +10,7 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.LiftingPower;
 import frc.robot.commands.TimedDrive;
+import frc.robot.commands.TimedLift;
 import frc.robot.subsystems.ArmPositions;
 
 public class LiftArmAndDriveOn extends CommandGroup {
@@ -24,6 +25,8 @@ public class LiftArmAndDriveOn extends CommandGroup {
     //The arm then returns to home position. 
 
     addSequential(new LiftingPower(false));
+    addParallel(new TimedLift(6.0));
+    addParallel(new TimedDrive(6.0, 0.2));
     addSequential(new InterpolateAndCheck(ArmPositions.LIFT_ARM));
     addParallel(new TimedDrive(1.0, 0.5));
     addSequential(new InterpolateAndCheck(ArmPositions.HOME));

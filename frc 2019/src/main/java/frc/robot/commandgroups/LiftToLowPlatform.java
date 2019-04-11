@@ -26,9 +26,16 @@ public class LiftToLowPlatform extends CommandGroup {
         addSequential(new LiftPowerAndStart());
         addSequential(new DriveAndDuringlow());
         addSequential(new DriveAndPullInLow());
-        //addSequential(new SecondPullAndDrive());
+        
         addSequential(new LiftArmAndDriveOn());
     
+        //new plan
+        //pull up with arm until wheels up to box
+        //drive, lift arm, and timed pneumatics at same time
+        //(fire pneumatics for like 6 seconds)
+        //drive and pull arm in to home/pregame
+
+
 
 
   }
