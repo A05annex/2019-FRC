@@ -21,19 +21,10 @@ public class RobotMap {
     shifter 0 & 1 are the double solenoid ports for pneumatic shifting
     */
     public static int
-            rm1 = 2,
-            rm2 = 3,
-            rm3 = 6,
-            lm1 = 5,
-            lm2 = 7,
-            lm3 = 0,
-            arm1 = 4,
-            arm2 = 1,
-            bucket = 8,
-            lift = 0,
-            grabber = 1,
-            shifter = 2,
-            servo = 1,
-            cargoMotor = 0, //plugged into PWM port 0
-            limitSwitch = 0; //not on robot yet. will go in DIO port 0 probably
+            rm1 = 1,
+            rm2 = 2,
+            rm3 = 3,
+            lm1 = 4,
+            lm2 = 5,
+            lm3 = 6;
 }
