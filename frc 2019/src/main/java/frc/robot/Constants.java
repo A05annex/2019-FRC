@@ -7,7 +7,7 @@ public class Constants {
     // The practice robot has a different hardware configuration:
     // * true - This is the competition configuration
     // * false - This is the practice robot configuration
-    public static final boolean COMPETITION_ROBOT = false;
+    public static final boolean COMPETITION_ROBOT = true;
 
     // Enable shifter control on the 2 speed gearbox
     // * true - Drive shifter is enabled
